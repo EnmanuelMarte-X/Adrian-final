@@ -1,0 +1,25 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background -->
+    <rect width="400" height="400" fill="var(--background)" />
+    
+    <!-- Container with border -->
+    <rect x="50" y="50" width="300" height="300" rx="16" fill="var(--card)" stroke="var(--border)" stroke-width="2" />
+    
+    <!-- Product box/package -->
+    <rect x="120" y="120" width="160" height="120" rx="12" fill="var(--muted)" stroke="var(--border)" stroke-width="1" />
+    
+    <!-- Product shadow/depth -->
+    <rect x="125" y="125" width="150" height="110" rx="8" fill="var(--muted-foreground)" opacity="0.2" />
+    
+    <!-- Package icon (box with lines) -->
+    <rect x="140" y="140" width="120" height="80" rx="6" fill="var(--card)" stroke="var(--muted-foreground)" stroke-width="2" />
+    
+    <!-- Package tape/seal lines -->
+    <line x1="160" y1="140" x2="160" y2="220" stroke="var(--primary)" stroke-width="3" opacity="0.8" />
+    <line x1="200" y1="140" x2="200" y2="220" stroke="var(--primary)" stroke-width="3" opacity="0.8" />
+    <line x1="240" y1="140" x2="240" y2="220" stroke="var(--primary)" stroke-width="3" opacity="0.8" />
+    
+    <!-- Package handle/grip -->
+    <circle cx="200" cy="180" r="8" fill="var(--muted-foreground)" />
+    <circle cx="200" cy="180" r="4" fill="var(--card)" />
+</svg>

@@ -16,8 +16,10 @@ import { signOut } from "next-auth/react";
 import { User, Mail, Shield, LogOut, UserCheck, Phone } from "lucide-react";
 import { ROLE_PERMISSIONS } from "@/config/roles";
 import { motion } from "motion/react";
+import { Suspense } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
-export default function MePage() {
+function MePageContent() {
 	const { user, isLoading } = useAuth();
 
 	const handleSignOut = async () => {
@@ -247,5 +249,21 @@ export default function MePage() {
 				</motion.div>
 			</div>
 		</div>
+	);
+}
+
+export default function MePage() {
+	return (
+		<Suspense fallback={
+			<div className="max-w-4xl w-full px-10 py-6 mx-auto">
+				<Card>
+					<CardContent className="flex items-center justify-center h-64">
+						<Spinner className="size-8 text-primary" />
+					</CardContent>
+				</Card>
+			</div>
+		}>
+			<MePageContent />
+		</Suspense>
 	);
 }

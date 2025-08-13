@@ -19,10 +19,8 @@ const navbarConfig = {
 			title: "Catálogo",
 			url: "/products",
 		},
-		{
-			title: "Redes sociales",
-			url: "/socials",
-		},
+		{ title: "Acerca de", url: "/about" },
+		{ title: "Contacto", url: "/contact" },
 	],
 	auth: {
 		login: {
@@ -69,7 +67,7 @@ const footerConfig = {
 		{
 			title: "Ayuda",
 			links: [
-				{ text: "FAQ", href: "/faq" },
+				{ text: "Preguntas frecuentes", href: "/faq" },
 				{ text: "Devoluciones", href: "/returns" },
 			],
 		},

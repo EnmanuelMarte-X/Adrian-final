@@ -65,13 +65,7 @@ function ProductDialogAlertsPure({
 			});
 		}
 
-		if (!product.sku) {
-			alerts.push({
-				id: "missing-sku",
-				level: "warning",
-				message: "El producto no tiene un SKU asignado.",
-			});
-		}
+	
 		if (!product.minimumStock) {
 			alerts.push({
 				id: "missing-minimum-stock",

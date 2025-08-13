@@ -8,10 +8,10 @@ import { withAdminOnly } from "@/contexts/auth/middlewares";
 
 export async function GET(
 	_: NextRequest,
-	{ params }: { params: { id: string } },
+	{ params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
 	try {
-		const { id } = params;
+		const { id } = await params;
 		const user = await getUserById(id);
 
 		return NextResponse.json(user);
@@ -25,10 +25,10 @@ export async function GET(
 
 export async function PUT(
 	request: NextRequest,
-	{ params }: { params: { id: string } },
+	{ params }: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
 	try {
-		const { id } = params;
+		const { id } = await params;
 		const userData = await request.json();
 		const updatedUser = await updateUser(id, userData);
 

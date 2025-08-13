@@ -6,7 +6,7 @@ import { getPaginationRequestFromState, getTotalPages } from "@/lib/utils";
 import { DataPagination } from "@/components/ui/data-pagination";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "motion/react";
-import { PackageIcon } from "lucide-react";
+import { AlertCircleIcon, PackageIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { currencyFormat } from "@/config/formats";
 import type { ProductType } from "@/types/models/products";
@@ -203,15 +203,22 @@ export function ProductsSection() {
 	if (error) {
 		return (
 			<section className="py-16 px-4">
-				<div className="container mx-auto max-w-7xl">
-					<div className="text-center">
-						<h2 className="text-3xl font-bold text-destructive mb-4">
+				<div className="relative container mx-auto max-w-7xl">
+					<div className="absolute size-full z-20 bg-background/30 flex flex-col items-center justify-center gap-y-4 text-center">
+						<AlertCircleIcon className="size-16 text-destructive" />
+						<h2 className="text-3xl font-bold text-destructive-foreground">
 							Error al cargar productos
 						</h2>
-						<p className="text-muted-foreground">
-							No se pudieron cargar los productos. Por favor, intenta de nuevo
-							más tarde.
+						<p className="text-muted-foreground text-lg">
+							No se pudo cargar la lista de productos. Por favor, vuelve a
+							intentarlo más tarde o contacta al soporte si el problema
+							persiste.
 						</p>
+					</div>
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 blur-xs">
+						{Array.from({ length: 8 }, (_, index) => (
+							<ProductPlaceholder key={`placeholder-${Date.now()}-${index}`} />
+						))}
 					</div>
 				</div>
 			</section>
@@ -231,7 +238,7 @@ export function ProductsSection() {
 						initial={{ opacity: 0, scale: 0.9 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.5 }}
-						className="inline-flex items-center gap-2 bg-bra/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6"
+						className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6"
 					>
 						<PackageIcon className="h-4 w-4" />
 						Catálogo de Productos

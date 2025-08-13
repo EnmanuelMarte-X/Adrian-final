@@ -6,7 +6,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { paymentMethodIcons } from "@/config/orders";
+import { paymentMethodIcons, unknownPaymentMethodIcon } from "@/config/orders";
 import { paymentMethods } from "@/contexts/paymentHistory/payment-method";
 import { memo } from "react";
 
@@ -32,7 +32,7 @@ function PaymentMethodFilterComponent({
 				<SelectContent>
 					{paymentMethods.map((method) => (
 						<SelectItem key={method.id} value={method.id}>
-							{paymentMethodIcons[method.id] || paymentMethodIcons.unknown}
+							{paymentMethodIcons[method.id] || unknownPaymentMethodIcon}
 							{method.name}
 						</SelectItem>
 					))}

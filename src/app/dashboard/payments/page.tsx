@@ -1,15 +1,16 @@
 "use client";
 
 import { PaymentHistoryTable } from "@/components/dashboard/paymentHistory/PaymentHistoryTable";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import type { SortingState } from "@tanstack/react-table";
 import type { PaymentHistoryFilters } from "@/contexts/paymentHistory/types";
 import { PaymentHistoryFilters as PaymentHistoryFiltersComponent } from "@/components/dashboard/paymentHistory/PaymentHistoryFilters";
 import { CreatePaymentSheet } from "@/components/dashboard/paymentHistory/CreatePaymentSheet";
 import { useQueryPaginationState } from "@/hooks/use-pagination-state";
 import { motion } from "motion/react";
+import { Spinner } from "@/components/ui/spinner";
 
-export default function CreditPage() {
+function CreditPageContent() {
 	const [pagination, setPagination] = useQueryPaginationState({
 		pageSize: 25,
 	});
@@ -17,7 +18,6 @@ export default function CreditPage() {
 	const [sorting, setSorting] = useState<SortingState>([
 		{ id: "date", desc: true },
 	]);
-	1;
 
 	const [filters, setFilters] = useState<PaymentHistoryFilters>({});
 
@@ -72,5 +72,24 @@ export default function CreditPage() {
 				/>
 			</motion.div>
 		</motion.main>
+	);
+}
+
+export default function CreditPage() {
+	return (
+		<Suspense fallback={
+			<motion.main
+				className="flex-1 p-6"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.4 }}
+			>
+				<div className="flex items-center justify-center h-64">
+					<Spinner className="size-8 text-primary" />
+				</div>
+			</motion.main>
+		}>
+			<CreditPageContent />
+		</Suspense>
 	);
 }

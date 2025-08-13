@@ -1,15 +1,16 @@
 "use client";
 
 import { ProductsTable } from "@/components/dashboard/products/ProductsTable";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import type { SortingState } from "@tanstack/react-table";
 import type { ProductFilters } from "@/contexts/products/types";
 import { ProductsFilters } from "@/components/dashboard/products/ProductsFilters";
 import { CreateProductSheet } from "@/components/dashboard/products/CreateProductSheet";
 import { useQueryPaginationState } from "@/hooks/use-pagination-state";
 import { motion } from "motion/react";
+import { Spinner } from "@/components/ui/spinner";
 
-export default function ProductsPage() {
+function ProductsPageContent() {
 	const [pagination, setPagination] = useQueryPaginationState({
 		pageSize: 25,
 	});
@@ -71,5 +72,24 @@ export default function ProductsPage() {
 				/>
 			</motion.div>
 		</motion.main>
+	);
+}
+
+export default function ProductsPage() {
+	return (
+		<Suspense fallback={
+			<motion.main
+				className="flex-1 p-6"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.4 }}
+			>
+				<div className="flex items-center justify-center h-64">
+					<Spinner className="size-8 text-primary" />
+				</div>
+			</motion.main>
+		}>
+			<ProductsPageContent />
+		</Suspense>
 	);
 }

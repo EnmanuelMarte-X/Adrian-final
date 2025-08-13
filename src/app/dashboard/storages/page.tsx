@@ -5,8 +5,10 @@ import { GripIcon, Info } from "lucide-react";
 import { CreateStorageDialog } from "@/components/dashboard/storages/CreateStorageDialog";
 import { useQueryClient } from "@tanstack/react-query";
 import { motion } from "motion/react";
+import { Suspense } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
-export default function StoragesPage() {
+function StoragesPageContent() {
 	const queryClient = useQueryClient();
 
 	const handleStorageCreated = () => {
@@ -59,5 +61,24 @@ export default function StoragesPage() {
 				<Storages />
 			</motion.main>
 		</motion.div>
+	);
+}
+
+export default function StoragesPage() {
+	return (
+		<Suspense fallback={
+			<motion.div
+				className="flex flex-col w-full h-full py-4 px-6 space-y-4"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.4 }}
+			>
+				<div className="flex items-center justify-center h-64">
+					<Spinner className="size-8 text-primary" />
+				</div>
+			</motion.div>
+		}>
+			<StoragesPageContent />
+		</Suspense>
 	);
 }

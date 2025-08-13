@@ -11,7 +11,7 @@ export const LocationSection = () => (
 					<MapPinIcon className="size-8" />
 					Nuestra Ubicación
 				</h2>
-				<p className="text-xl text-gray-600 max-w-2xl mx-auto">
+				<p className="text-xl text-muted-foreground max-w-2xl mx-auto">
 					Visítanos en nuestra tienda física o contáctanos para más información
 				</p>
 			</div>
@@ -26,13 +26,13 @@ export const LocationSection = () => (
 										<MapPinIcon className="size-6 text-primary" />
 									</div>
 									<div>
-										<h3 className="text-lg font-semibold text-gray-900 mb-2">
+										<h3 className="text-lg font-semibold mb-2">
 											Dirección
 										</h3>
-										<p className="text-gray-700 leading-relaxed">
+										<p className="text-muted-foreground leading-relaxed">
 											C. 12 113, Santo Domingo Este 11509
 										</p>
-										<p className="text-gray-700 leading-relaxed">
+										<p className="text-muted-foreground leading-relaxed">
 											C. Sta. Lucía, Santo Domingo Este 11605
 										</p>
 									</div>
@@ -43,10 +43,10 @@ export const LocationSection = () => (
 										<PhoneIcon className="size-6 text-primary" />
 									</div>
 									<div>
-										<h3 className="text-lg font-semibold text-gray-900 mb-2">
+										<h3 className="text-lg font-semibold text-foreground mb-2">
 											Contacto
 										</h3>
-										<p className="text-gray-700">
+										<p className="text-muted-foreground">
 											+1 (849) 863-6444
 											<br />
 											info@jhesonsupply.com
@@ -59,10 +59,10 @@ export const LocationSection = () => (
 										<ClockIcon className="size-6 text-primary" />
 									</div>
 									<div>
-										<h3 className="text-lg font-semibold text-gray-900 mb-2">
+										<h3 className="text-lg font-semibold mb-2">
 											Horarios de Atención
 										</h3>
-										<div className="text-gray-700 space-y-1">
+										<div className="text-muted-foreground space-y-1">
 											<p>Lunes - Viernes: 8:00 AM - 6:00 PM</p>
 											<p>Sábados: 8:00 AM - 4:00 PM</p>
 											<p>Domingos: Cerrado</p>

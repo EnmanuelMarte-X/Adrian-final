@@ -34,6 +34,7 @@ import { useEffect, useRef } from "react";
 import { Logo } from "../logo";
 
 export interface DashboardSidebarProps {
+	ref: React.RefObject<HTMLDivElement | null>;
 	children: React.ReactNode;
 }
 

@@ -3,10 +3,10 @@ import { type NextRequest, NextResponse } from "next/server";
 
 export async function GET(
 	_: NextRequest,
-	{ params }: { params: { id: string } },
+	context: { params: Promise<{ id: string }> },
 ): Promise<NextResponse> {
 	try {
-		const { id } = params;
+		const { id } = await context.params;
 		const user = await getUserBasicInfo(id);
 
 		return NextResponse.json(user);

@@ -1,6 +1,5 @@
 import { OrderValue } from "@/components/dashboard/orders/OrderValue";
 import { currencyFormat, dateFormat } from "@/config/formats";
-import { unknownProductValue } from "@/config/products";
 import {
 	getDateFromObjectId,
 	getProductCapacityUnitLabel,
@@ -53,11 +52,6 @@ export function ProductDialogProperties({
 				</OrderValue>
 			</div>
 			<div className="flex flex-col gap-y-5">
-				<OrderValue label="SKU" isLoading={isLoading}>
-					{!isLoading &&
-						product &&
-						getUnsetValue(product.sku, unknownProductValue)}
-				</OrderValue>
 				<OrderValue label="Capacidad" isLoading={isLoading}>
 					{!isLoading &&
 						product &&

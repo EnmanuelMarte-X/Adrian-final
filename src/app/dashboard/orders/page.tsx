@@ -6,10 +6,11 @@ import { OrdersTable } from "@/components/dashboard/orders/OrdersTable";
 import type { OrderFilters } from "@/contexts/orders/types";
 import { usePaginationState } from "@/hooks/use-pagination-state";
 import type { SortingState } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
+import { useState, Suspense } from "react";
 import { motion } from "motion/react";
+import { Spinner } from "@/components/ui/spinner";
 
-export default function OrdersPage() {
+function OrdersPageContent() {
 	const [pagination, setPagination] = usePaginationState({
 		pageSize: 25,
 	});
@@ -24,13 +25,6 @@ export default function OrdersPage() {
 		setFilters(newFilters);
 		setPagination((prev) => ({ ...prev, pageIndex: 0 }));
 	};
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We don't want to re-run this effect when filters change.
-	useEffect(() => {
-		if (filters) {
-			setFilters(filters);
-		}
-	}, [filters, setFilters]);
 
 	return (
 		<motion.main
@@ -77,5 +71,24 @@ export default function OrdersPage() {
 				/>
 			</motion.div>
 		</motion.main>
+	);
+}
+
+export default function OrdersPage() {
+	return (
+		<Suspense fallback={
+			<motion.main
+				className="flex-1 p-6"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.4 }}
+			>
+				<div className="flex items-center justify-center h-64">
+					<Spinner className="size-8 text-primary" />
+				</div>
+			</motion.main>
+		}>
+			<OrdersPageContent />
+		</Suspense>
 	);
 }

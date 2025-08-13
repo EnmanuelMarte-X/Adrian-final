@@ -19,8 +19,10 @@ import { useTheme } from "next-themes";
 import { ComingSoon } from "@/components/ui/coming-soon";
 import { motion } from "motion/react";
 import { Palette } from "lucide-react";
+import { Suspense } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
-export default function SettingsPage() {
+function SettingsPageContent() {
 	const { theme, setTheme } = useTheme();
 
 	return (
@@ -82,5 +84,19 @@ export default function SettingsPage() {
 				</Card>
 			</motion.div>
 		</main>
+	);
+}
+
+export default function SettingsPage() {
+	return (
+		<Suspense fallback={
+			<main className="w-full px-10 py-6">
+				<div className="flex items-center justify-center h-64">
+					<Spinner className="size-8 text-primary" />
+				</div>
+			</main>
+		}>
+			<SettingsPageContent />
+		</Suspense>
 	);
 }

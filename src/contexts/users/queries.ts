@@ -79,7 +79,6 @@ export const useInfiniteUsers = (
 			if (filters) {
 				if (filters.username) params.set("username", filters.username);
 				if (filters.email) params.set("email", filters.email);
-				if (filters.role) params.set("role", filters.role.name);
 				if (filters.isActive !== undefined)
 					params.set("isActive", filters.isActive.toString());
 			}

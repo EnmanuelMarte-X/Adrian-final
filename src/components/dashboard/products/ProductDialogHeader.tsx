@@ -8,7 +8,7 @@ import type { ProductType } from "@/types/models/products";
 import { memo, useMemo } from "react";
 
 interface ProductDialogHeaderProps {
-	product?: ProductType;
+	product?: ProductType | null;
 	isLoading: boolean;
 	isError: boolean;
 }

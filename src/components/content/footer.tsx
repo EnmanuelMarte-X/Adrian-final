@@ -56,7 +56,7 @@ export function FooterSection({
 									<a
 										key={linkIndex}
 										href={link.href}
-										className="text-muted-foreground text-sm"
+										className="text-muted-foreground text-sm hover:text-foreground"
 									>
 										{link.text}
 									</a>
@@ -68,7 +68,7 @@ export function FooterSection({
 						<div>{copyright}</div>
 						<div className="flex items-center gap-4">
 							{policies.map((policy, index) => (
-								<a key={index} href={policy.href}>
+								<a key={index} href={policy.href} className="hover:text-foreground">
 									{policy.text}
 								</a>
 							))}

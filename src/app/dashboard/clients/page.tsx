@@ -1,7 +1,7 @@
 "use client";
 
 import { ClientsTable } from "@/components/dashboard/clients/ClientsTable";
-import { useState, useEffect } from "react";
+import { useState, Suspense } from "react";
 import type { SortingState } from "@tanstack/react-table";
 import type { ClientFilters } from "@/contexts/clients/types";
 import { ClientsFilters } from "@/components/dashboard/clients/ClientsFilters";
@@ -9,7 +9,7 @@ import { CreateClientSheet } from "@/components/dashboard/clients/CreateClientSh
 import { useQueryPaginationState } from "@/hooks/use-pagination-state";
 import { motion } from "motion/react";
 
-export default function ClientsPage() {
+function ClientsPageContent() {
 	const [pagination, setPagination] = useQueryPaginationState({
 		pageSize: 25,
 	});
@@ -25,12 +25,6 @@ export default function ClientsPage() {
 		setPagination((prev) => ({ ...prev, pageIndex: 0 }));
 		setSorting([{ id: "_id", desc: true }]);
 	};
-
-	useEffect(() => {
-		if (filters) {
-			setFilters(filters);
-		}
-	}, [filters]);
 
 	return (
 		<motion.main
@@ -78,5 +72,24 @@ export default function ClientsPage() {
 				/>
 			</motion.div>
 		</motion.main>
+	);
+}
+
+export default function ClientsPage() {
+	return (
+		<Suspense fallback={
+			<motion.main
+				className="flex-1 p-6"
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				transition={{ duration: 0.4 }}
+			>
+				<div className="flex items-center justify-center h-64">
+					<div className="text-lg text-muted-foreground">Cargando clientes...</div>
+				</div>
+			</motion.main>
+		}>
+			<ClientsPageContent />
+		</Suspense>
 	);
 }

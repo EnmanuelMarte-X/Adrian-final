@@ -9,8 +9,10 @@ import { QuickActions } from "@/components/dashboard/resume/QuickActions";
 import { LastClientsSection } from "@/components/dashboard/clients/LastClientsSection";
 import { motion } from "motion/react";
 import { LastClientsTable } from "@/components/dashboard/clients/LastClientTable";
+import { Suspense } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
-export default function DashboardPage() {
+function DashboardPageContent() {
 	return (
 		<main className="flex-1 p-4 sm:p-6 space-y-5 sm:space-y-7 animate-in fade-in duration-500">
 			{/* Sidebar width assumed to be 250px */}
@@ -59,5 +61,19 @@ export default function DashboardPage() {
 				</LastClientsSection>
 			</motion.div>
 		</main>
+	);
+}
+
+export default function DashboardPage() {
+	return (
+		<Suspense fallback={
+			<main className="flex-1 p-4 sm:p-6 space-y-5 sm:space-y-7">
+				<div className="flex items-center justify-center h-64">
+					<Spinner className="size-8 text-primary" />
+				</div>
+			</main>
+		}>
+			<DashboardPageContent />
+		</Suspense>
 	);
 }

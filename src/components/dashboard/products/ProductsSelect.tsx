@@ -15,7 +15,7 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { useDebounce } from "@/hooks/use-debounce";
-import type { ProductType } from "@/types/models/products";
+import type { ProductStorageType, ProductType } from "@/types/models/products";
 
 interface ProductsSelectProps {
 	value?: string;
@@ -246,7 +246,11 @@ export function ProductsSelect({
 												<div>
 													<div className="font-medium">{product.name}</div>
 													<div className="text-xs text-muted-foreground">
-														Stock: {product.stock || 0}
+														Stock: {product.locations?.reduce(
+																		(sum: number, location: ProductStorageType) =>
+																			sum + (location.stock || 0),
+																		0,
+																	) || 0}
 														{product.category && ` • ${product.category}`}
 													</div>
 												</div>

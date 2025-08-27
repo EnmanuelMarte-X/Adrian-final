@@ -8,8 +8,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Jehnson Supply",
-	description: "La verdadera tienda de suministros",
+	title: "Jhenson Supply",
+	description: "Descubre nuestra amplia gama de shampoos, acondicionadores, productos de belleza y cuidado personal. Calidad premium, precios competitivos y envío rápido.",
 };
 
 export default function RootLayout({

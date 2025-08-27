@@ -92,7 +92,7 @@ export default function Login({
 
 	return (
 		<motion.div
-			className="flex items-center justify-center h-screen"
+			className="flex items-center justify-center h-screen w-full"
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
 			transition={{ duration: 0.5 }}
@@ -101,11 +101,12 @@ export default function Login({
 				initial={{ y: 20, opacity: 0 }}
 				animate={{ y: 0, opacity: 1 }}
 				transition={{ duration: 0.6, delay: 0.1 }}
+				className="w-full px-6"
 			>
 				<Form {...form}>
 					<motion.form
 						onSubmit={form.handleSubmit(onSubmit)}
-						className="space-y-4 w-96"
+						className="space-y-4 sm:w-96 w-full"
 						initial={{ scale: 0.95 }}
 						animate={{ scale: 1 }}
 						transition={{ duration: 0.4, delay: 0.2 }}

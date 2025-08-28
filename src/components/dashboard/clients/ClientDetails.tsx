@@ -125,18 +125,6 @@ export function ClientDetails({ client }: ClientDetailsProps) {
 										{format(new Date(client.updatedAt), "PPP", { locale: es })}
 									</span>
 								</div>
-
-								<div className="flex items-center gap-2">
-									<CalendarDays className="size-4 text-muted-foreground" />
-									<span className="font-medium">Última compra:</span>
-									<span>
-										{client.lastPurchaseAt
-											? format(new Date(client.lastPurchaseAt), "PPP", {
-													locale: es,
-												})
-											: "Sin compras registradas"}
-									</span>
-								</div>
 							</CardContent>
 						</Card>
 

@@ -541,7 +541,7 @@ export function PaymentVoucher({ payment, isLoading }: PaymentVoucherProps) {
 												fontWeight: "500",
 											}}
 										>
-											Impuestos (ITEBIS)
+											Impuestos (ITEBIS {TAX_PERCENTAGE * 100}%)
 										</span>
 										<span
 											style={{

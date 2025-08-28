@@ -5,7 +5,9 @@ import { ClientsActions } from "./ClientsActions";
 import type { ClientType } from "@/types/models/clients";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { Mail, FileText, Calendar, Phone, MapPin } from "lucide-react";
+import { Mail, FileText, Calendar, Phone, MapPin, DollarSign } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { currencyFormat } from "@/config/formats";
 
 export function ClientCard({ client }: { client: ClientType }) {
 	const documentTypeLabels: Record<string, string> = {
@@ -34,6 +36,22 @@ export function ClientCard({ client }: { client: ClientType }) {
 							<p className="text-muted-foreground text-sm">
 								{clientTypeLabels[client.type] || client.type}
 							</p>
+							{/* Deuda del cliente */}
+							<div className="flex items-center gap-x-1">
+								<DollarSign className="size-3 text-muted-foreground" />
+								<span
+									className={cn("text-xs font-medium", {
+										"text-muted-foreground":
+											!client.debt || client.debt === 0,
+										"text-green-600":
+											client.debt && client.debt > 0,
+										"text-red-600":
+											client.debt && client.debt < 0,
+									})}
+								>
+									{currencyFormat.format(client.debt ?? 0)}
+								</span>
+							</div>
 						</div>
 						<div className="flex flex-col items-end gap-y-2">
 							<Badge

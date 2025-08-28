@@ -79,10 +79,8 @@ export async function createProductView(
 ): Promise<NextResponse> {
 	const product = await req.json();
 
-	const userId = req.headers.get("x-user-id") || product.userId || undefined;
-
 	const { data, error } = await tryCatch(
-		controller.createProduct(product, userId),
+		controller.createProduct(product),
 	);
 
 	if (error) {
@@ -100,10 +98,8 @@ export async function updateProductView(
 	const { id } = await params;
 	const product = await req.json();
 
-	const userId = req.headers.get("x-user-id") || product.userId || undefined;
-
 	const { data, error } = await tryCatch(
-		controller.updateProduct(id, product, userId),
+		controller.updateProduct(id, product),
 	);
 
 	if (error) {

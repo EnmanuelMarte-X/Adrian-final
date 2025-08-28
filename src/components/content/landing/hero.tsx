@@ -46,7 +46,7 @@ export function Hero() {
 									className="bg-primary/10 text-primary"
 								>
 									<SparklesIcon className="mr-2 h-4 w-4" />
-									Productos de Belleza Para el Cabello y Más
+									Shampoos y Productos de Belleza
 								</Badge>
 							</motion.div>
 							<motion.h1
@@ -55,10 +55,10 @@ export function Hero() {
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.4, delay: 0.4 }}
 							>
-								Donde Tu
-								<span className="text-brand"> Belleza</span>
+								Cuidado
+								<span className="text-brand"> Personal</span>
 								<br />
-								Es Real
+								Para Ti
 							</motion.h1>
 							<motion.p
 								className="text-xl text-muted-foreground"
@@ -66,9 +66,9 @@ export function Hero() {
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.4, delay: 0.5 }}
 							>
-								  Descubre nuestra amplia selección de productos para el cuidado capilar y personal.
-  								  Desde Tratamientos especializados, shampoos, leave-in, goteros, ampollas, accesorios, equipos y mucho más.
-                                  Productos de <strong>calidad premium</strong>, diseñados para resaltar tu belleza y brindarte el cuidado que tu cabello y tu piel merecen.
+								Descubre nuestra amplia gama de shampoos, acondicionadores,
+								productos de belleza y cuidado personal. Calidad premium,
+								precios competitivos y envío rápido.
 							</motion.p>
 						</motion.div>
 

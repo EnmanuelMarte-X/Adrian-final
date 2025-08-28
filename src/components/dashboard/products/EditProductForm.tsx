@@ -35,6 +35,8 @@ export function EditProductFrom({
 		})) || [],
 	);
 
+	const stock = productStorages.reduce((sum, storage) => sum + storage.stock, 0);
+
 	const { control, register, handleSubmit, setValue, reset } = useForm({
 		defaultValues: {
 			name: product?.name,
@@ -43,10 +45,7 @@ export function EditProductFrom({
 			category: product?.category,
 			capacity: product?.capacity,
 			capacityUnit: product?.capacityUnit,
-			stock: product?.locations?.reduce(
-				(acc, loc) => acc + (loc.stock || 0),
-				0,
-			),
+			stock: stock,
 			minimumStock: product?.minimumStock,
 			retailPrice: product?.retailPrice,
 			wholesalePrice: product?.wholesalePrice,
@@ -63,7 +62,7 @@ export function EditProductFrom({
 				category: product.category,
 				capacity: product.capacity,
 				capacityUnit: product.capacityUnit,
-				stock: product.stock,
+				stock: stock,
 				minimumStock: product.minimumStock,
 				retailPrice: product.retailPrice,
 				wholesalePrice: product.wholesalePrice,
@@ -76,7 +75,7 @@ export function EditProductFrom({
 				})) || [],
 			);
 		}
-	}, [product, reset]);
+	}, [product, stock, reset]);
 
 	const { mutateAsync: updateProduct } = useUpdateProductMutation(
 		product?._id,

@@ -114,7 +114,7 @@ const Navbar = ({ logo, menu, auth }: NavbarProps) => {
 							<Link href={logo.url} className="flex items-center gap-2">
 								<img
 									src={logo.src}
-									className="max-h-8 dark:invert"
+									className="max-h-8"
 									alt={logo.alt}
 								/>
 							</Link>
@@ -130,7 +130,7 @@ const Navbar = ({ logo, menu, auth }: NavbarProps) => {
 											<Link href={logo.url} className="flex items-center gap-2">
 												<img
 													src={logo.src}
-													className="max-h-8 dark:invert"
+													className="max-h-8"
 													alt={logo.alt}
 												/>
 											</Link>

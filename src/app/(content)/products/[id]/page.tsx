@@ -186,7 +186,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 												: "secondary"
 									}
 								>
-									{isOutOfStock ? "Agotado" : `${product.stock} en stock`}
+									{isOutOfStock ? "Agotado" : `${stock} en stock`}
 								</Badge>
 							</div>
 

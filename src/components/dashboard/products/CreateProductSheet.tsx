@@ -46,7 +46,7 @@ export function CreateProductSheet({
 		"create-product",
 	);
 	const [isHoveringSteps, setIsHoveringSteps] = useState(false);
-	const [productImages, setProductImages] = useState<File[]>([]);
+	const [productImages, setProductImages] = useState<string[]>([]);
 	const [productStorages, setProductStorages] = useState<
 		ProductStorageWithDisplay[]
 	>([]);
@@ -147,21 +147,11 @@ export function CreateProductSheet({
 	const isFirstStep = step === "create-product";
 	const handleSheetOpenChange = (open: boolean) => setIsOpen(open);
 
-	const prepareImagesForUpload = async (
-		files: File[],
-	): Promise<ProductImage[]> => {
-		return Promise.all(
-			files.map(
-				(file) =>
-					new Promise<ProductImage>((resolve, reject) => {
-						const reader = new FileReader();
-						reader.onload = (e) =>
-							resolve({ url: e.target?.result as string, alt: file.name });
-						reader.onerror = reject;
-						reader.readAsDataURL(file);
-					}),
-			),
-		);
+	const prepareImagesForProduct = (imageUrls: string[]): ProductImage[] => {
+		return imageUrls.map((url, index) => ({
+			url,
+			alt: `Imagen del producto ${index + 1}`,
+		}));
 	};
 
 	const handleStoragesChange = (storages: ProductStorageWithDisplay[]) => {
@@ -184,7 +174,7 @@ export function CreateProductSheet({
 				return;
 			}
 
-			const images = await prepareImagesForUpload(productImages);
+			const images = prepareImagesForProduct(productImages);
 			const productData = {
 				...data,
 				images,
@@ -217,7 +207,7 @@ export function CreateProductSheet({
 
 	const handleCategoryChange = (category: string) =>
 		setValue("category", category);
-	const handleImagesChange = (files: File[]) => setProductImages(files);
+	const handleImagesChange = (imageUrls: string[]) => setProductImages(imageUrls);
 
 	return (
 		<Sheet open={isOpen} onOpenChange={handleSheetOpenChange}>

@@ -214,7 +214,7 @@ export function ProductBarcodeScanner({
 											<div className="flex items-center justify-between text-sm">
 												<span className="text-muted-foreground">Stock:</span>
 												<span className="font-medium">
-													{product.stock} unidades
+													{product.locations.reduce((acc, loc) => acc + (loc.stock || 0), 0)} unidades
 												</span>
 											</div>
 											<div className="flex items-center justify-between text-sm">

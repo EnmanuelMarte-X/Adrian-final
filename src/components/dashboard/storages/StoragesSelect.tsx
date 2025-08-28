@@ -37,14 +37,8 @@ export function StoragesSelect({
 	}
 
 	const handleOnChange = (value: string) => {
-		console.log("StoragesSelect handleOnChange - value recibido:", value);
-		console.log(
-			"StoragesSelect handleOnChange - storages disponibles:",
-			storages,
-		);
 		if (!storages) return;
 		const storage = storages.find((e) => e._id === value);
-		console.log("StoragesSelect handleOnChange - storage encontrado:", storage);
 		onChange?.(storage);
 	};
 

@@ -13,7 +13,7 @@ import { AlertCircleIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TAX_PERCENTAGE } from "@/config/shop";
 import type { PaymentMethod } from "@/types/models/paymentHistory";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 type OrderFormData = {
 	buyerId: string;
@@ -72,7 +72,8 @@ export function OrderPaymentForm({ orderProducts }: OrderPaymentFormProps) {
 		};
 	}, [orderProducts]);
 
-	useMemo(() => {
+	// Set default payment amount when totals change
+	useEffect(() => {
 		if (totals.totalNumber > 0 && !paymentAmount) {
 			setValue("payment.amount", totals.totalNumber);
 		}
@@ -171,10 +172,12 @@ export function OrderPaymentForm({ orderProducts }: OrderPaymentFormProps) {
 								<Input
 									id="paymentAmount"
 									type="number"
-									readOnly
+									step="0.01"
+									min="0.01"
 									max={totals.totalNumber}
 									placeholder="0.00"
 									value={field.value || ""}
+									onChange={(e) => field.onChange(Number.parseFloat(e.target.value) || 0)}
 									className={cn(errors.payment?.amount && "border-destructive")}
 								/>
 								{errors.payment?.amount && (
@@ -207,6 +210,7 @@ export function OrderPaymentForm({ orderProducts }: OrderPaymentFormProps) {
 											? new Date(field.value).toISOString().slice(0, 16)
 											: ""
 									}
+									onChange={(e) => field.onChange(new Date(e.target.value))}
 									className={cn(
 										"max-w-[280px]",
 										errors.payment?.date && "border-destructive",

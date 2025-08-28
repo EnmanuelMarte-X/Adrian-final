@@ -49,7 +49,7 @@ export function ProductCard({
 						</div>
 						<div className="inline-flex items-center text-muted-foreground gap-x-1">
 							<Package2Icon className="size-3" />
-							<p className="text-xs font-medium">{product.stock}</p>
+							<p className="text-xs font-medium">{product.locations.reduce((acc, loc) => acc + (loc.stock || 0), 0)}</p>
 						</div>
 						<div className="inline-flex items-center text-muted-foreground gap-x-1">
 							<InspectionPanelIcon className="size-3" />

@@ -104,16 +104,16 @@ function OrderProductInput({
 			return;
 		}
 
-		// Validar almacén seleccionado
 		if (!selectedStorage) {
 			toast.error("Debe seleccionar un almacén");
 			return;
 		}
 
-		// Validar stock suficiente en el almacén seleccionado
+		console.log("Selected Storage:", selectedStorage._id);
+		console.log("Product Locations:", productToUse.locations);
 		const locationStock =
 			productToUse.locations?.find(
-				(l: ProductStorageType) => l.storageId === selectedStorage.id,
+				(l: ProductStorageType) => String(l.storageId) === String(selectedStorage._id),
 			)?.stock ?? 0;
 		if (data.quantity > locationStock) {
 			toast.error(
@@ -237,9 +237,7 @@ function OrderProductInput({
 					{selectedStorage && selectedProduct && (
 						<div className="text-xs text-muted-foreground">
 							Stock disponible:{" "}
-							{selectedProduct.locations?.find(
-								(l: ProductStorageType) => l.storageId === selectedStorage.id,
-							)?.stock || 0}{" "}
+							{selectedProduct.locations.find(l => l.storageId === selectedStorage._id)?.stock || 0}{" "}
 							unidades
 						</div>
 					)}

@@ -163,29 +163,22 @@ export const getProductsBatch = async (
 
 export const createProduct = async (
 	product: Partial<ProductType>,
-	userId?: string,
 ): Promise<ProductType> => {
 	await connectToMongo();
 
 	const productData = { ...product };
-	if (
-		Array.isArray(productData.locations) &&
-		productData.locations.length > 0
-	) {
-		// Stock is now calculated via virtual, not set directly
-	}
-
 	const newProduct = await Product.create(productData);
 
-	const initialStock = newProduct.stock || 0;
+	const initialStock = Array.isArray(newProduct.locations)
+		? newProduct.locations.reduce(
+			(sum: number, location: { stock?: number }) => sum + (location.stock || 0),
+			0
+		)
+		: 0;
+
 	if (initialStock > 0) {
-		await registerStockChange(
-			newProduct._id.toString(),
-			0,
-			initialStock,
-			userId,
-			"Producto creado con stock inicial",
-		);
+		await Product.findByIdAndUpdate(newProduct._id, { stock: initialStock });
+		newProduct.stock = initialStock;
 	}
 
 	if (Array.isArray(newProduct.locations) && newProduct.locations.length > 0) {
@@ -205,7 +198,6 @@ export const createProduct = async (
 export const updateProduct = async (
 	id: string,
 	product: Partial<ProductType>,
-	userId?: string,
 ): Promise<ProductType> => {
 	if (!isValidObjectId(id)) {
 		throw InvalidObjectIdException;
@@ -218,15 +210,14 @@ export const updateProduct = async (
 		throw new ProductsNotFoundException();
 	}
 
-	const oldStock =
-		currentProduct.locations?.reduce(
-			(sum: number, location: { stock: number }) => sum + (location.stock || 0),
-			0,
-		) || 0;
-
 	const productData = { ...product };
+
 	if (Array.isArray(productData.locations)) {
-		// Stock is now calculated via virtual, not set directly
+		const newStock = productData.locations.reduce(
+			(sum: number, location: { stock?: number }) => sum + (location.stock || 0),
+			0
+		);
+		productData.stock = newStock;
 	}
 
 	const updatedProduct = await Product.findByIdAndUpdate(
@@ -240,20 +231,6 @@ export const updateProduct = async (
 	if (!updatedProduct) {
 		throw new ProductsNotFoundException();
 	}
-
-	const newStock =
-		updatedProduct.locations?.reduce(
-			(sum: number, location: { stock: number }) => sum + (location.stock || 0),
-			0,
-		) || 0;
-
-	await registerStockChange(
-		updatedProduct._id.toString(),
-		oldStock,
-		newStock,
-		userId,
-		"Producto actualizado",
-	);
 
 	await updateStorageProductCount(currentProduct, updatedProduct);
 	return updatedProduct;
@@ -375,15 +352,4 @@ export const deleteProducts = async (ids: Array<string>): Promise<number> => {
 	}
 
 	return deletedCount;
-};
-
-const registerStockChange = async (
-	_productId: string,
-	_oldStock: number,
-	_newStock: number,
-	_userId?: string,
-	_reason?: string,
-) => {
-	// Stock change tracking removed
-	return;
 };

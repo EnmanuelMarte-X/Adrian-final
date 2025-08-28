@@ -9,8 +9,8 @@ import { ProductImageDropzone } from "./ProductImageDropzone";
 interface CreateProductFormProps {
 	onCategoryChange: (category: string) => void;
 	onCapacityUnitChange: (unit: string) => void;
-	onImagesChange: (files: File[]) => void;
-	productImages: File[];
+	onImagesChange: (imageUrls: string[]) => void;
+	productImages: string[];
 }
 
 export function CreateProductForm({

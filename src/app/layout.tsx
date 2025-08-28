@@ -19,6 +19,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="es-DO" suppressHydrationWarning>
+			<head>
+				<meta name="theme-color" content="#5aae19" />
+			</head>
 			<body
 				className={cn(
 					"bg-background text-foreground antialiased",

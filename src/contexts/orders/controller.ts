@@ -18,7 +18,9 @@ import type {
 	OrderProductDetails,
 	OrderType,
 	OrderTypeWithProducts,
+	OrderProduct,
 } from "@/types/models/orders";
+import type { ProductStorageType } from "@/types/models/products";
 
 const ensureModelsRegistered = () => {
 	void Client;
@@ -211,11 +213,116 @@ export const getOrderById = async (
 	return orderObject as OrderTypeWithProducts;
 };
 
+/**
+ * Verifica si hay suficiente stock para los productos en las ubicaciones especificadas
+ */
+const validateStockAvailability = async (products: OrderProduct[]): Promise<void> => {
+	for (const product of products) {
+		const productDoc = await Product.findById(product.productId);
+		if (!productDoc) {
+			throw new Error(`Producto con ID ${product.productId} no encontrado`);
+		}
+
+		if (product.locationId) {
+			// Verificar stock en ubicación específica
+			const location = productDoc.locations.find(
+				(loc: ProductStorageType) => loc.storageId.toString() === product.locationId
+			);
+			
+			if (!location) {
+				throw new Error(`Ubicación ${product.locationId} no encontrada para el producto ${productDoc.name}`);
+			}
+			
+			if (location.stock < product.quantity) {
+				throw new Error(`Stock insuficiente en la ubicación especificada para el producto ${productDoc.name}. Stock disponible: ${location.stock}, cantidad solicitada: ${product.quantity}`);
+			}
+		} else {
+			// Verificar stock total si no se especifica ubicación
+			const totalStock = productDoc.locations.reduce((total: number, loc: ProductStorageType) => total + loc.stock, 0);
+			if (totalStock < product.quantity) {
+				throw new Error(`Stock insuficiente para el producto ${productDoc.name}. Stock total disponible: ${totalStock}, cantidad solicitada: ${product.quantity}`);
+			}
+		}
+	}
+};
+
+/**
+ * Actualiza el stock de los productos después de crear una orden
+ */
+const updateProductStock = async (products: OrderProduct[]): Promise<void> => {
+	const session = await mongoose.startSession();
+	session.startTransaction();
+
+	try {
+		for (const product of products) {
+			if (product.locationId) {
+				// Decrementar stock en ubicación específica
+				await Product.updateOne(
+					{
+						_id: product.productId,
+						"locations.storageId": product.locationId
+					},
+					{
+						$inc: { "locations.$.stock": -product.quantity }
+					},
+					{ session }
+				);
+			} else {
+				// Si no se especifica ubicación, decrementar del stock disponible
+				// Priorizar ubicaciones con mayor stock
+				const productDoc = await Product.findById(product.productId).session(session);
+				if (!productDoc) continue;
+
+				let remainingQuantity = product.quantity;
+				const sortedLocations = productDoc.locations
+					.filter((loc: ProductStorageType) => loc.stock > 0)
+					.sort((a: ProductStorageType, b: ProductStorageType) => b.stock - a.stock);
+
+				for (const location of sortedLocations) {
+					if (remainingQuantity <= 0) break;
+
+					const quantityToDeduct = Math.min(location.stock, remainingQuantity);
+					
+					await Product.updateOne(
+						{
+							_id: product.productId,
+							"locations.storageId": location.storageId
+						},
+						{
+							$inc: { "locations.$.stock": -quantityToDeduct }
+						},
+						{ session }
+					);
+
+					remainingQuantity -= quantityToDeduct;
+				}
+			}
+		}
+
+		await session.commitTransaction();
+	} catch (error) {
+		await session.abortTransaction();
+		throw error;
+	} finally {
+		session.endSession();
+	}
+};
+
 export const createOrder = async (
 	order: Omit<OrderType, "_id">,
 ): Promise<OrderType> => {
 	await connectToMongo();
-	return await Order.create(order);
+	
+	// Validar disponibilidad de stock antes de crear la orden
+	await validateStockAvailability(order.products);
+	
+	// Crear la orden
+	const createdOrder = await Order.create(order);
+	
+	// Actualizar el stock de los productos
+	await updateProductStock(order.products);
+	
+	return createdOrder;
 };
 
 export const updateOrder = async (

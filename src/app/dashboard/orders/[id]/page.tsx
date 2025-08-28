@@ -7,13 +7,6 @@ import {
 	ResizablePanel,
 	ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import {
-	Drawer,
-	DrawerContent,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger,
-} from "@/components/ui/drawer";
 import { dateFormat, currencyFormat } from "@/config/formats";
 import { useOrderById } from "@/contexts/orders/queries";
 import {
@@ -23,7 +16,7 @@ import {
 	ReceiptIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { use, useState } from "react";
+import { use } from "react";
 import { TAX_PERCENTAGE } from "@/config/shop";
 import { Spinner } from "@/components/ui/spinner";
 import { ProductDialog } from "@/components/dashboard/products/ProductDialog";
@@ -35,7 +28,7 @@ import {
 } from "@/components/ui/tooltip";
 // import { ClientDetailsDialog } from "@/components/dashboard/clients/ClientDetailsDialog";
 import { UserDetailsDialog } from "@/components/dashboard/users/UserDetailsDialog";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useWindowWidth } from "@/hooks/use-window-width";
 import { motion } from "motion/react";
 import { ClientDetailsDialog } from "@/components/dashboard/clients/ClientDetailsDialog";
 import { CreditOrderReceipt } from "@/components/dashboard/orders/CreditOrderReceipt";
@@ -46,12 +39,17 @@ export default function OrderSlugPage({
 }: { params: Promise<{ id: string }> }) {
 	const { id: orderId } = use(params);
 	const { data: order, isError, isLoading } = useOrderById(orderId);
-	const isMobile = useIsMobile();
-	const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+	const windowWidth = useWindowWidth();
+	const isLargeScreen = windowWidth >= 1200;
 
 	const handlePrint = () => {
 		const printUrl = `/recipient/${orderId}`;
 		window.open(printUrl, "_blank", "width=800,height=600");
+	};
+
+	const handleViewReceipt = () => {
+		const receiptUrl = `/recipient/${orderId}`;
+		window.open(receiptUrl, "_blank");
 	};
 
 	if (isError) {
@@ -102,7 +100,7 @@ export default function OrderSlugPage({
 			transition={{ duration: 0.4 }}
 			className="min-h-screen h-full"
 		>
-			{isMobile ? (
+			{!isLargeScreen ? (
 				<motion.main
 					className="w-full mx-auto p-6"
 					initial={{ opacity: 0, y: 20 }}
@@ -121,35 +119,9 @@ export default function OrderSlugPage({
 							</Button>
 						</Link>
 						<div className="flex gap-2">
-							<Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-								<DrawerTrigger asChild>
-									<Button size="sm" variant="outline">
-										<ReceiptIcon className="size-3" /> Ver Factura
-									</Button>
-								</DrawerTrigger>
-								<DrawerContent className="max-h-[85vh]">
-									<DrawerHeader>
-										<DrawerTitle>Factura #{order?.orderId}</DrawerTitle>
-									</DrawerHeader>
-									<div className="overflow-auto p-4">
-										{order?.isCredit ? (
-											<CreditOrderReceipt
-												order={order}
-												subtotal={subtotal}
-												total={total}
-												isLoading={isLoading}
-											/>
-										) : (
-											<OrderReceipt
-												order={order}
-												subtotal={subtotal}
-												total={total}
-												isLoading={isLoading}
-											/>
-										)}
-									</div>
-								</DrawerContent>
-							</Drawer>
+							<Button size="sm" variant="outline" onClick={handleViewReceipt}>
+								<ReceiptIcon className="size-3" /> <span className={isLargeScreen ? "block" : "hidden"}>Ver factura</span>
+							</Button>
 							<Button size="sm" variant="ghost" onClick={handlePrint}>
 								<PrinterIcon className="size-3" /> Imprimir
 							</Button>

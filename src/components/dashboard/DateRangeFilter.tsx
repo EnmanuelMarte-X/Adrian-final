@@ -64,7 +64,7 @@ export function DateRangeFilter({
 						id="date"
 						variant={"outline"}
 						className={cn(
-							"w-[300px] justify-start text-left font-normal dark:bg-input/30 bg-transparent border border-input hover:bg-transparent hover:text-muted-foreground",
+							"sm:w-[300px] justify-start text-left font-normal dark:bg-input/30 bg-transparent border border-input hover:bg-transparent hover:text-muted-foreground",
 							!date && "text-muted-foreground",
 						)}
 					>

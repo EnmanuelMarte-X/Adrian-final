@@ -26,7 +26,6 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
-// import { ClientDetailsDialog } from "@/components/dashboard/clients/ClientDetailsDialog";
 import { UserDetailsDialog } from "@/components/dashboard/users/UserDetailsDialog";
 import { useWindowWidth } from "@/hooks/use-window-width";
 import { motion } from "motion/react";
@@ -72,9 +71,9 @@ export default function OrderSlugPage({
 						</p>
 					</div>
 					<Link href="/dashboard/orders">
-						<Button variant="outline">
-							<ArrowLeftIcon className="size-4 mr-2" />
-							Volver a órdenes
+						<Button variant="outline" size="sm">
+							<ArrowLeftIcon className="size-4" />
+							<span className="hidden sm:inline ml-2">Volver a órdenes</span>
 						</Button>
 					</Link>
 				</div>
@@ -114,16 +113,19 @@ export default function OrderSlugPage({
 						transition={{ duration: 0.5, delay: 0.2 }}
 					>
 						<Link href={"/dashboard/orders"}>
-							<Button variant="ghost">
-								<ArrowLeftIcon /> Ver todas las ordenes
+							<Button variant="ghost" size="sm">
+								<ArrowLeftIcon className="size-4" />
+								<span className="hidden sm:inline ml-1">Ver todas las ordenes</span>
 							</Button>
 						</Link>
 						<div className="flex gap-2">
 							<Button size="sm" variant="outline" onClick={handleViewReceipt}>
-								<ReceiptIcon className="size-3" /> <span className={isLargeScreen ? "block" : "hidden"}>Ver factura</span>
+								<ReceiptIcon className="size-3" />
+								<span className="hidden sm:inline ml-1">Ver factura</span>
 							</Button>
 							<Button size="sm" variant="ghost" onClick={handlePrint}>
-								<PrinterIcon className="size-3" /> Imprimir
+								<PrinterIcon className="size-3" />
+								<span className="hidden sm:inline ml-1">Imprimir</span>
 							</Button>
 						</div>
 					</motion.div>
@@ -341,12 +343,14 @@ export default function OrderSlugPage({
 								transition={{ duration: 0.5, delay: 0.2 }}
 							>
 								<Link href={"/dashboard/orders"}>
-									<Button variant="ghost">
-										<ArrowLeftIcon /> Ver todas las ordenes
+									<Button variant="ghost" size="sm">
+										<ArrowLeftIcon className="size-4" />
+										<span className="hidden sm:inline ml-1">Ver todas las ordenes</span>
 									</Button>
 								</Link>
 								<Button size="sm" variant="ghost" onClick={handlePrint}>
-									<PrinterIcon className="size-3" /> Imprimir
+									<PrinterIcon className="size-3" />
+									<span className="hidden sm:inline ml-1">Imprimir</span>
 								</Button>
 							</motion.div>
 							<motion.div

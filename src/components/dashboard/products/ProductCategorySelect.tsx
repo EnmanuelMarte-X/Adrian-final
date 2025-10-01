@@ -31,7 +31,7 @@ const fetchCategories: () => Promise<{
 					{ id: "Category C", name: "Categoría C" },
 				],
 			});
-		}, 1000);
+		}, 0);
 	});
 };
 

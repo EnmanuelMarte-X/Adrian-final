@@ -36,7 +36,6 @@ export async function POST(request: NextRequest) {
 
 		const formData = await request.formData();
 		const file = formData.get("file") as File;
-		const folder = formData.get("folder") as string || "general";
 		const customFilename = formData.get("filename") as string;
 
 		if (!file) {
@@ -67,7 +66,7 @@ export async function POST(request: NextRequest) {
 		const randomString = Math.random().toString(36).substring(2, 8);
 		const extension = file.name.split('.').pop();
 		const filename = customFilename || `${timestamp}-${randomString}.${extension}`;
-		const key = `${folder}/${filename}`;
+		const key = `content/${filename}`;
 
 		// Convert file to buffer
 		const bytes = await file.arrayBuffer();
@@ -91,6 +90,12 @@ export async function POST(request: NextRequest) {
 
 		// Construct public URL
 		const publicUrl = `${process.env.R2_PUBLIC_URL}/${key}`;
+		
+		console.log('=== URL CONSTRUCTION DEBUG ===');
+		console.log('R2_PUBLIC_URL:', process.env.R2_PUBLIC_URL);
+		console.log('key:', key);
+		console.log('publicUrl construida:', publicUrl);
+		console.log('===============================');
 
 		const response = {
 			url: publicUrl,

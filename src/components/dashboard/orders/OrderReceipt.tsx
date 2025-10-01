@@ -430,10 +430,10 @@ export function OrderReceipt({
 					<div style={{ display: "flex", justifyContent: "center" }}>
 						<Barcode
 							value={String(order._id)}
-							format="CODE128"
-							width={1.2}
-							height={45}
-							fontSize={8}
+							format="CODE128B"
+							width={1.4}
+							height={80}
+							fontSize={12}
 							margin={5}
 						/>
 					</div>

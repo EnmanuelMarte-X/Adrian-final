@@ -1,4 +1,4 @@
-# Delete payment logic
-# Edit product en acciones
-# Factura pequena
-# Landing page
+categorias
+[x] fecha de pago de factura
+[x] recibo mas pequeno
+[x] monto pagado de factura

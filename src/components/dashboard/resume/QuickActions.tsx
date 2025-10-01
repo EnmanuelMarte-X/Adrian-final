@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
 import {
 	FilePlusIcon,
-	Grid2x2PlusIcon,
+	BanknoteIcon,
 	PackagePlusIcon,
 	ScanIcon,
 } from "lucide-react";
 import { motion, type Variants } from "motion/react";
 import { CreateProductSheet } from "../products/CreateProductSheet";
 import { CreateOrderSheet } from "../orders/CreateOrderSheet";
-import { CreateStorageDialog } from "../storages/CreateStorageDialog";
-import { ProductBarcodeScanner } from "../products/ProductBarcodeScanner";
+import { BarcodeScanner } from "../shared/BarcodeScanner";
+import { CreatePaymentSheet } from "../paymentHistory/CreatePaymentSheet";
 
 const containerVariants = {
 	hidden: { opacity: 0 },
@@ -57,7 +57,7 @@ export function QuickActions() {
 				variants={containerVariants}
 			>
 				<motion.div variants={itemVariants}>
-					<ProductBarcodeScanner
+					<BarcodeScanner
 						onProductFound={(product) => {
 							console.log("Producto encontrado:", product);
 						}}
@@ -74,7 +74,7 @@ export function QuickActions() {
 								</span>
 							</div>
 						</Button>
-					</ProductBarcodeScanner>
+					</BarcodeScanner>
 				</motion.div>
 
 				<motion.div variants={itemVariants}>
@@ -112,22 +112,20 @@ export function QuickActions() {
 				</motion.div>
 
 				<motion.div variants={itemVariants}>
-					<CreateStorageDialog>
+					<CreatePaymentSheet>
 						<Button
 							className="flex flex-col sm:flex-row justify-center sm:justify-start gap-3 h-20 sm:h-16 hover:shadow-md transition-all duration-200 w-full"
 							variant="outline"
 						>
-							<Grid2x2PlusIcon className="h-5 w-5 shrink-0" />
+							<BanknoteIcon className="h-5 w-5 shrink-0" />
 							<div className="w-full flex flex-col items-center sm:items-start text-center sm:text-left">
-								<span className="font-medium text-sm">
-									Crear almacenamiento
-								</span>
+								<span className="font-medium text-sm">Crear pago</span>
 								<span className="text-xs text-muted-foreground hidden sm:block truncate max-w-[26ch] xl:max-w-none">
-									Crear un nuevo almacenamiento
+									Crear un nuevo pago a una factura
 								</span>
 							</div>
 						</Button>
-					</CreateStorageDialog>
+					</CreatePaymentSheet>
 				</motion.div>
 			</motion.div>
 		</motion.div>

@@ -12,7 +12,6 @@ import {
 	PackageIcon,
 	TagIcon,
 	ShoppingCartIcon,
-	StarIcon,
 	TruckIcon,
 	ShieldCheckIcon,
 	InfoIcon,
@@ -240,7 +239,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 								<div className="space-y-4">
 									<div>
 										<p className="text-sm text-muted-foreground mb-1">
-											Precio al detal
+											Precio al detalle
 										</p>
 										<p className="text-4xl font-bold text-primary">
 											{currencyFormat.format(product.retailPrice)}
@@ -248,7 +247,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 									</div>
 									<div>
 										<p className="text-sm text-muted-foreground mb-1">
-											Precio mayoreo
+											Precio al por mayor
 										</p>
 										<p className="text-2xl font-semibold">
 											{currencyFormat.format(product.wholesalePrice)}
@@ -260,25 +259,35 @@ export default function ProductPage({ params }: ProductPageProps) {
 
 						{/* Actions */}
 						<div className="space-y-4">
-							<Button
+						<Button
+							size="lg"
+							className="w-full text-lg py-6"
+							disabled={isOutOfStock}
+							asChild={!isOutOfStock}
+						>
+							{isOutOfStock ? (
+								<>
+									<ShoppingCartIcon className="h-5 w-5 mr-2" />
+									Producto agotado
+								</>
+							) : (
+								<Link href="/supply">
+									<ShoppingCartIcon className="h-5 w-5 mr-2" />
+									Solicitar cotización
+								</Link>
+							)}
+						</Button>						<div className="grid grid-cols-1 gap-4">
+							<Button 
+								variant="outline" 
 								size="lg"
-								className="w-full text-lg py-6"
-								disabled={isOutOfStock}
+								asChild
 							>
-								<ShoppingCartIcon className="h-5 w-5 mr-2" />
-								{isOutOfStock ? "Producto agotado" : "Solicitar cotización"}
-							</Button>
-
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								<Button variant="outline" size="lg">
-									<StarIcon className="h-4 w-4 mr-2" />
-									Agregar a favoritos
-								</Button>
-								<Button variant="outline" size="lg">
+								<a href="tel:+18498636444">
 									<TruckIcon className="h-4 w-4 mr-2" />
-									Consultar envío
-								</Button>
-							</div>
+									Consultar envío: +1 (849) 863-6444
+								</a>
+							</Button>
+						</div>
 						</div>
 
 						{/* Guarantees */}

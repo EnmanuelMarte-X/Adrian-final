@@ -20,7 +20,7 @@ import { use } from "react";
 import { TAX_PERCENTAGE } from "@/config/shop";
 import { Spinner } from "@/components/ui/spinner";
 import { ProductDialog } from "@/components/dashboard/products/ProductDialog";
-import { getUnsetValue, isArrayEmpty } from "@/lib/utils";
+import { getUnsetValue, isArrayEmpty, truncateText } from "@/lib/utils";
 import {
 	Tooltip,
 	TooltipContent,
@@ -431,8 +431,7 @@ export default function OrderSlugPage({
 										"Cargando..."
 									) : (
 										<div className="flex items-center justify-start gap-2">
-											{typeof order?.buyerId === "object" &&
-											order?.buyerId?._id ? (
+											{typeof order?.buyerId === "object" && order?.buyerId?._id ? (
 												<ClientDetailsDialog
 													clientId={order.buyerId._id}
 													clientInfo={order.buyerId}
@@ -442,15 +441,13 @@ export default function OrderSlugPage({
 														variant="link"
 														className="p-0 h-auto text-right font-normal"
 													>
-														{order.buyerId.name}
+														{order.buyerId.name || truncateText(order.buyerId._id, 10)}
 													</Button>
 												</ClientDetailsDialog>
 											) : (
 												<span className="text-muted-foreground flex items-center gap-1">
 													<AlertCircle className="size-3" />
-													{typeof order?.sellerId === "string"
-														? order.sellerId
-														: "Vendedor no encontrado"}
+													N/A
 												</span>
 											)}
 										</div>

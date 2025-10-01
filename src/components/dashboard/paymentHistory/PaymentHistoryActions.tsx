@@ -18,8 +18,10 @@ import Link from "next/link";
 
 export function PaymentHistoryActions({
 	paymentHistory,
+	trigger,
 }: {
 	paymentHistory: PaymentHistoryType;
+	trigger?: React.ReactNode;
 }) {
 	const handlePrint = () => {
 		const printUrl = `/voucher/${paymentHistory._id}`;
@@ -33,9 +35,13 @@ export function PaymentHistoryActions({
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost">
-					<EllipsisIcon className="size-4" />
-				</Button>
+				{trigger ? (
+					trigger
+				) : (
+					<Button variant="ghost">
+						<EllipsisIcon className="size-4" />
+					</Button>
+				)}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
 				<DropdownMenuLabel>Acciones</DropdownMenuLabel>

@@ -2,11 +2,9 @@ import { dateFormat, currencyFormat } from "@/config/formats";
 import { getPaymentMethodName } from "@/contexts/paymentHistory/payment-method";
 import { paymentMethodIcons, unknownPaymentMethodIcon } from "@/config/orders";
 import { TAX_PERCENTAGE } from "@/config/shop";
-import Barcode from "react-barcode";
 import type { PaymentHistoryType } from "@/types/models/paymentHistory";
 import type { PaymentMethod } from "@/types/models/paymentHistory";
 import { Spinner } from "@/components/ui/spinner";
-import { isValidObjectId } from "@/lib/utils";
 import { Logo } from "@/components/logo";
 
 interface PaymentVoucherProps {
@@ -91,8 +89,8 @@ export function PaymentVoucher({ payment, isLoading }: PaymentVoucherProps) {
 				margin: "0",
 				overflow: "visible",
 				width: "100%",
-				paddingLeft: "80px",
-				paddingRight: "80px",
+				paddingLeft: "16px",
+				paddingRight: "16px",
 			}}
 		>
 			<div
@@ -101,41 +99,40 @@ export function PaymentVoucher({ payment, isLoading }: PaymentVoucherProps) {
 					color: "#000",
 					minWidth: "320px",
 					maxWidth: "640px",
-					paddingTop: "48px",
-					paddingBottom: "48px",
-					paddingLeft: "20px",
-					paddingRight: "20px",
+					paddingTop: "20px",
+					paddingBottom: "20px",
+					paddingLeft: "16px",
+					paddingRight: "16px",
 				}}
 			>
 				<div id="voucher-content">
-					<header
+				<header
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						alignItems: "center",
+						justifyContent: "space-between",
+						gap: "8px",
+					}}
+				>
+					<Logo width={64} height={64} className="size-12" />
+					<h1
 						style={{
-							display: "flex",
-							flexDirection: "column",
-							alignItems: "center",
-							justifyContent: "space-between",
-							gap: "16px",
+							fontSize: "16px",
+							fontWeight: "bold",
+							textTransform: "uppercase",
+							margin: "0",
 						}}
 					>
-						<Logo width={128} height={128} className="size-24" />
-						<h1
-							style={{
-								fontSize: "20px",
-								fontWeight: "bold",
-								textTransform: "uppercase",
-							}}
-						>
-							Jhenson Supply
-						</h1>
-
-						<div
+						Jhenson Supply
+					</h1>						<div
 							style={{
 								width: "100%",
 								border: "1px solid #d1d5db",
 								borderRadius: "8px",
 								overflow: "hidden",
 								backgroundColor: "#ffffff",
-								marginTop: "16px",
+								marginTop: "8px",
 							}}
 						>
 							<div
@@ -156,12 +153,12 @@ export function PaymentVoucher({ payment, isLoading }: PaymentVoucherProps) {
 									Información del Recibo
 								</h3>
 							</div>
-							<div style={{ padding: "16px" }}>
+							<div style={{ padding: "8px" }}>
 								<div
 									style={{
 										display: "flex",
 										flexDirection: "column",
-										gap: "12px",
+										gap: "6px",
 									}}
 								>
 									<div
@@ -288,8 +285,8 @@ export function PaymentVoucher({ payment, isLoading }: PaymentVoucherProps) {
 							style={{
 								display: "grid",
 								gridTemplateColumns: "repeat(3, 1fr)",
-								gap: "24px",
-								marginBottom: "32px",
+							gap: "6px",
+							marginBottom: "16px",
 							}}
 						>
 							<div
@@ -408,23 +405,23 @@ export function PaymentVoucher({ payment, isLoading }: PaymentVoucherProps) {
 						<div
 							style={{
 								textAlign: "center",
-								padding: "24px",
+								padding: "12px",
 								backgroundColor: "#f0fdf4",
 								border: "1px solid #e5e7eb",
 								borderRadius: "8px",
-								marginBottom: "24px",
+								marginBottom: "12px",
 							}}
 						>
 							<h3
 								style={{
-									fontSize: "16px",
-									fontWeight: "600",
-									marginBottom: "8px",
+								fontSize: "12px",
+								fontWeight: "600",
+								marginBottom: "6px",
 								}}
 							>
 								Resumen del Pago
 							</h3>
-							<p style={{ fontSize: "14px", opacity: 0.85, lineHeight: "1.5" }}>
+							<p style={{ fontSize: "12px", opacity: 0.85, lineHeight: "1.4" }}>
 								Se ha procesado exitosamente un pago por{" "}
 								<strong>{currencyFormat.format(payment.amount)}</strong>{" "}
 								mediante <strong>{getPaymentMethodName(payment.method)}</strong>{" "}
@@ -462,12 +459,12 @@ export function PaymentVoucher({ payment, isLoading }: PaymentVoucherProps) {
 									Desglose de la Factura
 								</h3>
 							</div>
-							<div style={{ padding: "20px" }}>
+							<div style={{ padding: "12px" }}>
 								<div
 									style={{
 										display: "flex",
 										flexDirection: "column",
-										gap: "16px",
+										gap: "8px",
 									}}
 								>
 									<div
@@ -577,7 +574,7 @@ export function PaymentVoucher({ payment, isLoading }: PaymentVoucherProps) {
 									</span>
 									<span
 										style={{
-											fontSize: "18px",
+											fontSize: "16px",
 											fontWeight: "700",
 											color: "#111827",
 										}}
@@ -647,78 +644,6 @@ export function PaymentVoucher({ payment, isLoading }: PaymentVoucherProps) {
 							</div>
 						</div>
 					</div>
-
-					<div className="h-[5px] print:block hidden" />
-
-					{isValidObjectId(payment._id) && (
-						<div
-							style={{
-								width: "100%",
-								border: "1px solid #d1d5db",
-								borderRadius: "8px",
-								overflow: "hidden",
-								backgroundColor: "#ffffff",
-							}}
-						>
-							<div
-								style={{
-									padding: "12px 16px",
-									borderBottom: "1px solid #e5e7eb",
-									backgroundColor: "#f0fdf4",
-								}}
-							>
-								<h3
-									style={{
-										fontSize: "14px",
-										fontWeight: "600",
-										margin: "0",
-										color: "#111827",
-										textAlign: "center",
-									}}
-								>
-									Código de Identificación
-								</h3>
-							</div>
-							<div
-								style={{
-									display: "flex",
-									alignItems: "center",
-									justifyContent: "center",
-									padding: "20px",
-								}}
-							>
-								<Barcode value={String(payment._id)} format="CODE128" />
-							</div>
-						</div>
-					)}
-
-					<footer
-						style={{
-							marginTop: "24px",
-						}}
-					>
-						<div
-							style={{
-								padding: "12px",
-								border: "1px solid #e5e7eb",
-								borderRadius: "6px",
-								backgroundColor: "#f0fdf4",
-								textAlign: "center",
-							}}
-						>
-							<div
-								style={{ fontSize: "12px", opacity: 0.75, lineHeight: "1.3" }}
-							>
-								<div style={{ fontWeight: "600", marginBottom: "4px" }}>
-									Jhenson Supply
-								</div>
-								<div>
-									RNC 132145399 • +1 (849) 863-6444 • facturas@jhensonsupply.com
-								</div>
-								<div>Calle Santa Lucía No. 15, Val. del Este, SDE</div>
-							</div>
-						</div>
-					</footer>
 				</div>
 			</div>
 		</div>

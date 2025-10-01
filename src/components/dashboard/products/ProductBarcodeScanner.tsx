@@ -67,7 +67,7 @@ function useOrderByIdWithOptions(id: string, options: { enabled: boolean }) {
 	});
 }
 
-interface BarcodeScannerProps {
+interface ProductBarcodeScanner {
 	children?: React.ReactNode;
 	filters?: ProductFilters;
 	onProductFound?: (product: ProductType) => void;
@@ -75,13 +75,13 @@ interface BarcodeScannerProps {
 	searchType?: SearchType;
 }
 
-export function BarcodeScanner({
+export function ProductBarcodeScanner({
 	children,
 	filters = {},
 	onProductFound,
 	onOrderFound,
 	searchType = "product",
-}: BarcodeScannerProps) {
+}: ProductBarcodeScanner) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [barcodeInput, setBarcodeInput] = useState("");
 	const [currentSearchType, setCurrentSearchType] = useState<SearchType>(searchType);
@@ -327,7 +327,7 @@ export function BarcodeScanner({
 											<div className="flex items-center justify-between text-sm">
 												<span className="text-muted-foreground">Stock:</span>
 												<span className="font-medium">
-													{product.locations.reduce((acc, loc) => acc + (loc.stock || 0), 0)} unidades
+													{product.locations.reduce((acc: number, loc) => acc + (loc.stock || 0), 0)} unidades
 												</span>
 											</div>
 											<div className="flex items-center justify-between text-sm">

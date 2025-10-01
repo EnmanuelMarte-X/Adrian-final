@@ -20,9 +20,17 @@ export function ProductImageDropzone({
 }: ProductImageDropzoneProps) {
 	const [isUploading, setIsUploading] = useState(false);
 	const [uploadProgress, setUploadProgress] = useState<Record<string, number>>({});
+	const [deletingIndex, setDeletingIndex] = useState<number | null>(null);
 
 	const uploadMutation = useUploadMultipleImagesMutation({
 		onSuccess: (responses) => {
+			console.log('=== UPLOAD SUCCESS DEBUG ===');
+			console.log('Respuestas recibidas:', responses);
+			responses.forEach((r: ImageUploadResponse, index) => {
+				console.log(`Imagen ${index + 1} - URL:`, r.url);
+			});
+			console.log('============================');
+			
 			const newImageUrls = [...images, ...responses.map((r: ImageUploadResponse) => r.url)];
 			onImagesChange(newImageUrls);
 			setIsUploading(false);
@@ -85,11 +93,48 @@ export function ProductImageDropzone({
 		[images, uploadMutation],
 	);
 
-	const removeImage = (index: number) => {
-		const newImages = [...images];
-		newImages.splice(index, 1);
-		onImagesChange(newImages);
-		toast.success("Imagen eliminada");
+	const removeImage = async (index: number) => {
+		const imageUrl = images[index];
+		console.log('Eliminando imagen:', imageUrl);
+		
+		setDeletingIndex(index);
+		
+		// Extraer la key del archivo desde la URL
+		// Ejemplo: https://s3.jhensonsupply.com/content/archivo.jpg -> content/archivo.jpg
+		const urlParts = imageUrl.split('/');
+		const key = urlParts.slice(-2).join('/'); // Tomar las últimas 2 partes: content/archivo.jpg
+		
+		console.log('Key extraída para eliminación:', key);
+		
+		try {
+			// Eliminar del servidor
+			const res = await fetch('/api/images/delete', {
+				method: 'DELETE',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ key }),
+			});
+			
+			const data = await res.json();
+			console.log('Respuesta del servidor:', data);
+			
+			if (!res.ok) {
+				console.error('Error del servidor:', data);
+				toast.error(data.error || 'Error al eliminar la imagen del servidor');
+				return;
+			}
+			
+			// Solo eliminar de la interfaz si se eliminó exitosamente del servidor
+			const newImages = [...images];
+			newImages.splice(index, 1);
+			onImagesChange(newImages);
+			toast.success("Imagen eliminada exitosamente");
+			
+		} catch (error) {
+			console.error('Error eliminando imagen:', error);
+			toast.error('Error de red al eliminar la imagen');
+		} finally {
+			setDeletingIndex(null);
+		}
 	};
 
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -118,18 +163,27 @@ export function ProductImageDropzone({
 								alt={`Imagen ${index + 1}`}
 								className="w-full aspect-square object-cover rounded-md border"
 								loading="lazy"
+								onLoad={() => console.log('✅ Imagen cargada exitosamente:', imageUrl)}
+								onError={(e) => {
+									console.error('❌ Error cargando imagen:', imageUrl);
+									console.error('Error details:', e);
+								}}
 							/>
 							<Button
 								variant="secondary"
 								size="icon"
 								className="absolute top-1 right-1 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity bg-destructive/90 hover:bg-destructive text-destructive-foreground"
-								onClick={(e) => {
+								onClick={async (e) => {
 									e.stopPropagation();
-									removeImage(index);
+									await removeImage(index);
 								}}
-								disabled={isUploading}
+								disabled={isUploading || deletingIndex === index}
 							>
-								<X className="w-4 h-4" />
+								{deletingIndex === index ? (
+									<Loader2 className="w-4 h-4 animate-spin" />
+								) : (
+									<X className="w-4 h-4" />
+								)}
 							</Button>
 						</div>
 					))}

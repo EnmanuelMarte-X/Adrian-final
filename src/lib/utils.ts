@@ -17,6 +17,11 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
+export function truncateText(text: string, maxLength: number): string {
+	if (text.length <= maxLength) return text;
+	return `${text.slice(0, maxLength)}...`;
+}
+
 export function isArrayEmpty<T>(array: T[] | undefined): boolean {
 	return !array || array.length === 0;
 }
@@ -194,4 +199,33 @@ export function formatNationalId(
 		default:
 			return id;
 	}
+}
+
+const BASE62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+function encodeBase62(num: bigint): string {
+	let s = "";
+	let n = num;
+	while (n > BigInt(0)) {
+		s = BASE62[Number(n % BigInt(62))] + s;
+		n = n / BigInt(62);
+	}
+	return s || "0";
+}
+
+function decodeBase62(str: string): bigint {
+	let num = BigInt(0);
+	for (const c of str) {
+		const val = BigInt(BASE62.indexOf(c));
+		num = num * BigInt(62) + val;
+	}
+	return num;
+}
+
+export function mongoIdToShort(id: string): string {
+	return encodeBase62(BigInt(`0x${id}`));
+}
+
+export function shortToMongoId(short: string): string {
+	return decodeBase62(short).toString(16).padStart(24, "0");
 }

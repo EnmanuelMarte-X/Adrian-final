@@ -30,13 +30,19 @@ export function CreditOrderReceipt({
 		return (
 			<div
 				style={{
+					position: "fixed",
+					top: 0,
+					left: 0,
+					width: "100vw",
+					height: "100vh",
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",
 					justifyContent: "center",
-					height: "100%",
 					gap: "20px",
 					color: "#000",
+					zIndex: 9999,
+					background: "rgba(255,255,255,0.85)",
 				}}
 			>
 				<Spinner
@@ -310,26 +316,26 @@ export function CreditOrderReceipt({
 									}}
 								>
 									<th
-										style={{
-											padding: "12px 8px",
-											textAlign: "left",
-											fontWeight: "600",
-											fontSize: "10px",
-											textTransform: "uppercase",
-											borderBottom: "1px solid #e5e7eb",
-										}}
+									   style={{
+										   padding: "6px 4px",
+										   textAlign: "left",
+										   fontWeight: "600",
+										   fontSize: "10px",
+										   textTransform: "uppercase",
+										   borderBottom: "1px solid #e5e7eb",
+									   }}
 									>
 										Descripción
 									</th>
 									<th
-										style={{
-											padding: "12px 4px",
-											textAlign: "center",
-											fontWeight: "600",
-											fontSize: "10px",
-											textTransform: "uppercase",
-											borderBottom: "1px solid #e5e7eb",
-										}}
+									   style={{
+										   padding: "6px 4px",
+										   textAlign: "center",
+										   fontWeight: "600",
+										   fontSize: "10px",
+										   textTransform: "uppercase",
+										   borderBottom: "1px solid #e5e7eb",
+									   }}
 									>
 										Precio
 									</th>
@@ -376,19 +382,19 @@ export function CreditOrderReceipt({
 									<tr
 										key={product.productId}
 										style={{
-											backgroundColor: index % 2 === 0 ? "#f8fafc" : "white",
+											backgroundColor: "#fffff",
 										}}
 									>
 										<td
-											style={{
-												padding: "12px 8px",
-												maxWidth: "180px",
-												wordBreak: "break-word",
-												borderBottom:
-													index === (order.products?.length || 0) - 1
-														? "none"
-														: "1px solid #f1f5f9",
-											}}
+										   style={{
+											   padding: "6px 4px",
+											   maxWidth: "180px",
+											   wordBreak: "break-word",
+											   borderBottom:
+												   index === (order.products?.length || 0) - 1
+													   ? "none"
+													   : "1px solid #f1f5f9",
+										   }}
 										>
 											<div style={{ fontSize: "11px", fontWeight: "600" }}>
 												{product.name || product.productId}
@@ -405,15 +411,15 @@ export function CreditOrderReceipt({
 											</div>
 										</td>
 										<td
-											style={{
-												padding: "12px 4px",
-												textAlign: "center",
-												fontSize: "11px",
-												borderBottom:
-													index === (order.products?.length || 0) - 1
-														? "none"
-														: "1px solid #f1f5f9",
-											}}
+										   style={{
+											   padding: "6px 4px",
+											   textAlign: "center",
+											   fontSize: "11px",
+											   borderBottom:
+												   index === (order.products?.length || 0) - 1
+													   ? "none"
+													   : "1px solid #f1f5f9",
+										   }}
 										>
 											{currencyFormat.format(product.retailPrice)}
 										</td>
@@ -446,16 +452,16 @@ export function CreditOrderReceipt({
 												: "0%"}
 										</td>
 										<td
-											style={{
-												padding: "12px 4px",
-												textAlign: "right",
-												fontSize: "11px",
-												fontWeight: "600",
-												borderBottom:
-													index === (order.products?.length || 0) - 1
-														? "none"
-														: "1px solid #f1f5f9",
-											}}
+										   style={{
+											   padding: "6px 4px",
+											   textAlign: "right",
+											   fontSize: "11px",
+											   fontWeight: "600",
+											   borderBottom:
+												   index === (order.products?.length || 0) - 1
+													   ? "none"
+													   : "1px solid #f1f5f9",
+										   }}
 										>
 											{currencyFormat.format(
 												product.retailPrice * product.quantity -
@@ -472,18 +478,21 @@ export function CreditOrderReceipt({
 						style={{
 							display: "flex",
 							justifyContent: "flex-end",
-							marginTop: "24px",
+							marginTop: "12px",
 							width: "100%",
 						}}
 					>
 						<div
 							style={{
-								minWidth: "340px",
+								minWidth: "0",
 								width: "60%",
-								backgroundColor: "#f8f9fa",
-								padding: "16px",
+								backgroundColor: "white",
+								padding: "12px", // padding más generoso
 								borderRadius: "6px",
 								border: "1px solid #e9ecef",
+								fontSize: "9px", // fuente más pequeña
+								marginTop: "2px", // margen superior más pequeño
+								marginBottom: "2px", // margen inferior más pequeño
 							}}
 						>
 							<div
@@ -491,14 +500,14 @@ export function CreditOrderReceipt({
 									display: "flex",
 									justifyContent: "space-between",
 									alignItems: "center",
-									padding: "6px 0",
-									fontSize: "13px",
+									padding: "2px 0", // aún menos alto
+									fontSize: "11px",
+									fontWeight: 600,
 								}}
 							>
-								<span style={{ fontWeight: "600" }}>Subtotal:</span>
+								<span>Subtotal:</span>
 								<span>{currencyFormat.format(subtotal)}</span>
 							</div>
-
 							{(() => {
 								const totalDiscount =
 									order.products?.reduce(
@@ -513,39 +522,37 @@ export function CreditOrderReceipt({
 												display: "flex",
 												justifyContent: "space-between",
 												alignItems: "center",
-												padding: "6px 0",
-												fontSize: "13px",
+												padding: "0.5px 0",
+												fontSize: "9px",
 												color: "#059669",
+												fontWeight: 600,
 											}}
 										>
-											<span style={{ fontWeight: "600" }}>Descuento:</span>
+											<span>Descuento:</span>
 											<span>-{currencyFormat.format(totalDiscount)}</span>
 										</div>
 									);
 								}
 								return null;
 							})()}
-
 							<div
 								style={{
 									display: "flex",
 									justifyContent: "space-between",
 									alignItems: "center",
-									padding: "6px 0",
-									fontSize: "13px",
+									padding: "0.5px 0",
+									fontSize: "9px",
+									fontWeight: 600,
 								}}
 							>
-								<span style={{ fontWeight: "600" }}>
-									ITBIS ({(TAX_PERCENTAGE * 100).toFixed(0)}%):
-								</span>
+								<span>ITBIS ({(TAX_PERCENTAGE * 100).toFixed(0)}%):</span>
 								<span>{currencyFormat.format(subtotal * TAX_PERCENTAGE)}</span>
 							</div>
-
 							<div
 								style={{
 									borderTop: "2px solid #000",
-									marginTop: "12px",
-									paddingTop: "12px",
+									marginTop: "2px",
+									paddingTop: "2px",
 								}}
 							>
 								<div
@@ -553,7 +560,7 @@ export function CreditOrderReceipt({
 										display: "flex",
 										justifyContent: "space-between",
 										alignItems: "center",
-										fontSize: "16px",
+										fontSize: "12px",
 										fontWeight: "700",
 									}}
 								>
@@ -561,11 +568,10 @@ export function CreditOrderReceipt({
 									<span>{currencyFormat.format(total)}</span>
 								</div>
 							</div>
-
 							<div
 								style={{
-									marginTop: "12px",
-									paddingTop: "12px",
+									marginTop: "4px",
+									paddingTop: "4px",
 									borderTop: "1px solid #dee2e6",
 								}}
 							>
@@ -574,8 +580,8 @@ export function CreditOrderReceipt({
 										display: "flex",
 										justifyContent: "space-between",
 										alignItems: "center",
-										padding: "4px 0",
-										fontSize: "12px",
+										padding: "0.5px 0",
+										fontSize: "9px",
 										color: "#6c757d",
 									}}
 								>
@@ -587,8 +593,8 @@ export function CreditOrderReceipt({
 										display: "flex",
 										justifyContent: "space-between",
 										alignItems: "center",
-										padding: "4px 0",
-										fontSize: "14px",
+										padding: "0.5px 0",
+										fontSize: "10px",
 										fontWeight: "700",
 										color: remainingBalance > 0 ? "#dc3545" : "#059669",
 									}}
@@ -608,19 +614,20 @@ export function CreditOrderReceipt({
 								borderRadius: "8px",
 								overflow: "hidden",
 								backgroundColor: "#ffffff",
-								marginTop: "40px",
+								marginTop: "6px", // margen superior más pequeño
+								marginBottom: "2px", // margen inferior más pequeño
 							}}
 						>
 							<div
 								style={{
-									padding: "8px 12px",
+									padding: "2px 4px", // menos alto
 									borderBottom: "1px solid #e5e7eb",
 									backgroundColor: "#f0fdf4",
 								}}
 							>
 								<h3
 									style={{
-										fontSize: "12px",
+										fontSize: "10px",
 										fontWeight: "600",
 										margin: "0",
 										color: "#111827",
@@ -635,15 +642,15 @@ export function CreditOrderReceipt({
 									display: "flex",
 									alignItems: "center",
 									justifyContent: "center",
-									padding: "12px",
+									padding: "2px", // menos alto
 								}}
 							>
 								<Barcode
 									value={String(order._id)}
 									format="CODE128"
 									width={1.5}
-									height={60}
-									fontSize={10}
+									height={50}
+									fontSize={12}
 								/>
 							</div>
 						</div>

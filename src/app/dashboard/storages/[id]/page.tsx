@@ -32,7 +32,7 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { StorageProductsTable } from "@/components/dashboard/products/StorageProductsTable";
 import Link from "next/link";
-import { ProductBarcodeScanner } from "@/components/dashboard/products/ProductBarcodeScanner";
+import { BarcodeScanner } from "@/components/dashboard/shared/BarcodeScanner";
 import type { ProductType } from "@/types/models/products";
 
 export default function StorageDetailPage({
@@ -352,7 +352,7 @@ export default function StorageDetailPage({
 										animate={{ opacity: 1 }}
 										exit={{ opacity: 0 }}
 									>
-										<ProductBarcodeScanner
+										<BarcodeScanner
 											filters={{
 												storageId: storage?._id,
 											}}
@@ -370,7 +370,7 @@ export default function StorageDetailPage({
 													</span>
 												</div>
 											</Button>
-										</ProductBarcodeScanner>
+										</BarcodeScanner>
 										<Button
 											className="w-full flex justify-start gap-3 h-16"
 											variant="outline"

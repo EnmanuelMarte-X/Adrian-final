@@ -58,7 +58,7 @@ export function CreateProductSheet({
 			brand: "",
 			category: "",
 			capacity: 0,
-			capacityUnit: "L" as ProductCapacityUnit,
+			capacityUnit: "count" as ProductCapacityUnit, // Valor por defecto válido
 			// stock is now calculated from locations
 			retailPrice: 0,
 			wholesalePrice: 0,
@@ -85,9 +85,35 @@ export function CreateProductSheet({
 		reset();
 	};
 
+	// Lista de categorías válidas (debería venir de la misma fuente que ProductCategorySelect)
+	const validCategories = ["Category A", "Category B", "Category C"];
+
 	const validateForm = (values: ProductType) => {
-		if (!values.name || !values.brand || !values.category) {
-			toast.error("Por favor completa todos los campos obligatorios.");
+		// Validar campos obligatorios
+		if (!values.name?.trim()) {
+			toast.error("El nombre del producto es obligatorio.");
+			return false;
+		}
+
+		if (!values.brand?.trim()) {
+			toast.error("La marca del producto es obligatoria.");
+			return false;
+		}
+
+		if (!values.category?.trim()) {
+			toast.error("La categoría es obligatoria.");
+			return false;
+		}
+
+		// Validar que la categoría sea válida
+		if (!validCategories.includes(values.category)) {
+			toast.error("Debe seleccionar una categoría válida.");
+			return false;
+		}
+
+		// Validar que la unidad de capacidad sea válida
+		if (!values.capacityUnit || !productCapacityUnits.includes(values.capacityUnit as ProductCapacityUnit)) {
+			toast.error("Debe seleccionar una unidad de capacidad válida.");
 			return false;
 		}
 
@@ -205,8 +231,12 @@ export function CreateProductSheet({
 		);
 	};
 
-	const handleCategoryChange = (category: string) =>
-		setValue("category", category);
+	const handleCategoryChange = (category: string) => {
+		// Validar que la categoría sea válida antes de establecerla
+		if (category?.trim() && validCategories.includes(category)) {
+			setValue("category", category);
+		}
+	};
 	const handleImagesChange = (imageUrls: string[]) => setProductImages(imageUrls);
 
 	return (

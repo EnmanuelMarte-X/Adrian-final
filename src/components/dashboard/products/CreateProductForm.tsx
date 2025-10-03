@@ -5,6 +5,7 @@ import { ProductCapacityUnitSelect } from "./ProductCapacityUnitSelect";
 import { ProductCategorySelect } from "./ProductCategorySelect";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductImageDropzone } from "./ProductImageDropzone";
+import { productCapacityUnits } from "@/contexts/products/units";
 
 interface CreateProductFormProps {
 	onCategoryChange: (category: string) => void;
@@ -21,7 +22,7 @@ export function CreateProductForm({
 }: CreateProductFormProps) {
 	const {
 		register,
-		formState: { isSubmitting },
+		formState: { isSubmitting, errors },
 	} = useFormContext();
 
 	return (
@@ -64,9 +65,22 @@ export function CreateProductForm({
 					</Label>
 					<ProductCategorySelect
 						className="w-full"
-						{...register("category")}
+						{...register("category", { 
+							required: "La categoría es obligatoria",
+							validate: (value) => {
+								if (!value || !value.trim()) {
+									return "Debe seleccionar una categoría";
+								}
+								return true;
+							}
+						})}
 						onValueChange={onCategoryChange}
 					/>
+					{errors.category && (
+						<span className="text-sm text-red-500">
+							{String(errors.category.message)}
+						</span>
+					)}
 				</div>
 				<div className="flex flex-col gap-y-2">
 					<Label required htmlFor="cost" className="text-right">
@@ -143,9 +157,22 @@ export function CreateProductForm({
 					<div>
 						<ProductCapacityUnitSelect
 							className="w-full"
-							{...register("capacityUnit")}
+							{...register("capacityUnit", { 
+								required: "La unidad de capacidad es obligatoria",
+								validate: (value) => {
+									if (!value || !productCapacityUnits.includes(value as typeof productCapacityUnits[number])) {
+										return "Debe seleccionar una unidad de capacidad válida";
+									}
+									return true;
+								}
+							})}
 							onValueChange={onCapacityUnitChange}
 						/>
+						{errors.capacityUnit && (
+							<span className="text-sm text-red-500 mt-1 block">
+								{String(errors.capacityUnit.message)}
+							</span>
+						)}
 					</div>
 				</div>
 				<div className="flex flex-col gap-y-2 col-span-2">

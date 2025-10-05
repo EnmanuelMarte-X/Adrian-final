@@ -231,7 +231,7 @@ export function ProductsTable({
 					"bg-secondary": !isMinInnerWidth,
 				})}
 			>
-				{totalPages > 1 && !isMinInnerWidth && (
+				{totalPages > 1 && (
 					<DataPagination
 						totalPages={totalPages}
 						currentPage={pagination.pageIndex}

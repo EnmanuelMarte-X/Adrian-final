@@ -59,23 +59,23 @@ export function EmailForm({
 					throw new Error("Tipo de formulario no válido");
 			}
 
-			// Call custom onSubmit if provided
-			if (onSubmit) {
-				onSubmit(emailData);
-			}
-
-			// Show success message
+			// Show success message only if email was sent successfully
 			toast.success("¡Mensaje enviado!", {
 				description: "Hemos recibido tu solicitud. Te contactaremos pronto.",
 			});
 
-			// Reset form
+			// Reset form only on success
 			event.currentTarget.reset();
+
+			// Call custom onSubmit if provided only after successful email send and UI updates
+			if (onSubmit) {
+				onSubmit(emailData);
+			}
 		} catch (error) {
-			console.error("Error:", error);
-			toast.error("Error", {
+			console.error("Error enviando formulario:", error);
+			toast.error("Error al enviar mensaje", {
 				description:
-					"Hubo un problema enviando tu mensaje. Inténtalo de nuevo.",
+					"Hubo un problema enviando tu mensaje. Por favor, verifica tus datos e inténtalo de nuevo.",
 			});
 		} finally {
 			setIsSubmitting(false);

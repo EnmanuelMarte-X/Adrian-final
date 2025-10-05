@@ -308,7 +308,7 @@ export function OrdersTable({
 					"px-4": !isMinInnerWidth,
 				})}
 			>
-				{totalPages > 1 && !isMinInnerWidth && (
+				{totalPages > 1 && (
 					<DataPagination
 						totalPages={totalPages}
 						currentPage={pagination.pageIndex}

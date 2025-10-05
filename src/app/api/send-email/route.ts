@@ -24,7 +24,10 @@ export async function POST(request: NextRequest) {
 		// Validar que tenemos los datos necesarios
 		if (!type || !formData) {
 			return NextResponse.json(
-				{ error: "Tipo de formulario y datos son requeridos" },
+				{ 
+					success: false,
+					error: "Tipo de formulario y datos son requeridos" 
+				},
 				{ status: 400 },
 			);
 		}
@@ -78,7 +81,10 @@ export async function POST(request: NextRequest) {
       `;
 		} else {
 			return NextResponse.json(
-				{ error: "Tipo de formulario no válido" },
+				{ 
+					success: false,
+					error: "Tipo de formulario no válido" 
+				},
 				{ status: 400 },
 			);
 		}
@@ -91,7 +97,10 @@ export async function POST(request: NextRequest) {
 		) {
 			console.error("Missing SMTP configuration");
 			return NextResponse.json(
-				{ error: "Configuración de email no disponible" },
+				{ 
+					success: false,
+					error: "Configuración de email no disponible" 
+				},
 				{ status: 500 },
 			);
 		}
@@ -132,7 +141,10 @@ export async function POST(request: NextRequest) {
 	} catch (error) {
 		console.error("Error enviando email:", error);
 		return NextResponse.json(
-			{ error: "Error interno del servidor" },
+			{ 
+				success: false,
+				error: "Error interno del servidor al enviar el email" 
+			},
 			{ status: 500 },
 		);
 	}

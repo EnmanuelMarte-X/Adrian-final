@@ -33,6 +33,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import Link from "next/link";
 
 export const metadata: Metadata = {
 	title: "Suplir Tienda | Jhenson Supply",
@@ -269,7 +270,9 @@ export default function SupplyPage() {
 								</AlertDescription>
 							</Alert>
 
-							<Button className="w-full">Enviar Solicitud</Button>
+							<Button asChild className="w-full">
+								<Link href="/supply">Enviar Solicitud</Link>
+							</Button>
 						</CardContent>
 					</Card>
 

@@ -90,7 +90,7 @@ export function Hero() {
 								className="transition-transform"
 								style={{ transition: "transform 0.2s" }}
 							>
-								Suplir mi tienda
+								<Link href="/supply">Suplir mi tienda</Link>
 							</Button>
 						</div>
 						<motion.div

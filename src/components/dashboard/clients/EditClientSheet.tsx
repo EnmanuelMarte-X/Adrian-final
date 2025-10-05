@@ -35,6 +35,7 @@ import type { ClientType } from "@/types/models/clients";
 import { ClientAddressesFields } from "./ClientAddressesFields";
 import { ClientPhonesFields } from "./ClientPhonesFields";
 import { toast } from "sonner";
+import { useEffect } from "react";
 import {
 	createClientFormSchema,
 	type CreateClientFormValues,
@@ -65,6 +66,21 @@ export function EditClientSheet({
 			isActive: client.isActive,
 		},
 	});
+
+	// Reset form when client changes
+	useEffect(() => {
+		form.reset({
+			name: client.name,
+			email: client.email || "",
+			documentType: client.documentType,
+			documentNumber: client.documentNumber,
+			phones: client.phones,
+			addresses: client.addresses,
+			notes: client.notes || "",
+			type: client.type,
+			isActive: client.isActive,
+		});
+	}, [client, form]);
 
 	const updateClientMutation = useUpdateClientMutation(client._id, {
 		onSuccess: () => {

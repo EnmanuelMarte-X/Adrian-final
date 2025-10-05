@@ -207,7 +207,7 @@ export function ClientsTable({
 }) {
 	const sortParams = sorting.map((sort) => ({
 		field: sort.id,
-		order: sort.desc ? "desc" : "asc",
+		order: sort.desc ? "asc" : "desc",
 	}));
 
 	const { data, isLoading } = useClients({
@@ -272,7 +272,7 @@ export function ClientsTable({
 					"bg-secondary": !isMinInnerWidth,
 				})}
 			>
-				{totalPages > 1 && !isMinInnerWidth && (
+				{totalPages > 1 && (
 					<DataPagination
 						totalPages={totalPages}
 						currentPage={pagination.pageIndex}

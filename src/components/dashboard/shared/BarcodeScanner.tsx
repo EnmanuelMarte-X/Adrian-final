@@ -146,11 +146,11 @@ export function BarcodeScanner({
 	};
 
 	const stock =
-		product?.locations.reduce((sum: number, loc) => sum + (loc.stock || 0), 0) ?? 0;
+		product?.locations?.reduce((sum: number, loc) => sum + (loc.stock || 0), 0) ?? 0;
 
 	// Cálculo correcto del total de la factura con ITBIS y descuentos
-	const subtotal = order?.products.reduce((sum: number, prod) => sum + (prod.price * prod.quantity), 0) ?? 0;
-	const totalDiscount = order?.products.reduce((total: number, prod) => total + (prod.discount || 0), 0) ?? 0;
+	const subtotal = order?.products?.reduce((sum: number, prod) => sum + (prod.price * prod.quantity), 0) ?? 0;
+	const totalDiscount = order?.products?.reduce((total: number, prod) => total + (prod.discount || 0), 0) ?? 0;
 	const tax = subtotal * TAX_PERCENTAGE;
 	const totalAmount = subtotal - totalDiscount + tax;
 
@@ -327,7 +327,7 @@ export function BarcodeScanner({
 											<div className="flex items-center justify-between text-sm">
 												<span className="text-muted-foreground">Stock:</span>
 												<span className="font-medium">
-													{product.locations.reduce((acc, loc) => acc + (loc.stock || 0), 0)} unidades
+													{product.locations?.reduce((acc, loc) => acc + (loc.stock || 0), 0) || 0} unidades
 												</span>
 											</div>
 											<div className="flex items-center justify-between text-sm">
@@ -437,7 +437,7 @@ export function BarcodeScanner({
 											<div className="flex items-center justify-between text-sm">
 												<span className="text-muted-foreground">Productos:</span>
 												<span className="font-medium">
-													{order.products.length} item{order.products.length !== 1 ? 's' : ''}
+													{order.products?.length || 0} item{(order.products?.length || 0) !== 1 ? 's' : ''}
 												</span>
 											</div>
 											<div className="flex items-center justify-between text-sm">

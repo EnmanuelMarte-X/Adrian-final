@@ -51,15 +51,30 @@ export async function sendEmail(
 			}),
 		});
 
+		// Check if response is ok
 		if (!response.ok) {
-			const errorData = await response.json();
-			throw new Error(errorData.error || "Error enviando el email");
+			let errorMessage = "Error enviando el email";
+			try {
+				const errorData = await response.json();
+				errorMessage = errorData.error || errorMessage;
+			} catch {
+				// If can't parse error response, use status text
+				errorMessage = response.statusText || errorMessage;
+			}
+			throw new Error(errorMessage);
 		}
 
 		const result = await response.json();
+		
+		// Verify the response contains success
+		if (!result.success) {
+			throw new Error(result.error || "Error inesperado al enviar el email");
+		}
+		
 		return result;
 	} catch (error) {
 		console.error("Error sending email:", error);
+		// Re-throw the error so it can be handled by the calling component
 		throw error;
 	}
 }

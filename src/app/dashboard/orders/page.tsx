@@ -16,7 +16,7 @@ function OrdersPageContent() {
 	});
 
 	const [sorting, setSorting] = useState<SortingState>([
-		{ id: "_id", desc: true },
+		{ id: "orderId", desc: true },
 	]);
 
 	const [filters, setFilters] = useState<OrderFilters>({});

@@ -216,10 +216,10 @@ export function ClientSelect({
 													</div>
 												</div>
 											</div>
-											{client.debt && client.debt > 0 && (
+											{client.debt && client.debt < 0 && (
 												<div className="text-right">
 													<div className="text-xs text-destructive font-medium">
-														Deuda: ${client.debt.toFixed(2)}
+														Deuda: ${Math.abs(client.debt).toFixed(2)}
 													</div>
 												</div>
 											)}

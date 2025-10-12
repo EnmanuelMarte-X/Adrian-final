@@ -4,6 +4,7 @@ import { Client } from "@/contexts/clients/model";
 import { Product } from "@/contexts/products/model";
 import { User } from "@/contexts/users/model";
 import { calculateClientDebt } from "@/contexts/clients/controller";
+import { deletePaymentHistoryByOrderId } from "@/contexts/paymentHistory/controller";
 import mongoose, { isValidObjectId, type RootFilterQuery } from "mongoose";
 import type { PaginationRequest, PaginationResponse } from "@/types/pagination";
 import type { OrderFilters } from "./types";
@@ -36,6 +37,7 @@ export const getOrdersCount = async (): Promise<number> => {
 export const getOrders = async (
 	pagination: PaginationRequest,
 	filters: OrderFilters,
+	sort: { field: string; order: string }[] = [],
 ): Promise<PaginationResponse<OrderType>> => {
 	ensureModelsRegistered();
 	const { page, limit } = getSafePaginationRequest(pagination);
@@ -93,6 +95,53 @@ export const getOrders = async (
 	if (filters.shippingAddress)
 		query.shippingAddress = { $regex: filters.shippingAddress, $options: "i" };
 
+	// Build sort object
+	const sortObject: Record<string, 1 | -1> = {};
+	if (sort && sort.length > 0) {
+		for (const sortParam of sort) {
+			// Map frontend field names to database field names if needed
+			let dbField = sortParam.field;
+			
+			// Handle special field mappings
+			switch (sortParam.field) {
+				case '_id':
+					dbField = '_id';
+					break;
+				case 'orderId':
+					dbField = 'orderId';
+					break;
+				case 'date':
+					dbField = 'date';
+					break;
+				case 'buyerId':
+					// Since buyerId is populated, we can't sort by it directly
+					// Default to date sorting for now
+					dbField = 'date';
+					break;
+				case 'sellerId':
+					// Since sellerId is populated, we can't sort by it directly
+					// Default to date sorting for now
+					dbField = 'date';
+					break;
+				case 'total':
+					// For total, we'll sort by date for now since total is calculated
+					dbField = 'date';
+					break;
+				case 'products':
+					// For products count, we'll sort by date for now since it's calculated
+					dbField = 'date';
+					break;
+				default:
+					dbField = sortParam.field;
+			}
+			
+			sortObject[dbField] = sortParam.order === 'desc' ? -1 : 1;
+		}
+	} else {
+		// Default sort by orderId descending (newest first)
+		sortObject.orderId = -1;
+	}
+
 	const orders = await Order.find(query)
 		.populate({
 			path: "buyerId",
@@ -104,7 +153,7 @@ export const getOrders = async (
 			model: "User",
 			select: "firstName lastName email username avatar",
 		})
-		.sort({ date: -1 })
+		.sort(sortObject)
 		.limit(limit)
 		.skip(getOffsetFromPage(page, limit));
 
@@ -184,6 +233,7 @@ export const getOrderById = async (
 					cost?: number;
 			  }
 			| string;
+		price: number;
 		quantity: number;
 		discount?: number;
 	}
@@ -202,6 +252,7 @@ export const getOrderById = async (
 				retailPrice: product.retailPrice || 0,
 				wholesalePrice: product.wholesalePrice || 0,
 				cost: product.cost || 0,
+				price: item.price || product.retailPrice || 0, // Include the original order price
 				quantity: item.quantity || 0,
 				discount: item.discount || 0,
 			} as OrderProductDetails;
@@ -351,6 +402,14 @@ export const deleteOrder = async (id: string): Promise<OrderType> => {
 		throw new OrdersNotFoundException();
 	}
 
+	// También eliminar todos los pagos relacionados con esta orden
+	try {
+		await deletePaymentHistoryByOrderId(id);
+	} catch (error) {
+		console.warn(`Error deleting payments for order ${id}:`, error);
+		// No lanzamos error aquí para no fallar la eliminación de la orden
+	}
+
 	return deletedOrder;
 };
 
@@ -366,10 +425,23 @@ export const deleteOrders = async (ids: string[]): Promise<number> => {
 	const objectIds = ids.map((id) => new mongoose.Types.ObjectId(id));
 
 	await connectToMongo();
+	
+	// Primero obtenemos las órdenes para obtener sus orderIds
+	const ordersToDelete = await Order.find({ _id: { $in: objectIds } }, { orderId: 1 });
+	
 	const result = await Order.deleteMany({ _id: { $in: objectIds } });
 
 	if (result.deletedCount === 0) {
 		throw new OrdersNotFoundException();
+	}
+
+	// Eliminar pagos relacionados para cada orden
+	for (const order of ordersToDelete) {
+		try {
+			await deletePaymentHistoryByOrderId(order.orderId.toString());
+		} catch (error) {
+			console.warn(`Error deleting payments for order ${order.orderId}:`, error);
+		}
 	}
 
 	return result.deletedCount;

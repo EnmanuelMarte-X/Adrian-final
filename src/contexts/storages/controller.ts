@@ -7,6 +7,48 @@ import { connectToMongo } from "@/lib/mongo";
 import type { StorageType } from "@/types/models/storages";
 import { StorageNotFoundException } from "./exceptions";
 import { isValidObjectId, type RootFilterQuery } from "mongoose";
+import { Product } from "@/contexts/products/model";
+
+export const fixStorageProductCounts = async (): Promise<{
+	success: boolean;
+	fixed: Array<{
+		storageId: string;
+		storageName: string;
+		oldCount: number;
+		newCount: number;
+	}>;
+}> => {
+	await connectToMongo();
+	
+	const storages = await Storage.find({});
+	const fixed = [];
+	
+	for (const storage of storages) {
+		// Count actual products that have this storage in their locations
+		const actualProductCount = await Product.countDocuments({
+			"locations.storageId": storage._id,
+		});
+		
+		if (storage.productsCount !== actualProductCount) {
+			fixed.push({
+				storageId: storage._id.toString(),
+				storageName: storage.name,
+				oldCount: storage.productsCount,
+				newCount: actualProductCount,
+			});
+			
+			// Update the productsCount field
+			await Storage.findByIdAndUpdate(storage._id, {
+				productsCount: actualProductCount,
+			});
+		}
+	}
+	
+	return {
+		success: true,
+		fixed,
+	};
+};
 
 export const getStoragesCount = async (): Promise<number> => {
 	await connectToMongo();

@@ -23,13 +23,8 @@ import { useSidebar } from "@/components/ui/sidebar";
 import { useWindowWidth } from "@/hooks/use-window-width";
 import { BanknoteIcon, CoinsIcon, ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { TAX_PERCENTAGE } from "@/config/shop";
+import { InvoiceTotalWithTooltip } from "./InvoiceTotalWithTooltip";
 
 const columns: ColumnDef<OrderType>[] = [
 	{
@@ -52,7 +47,7 @@ const columns: ColumnDef<OrderType>[] = [
 		accessorKey: "buyerId",
 		header: "Cliente",
 		enableColumnFilter: true,
-		enableSorting: false,
+		enableSorting: true,
 		cell: ({ row }) => {
 			const buyer = row.original.buyerId;
 
@@ -129,9 +124,9 @@ const columns: ColumnDef<OrderType>[] = [
 	{
 		accessorKey: "products",
 		header() {
-			return <div className="w-full text-right">Productos</div>;
+			return <div className="text-right w-full">Productos</div>;
 		},
-		enableSorting: false,
+		enableSorting: true,
 		cell: ({ row }) => {
 			return (
 				<div className="font-medium text-right">
@@ -159,21 +154,7 @@ const columns: ColumnDef<OrderType>[] = [
 
 			return (
 				<div className="text-right font-medium">
-					<TooltipProvider>
-						<Tooltip>
-							<TooltipTrigger>
-								{row.original.isCredit ? (
-									<CoinsIcon className="size-4 inline mr-1 dark:text-success-foreground" />
-								) : (
-									<BanknoteIcon className="size-4 inline mr-1 dark:text-success-foreground" />
-								)}
-							</TooltipTrigger>
-							<TooltipContent>
-								<p>{row.original.isCredit ? "Crédito" : "Contado"}</p>
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
-					{currencyFormat.format(total)}
+					<InvoiceTotalWithTooltip order={order} total={total} />
 				</div>
 			);
 		},
@@ -181,7 +162,7 @@ const columns: ColumnDef<OrderType>[] = [
 	{
 		accessorKey: "sellerId",
 		header: "Vendedor",
-		enableSorting: false,
+		enableSorting: true,
 		cell: ({ row }) => {
 			const user = row.original.sellerId;
 

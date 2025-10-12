@@ -358,6 +358,22 @@ export const deletePaymentHistoryBatch = async (
 	return deletedCount;
 };
 
+export const deletePaymentHistoryByOrderId = async (
+	orderId: string,
+): Promise<number> => {
+	if (!orderId) {
+		throw new PaymentHistoryNotFoundException();
+	}
+
+	await connectToMongo();
+
+	const { deletedCount } = await PaymentHistory.deleteMany({
+		orderId: orderId,
+	});
+
+	return deletedCount;
+};
+
 export const getPaymentAnalytics = async (period = 12) => {
 	await connectToMongo();
 

@@ -23,9 +23,16 @@ export async function getOrdersViews(req: NextRequest): Promise<NextResponse> {
 		page,
 		limit,
 		filters = "{}",
+		sort,
 	} = Object.fromEntries(req.nextUrl.searchParams);
 
 	const parsedFilters = JSON.parse(filters) as OrderFilters;
+	
+	// Parse sort parameter
+	const sortParams = sort ? sort.split(',').map((s: string) => {
+		const [field, order] = s.split(':');
+		return { field, order: order || 'asc' };
+	}) : [];
 
 	const { data, error } = await tryCatch(
 		controller.getOrders(
@@ -34,6 +41,7 @@ export async function getOrdersViews(req: NextRequest): Promise<NextResponse> {
 				limit: Number.parseInt(limit),
 			},
 			parsedFilters,
+			sortParams,
 		),
 	);
 

@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import {
 	Accordion,
 	AccordionContent,
@@ -15,12 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Mail, Phone } from "lucide-react";
-
-export const metadata: Metadata = {
-	title: "Preguntas Frecuentes | Jhenson Supply",
-	description:
-		"Encuentra respuestas a las preguntas más comunes sobre Jhenson Supply, nuestros productos y servicios.",
-};
+import { quickAccess } from "@/config";
 
 export default function FAQPage() {
 	const faqCategories = [
@@ -183,6 +179,16 @@ export default function FAQPage() {
 							<Button
 								variant="outline"
 								className="flex items-center justify-center gap-2"
+								onClick={() => {
+									const message = encodeURIComponent(
+										"Hola, tengo una pregunta sobre sus productos y servicios."
+									);
+									const phoneNumber = quickAccess.mainPhone.replace(/\D/g, "");
+									window.open(
+										`https://wa.me/${phoneNumber}?text=${message}`,
+										"_blank"
+									);
+								}}
 							>
 								<MessageCircle className="w-4 h-4" />
 								Chat en vivo
@@ -190,6 +196,13 @@ export default function FAQPage() {
 							<Button
 								variant="outline"
 								className="flex items-center justify-center gap-2"
+								onClick={() => {
+									const subject = encodeURIComponent("Consulta - FAQ");
+									const body = encodeURIComponent(
+										"Hola,\n\nTengo una pregunta que no encontré en las preguntas frecuentes:\n\n\n\nGracias por su atención."
+									);
+									window.location.href = `mailto:${quickAccess.generalEmail}?subject=${subject}&body=${body}`;
+								}}
 							>
 								<Mail className="w-4 h-4" />
 								Enviar email
@@ -197,6 +210,9 @@ export default function FAQPage() {
 							<Button
 								variant="outline"
 								className="flex items-center justify-center gap-2"
+								onClick={() => {
+									window.location.href = `tel:${quickAccess.mainPhone}`;
+								}}
 							>
 								<Phone className="w-4 h-4" />
 								Llamar ahora

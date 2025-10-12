@@ -187,11 +187,11 @@ export function ProductBarcodeScanner({
 								<FileTextIcon className="size-4" />
 								Facturas
 							</TabsTrigger>
-						</TabsList>
+					</TabsList>
 
-						<TabsContent value="product" className="space-y-3 mt-4">
-							<Label htmlFor="barcode-input">Código de barras del producto</Label>
-							<div className="flex gap-2">
+					<TabsContent value="product" className="space-y-3 mt-4">
+						<Label htmlFor="barcode-input">ID del producto</Label>
+						<div className="flex gap-2">
 								<Input
 									id="barcode-input"
 									placeholder="Escanea o ingresa el código de barras..."

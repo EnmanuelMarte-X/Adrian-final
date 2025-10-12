@@ -7,6 +7,7 @@ import {
 	useStorage,
 	useUpdateStorageMutation,
 	useDeleteStorageMutation,
+	useFixStorageCountsMutation,
 } from "@/contexts/storages/queries";
 import {
 	Card,
@@ -28,6 +29,7 @@ import {
 	CheckIcon,
 	XIcon,
 	ArrowLeftIcon,
+	RefreshCwIcon,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { StorageProductsTable } from "@/components/dashboard/products/StorageProductsTable";
@@ -47,6 +49,7 @@ export default function StorageDetailPage({
 	const { data: storage, isLoading, isError } = useStorage({ id });
 	const updateStorageMutation = useUpdateStorageMutation();
 	const deleteStorageMutation = useDeleteStorageMutation();
+	const fixCountsMutation = useFixStorageCountsMutation();
 
 	const createdAt = getDateFromObjectId(storage?._id);
 
@@ -106,6 +109,28 @@ export default function StorageDetailPage({
 
 	const handleCancelDelete = () => {
 		setIsDeleting(false);
+	};
+
+	const handleFixCounts = async () => {
+		try {
+			console.log("Starting fix counts operation...");
+			const result = await fixCountsMutation.mutateAsync();
+			console.log("Fix counts result:", result);
+			
+			if (result.success) {
+				const fixedStoragesCount = result.details?.length || 0;
+				if (fixedStoragesCount > 0) {
+					toast.success(
+						`Se corrigieron los conteos de ${fixedStoragesCount} almacén(es)`
+					);
+				} else {
+					toast.info("Todos los conteos de productos están correctos");
+				}
+			}
+		} catch (error) {
+			console.error("Error fixing storage counts:", error);
+			toast.error("Error al corregir los conteos de productos");
+		}
 	};
 
 	if (isError) {
@@ -382,6 +407,24 @@ export default function StorageDetailPage({
 												<span className="font-medium">Editar nombre</span>
 												<span className="text-xs text-muted-foreground">
 													Modificar el nombre del almacén
+												</span>
+											</div>
+										</Button>
+										<Button
+											className="w-full flex justify-start gap-3 h-16"
+											variant="outline"
+											onClick={handleFixCounts}
+											disabled={isLoading || fixCountsMutation.isPending}
+										>
+											<RefreshCwIcon className="h-5 w-5" />
+											<div className="flex flex-col items-start">
+												<span className="font-medium">
+													{fixCountsMutation.isPending
+														? "Corrigiendo conteos..."
+														: "Corregir conteos"}
+												</span>
+												<span className="text-xs text-muted-foreground">
+													Recalcular conteos de productos
 												</span>
 											</div>
 										</Button>

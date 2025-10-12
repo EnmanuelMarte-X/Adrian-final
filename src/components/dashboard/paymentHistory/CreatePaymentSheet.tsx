@@ -39,10 +39,9 @@ export function CreatePaymentSheet({
 		onSuccess: () => {
 			resetAll();
 			setIsOpen(false);
-			toast.success("Pago registrado exitosamente!");
 		},
 		onError: () => {
-			toast.error("Error al registrar el pago. Por favor intenta de nuevo.");
+			// El error ya se maneja en toast.promise
 		},
 	});
 

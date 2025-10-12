@@ -47,7 +47,7 @@ export function QuickActions() {
 			<div className="flex flex-col gap-y-2">
 				<h2>Acciones rápidas</h2>
 				<p className="text-sm text-muted-foreground max-w-prose">
-					Estas acciones te permiten gestionar tu inventario y pedidos de manera
+					Estas acciones te permiten gestionar tu inventario, pedidos y pagos de manera
 					eficiente.
 				</p>
 			</div>
@@ -61,6 +61,12 @@ export function QuickActions() {
 						onProductFound={(product) => {
 							console.log("Producto encontrado:", product);
 						}}
+						onOrderFound={(order) => {
+							console.log("Factura encontrada:", order);
+						}}
+						onPaymentFound={(payment) => {
+							console.log("Pago encontrado:", payment);
+						}}
 					>
 						<Button
 							className="w-full flex flex-col sm:flex-row justify-center sm:justify-start gap-3 h-20 sm:h-16 hover:shadow-md transition-all duration-200"
@@ -68,9 +74,9 @@ export function QuickActions() {
 						>
 							<ScanIcon className="h-5 w-5 shrink-0" />
 							<div className="flex flex-col items-center sm:items-start text-center sm:text-left">
-								<span className="font-medium text-sm">Escanear producto</span>
+								<span className="font-medium text-sm">Buscar por código</span>
 								<span className="text-xs text-muted-foreground hidden sm:block">
-									Buscar producto en el almacén
+									Buscar productos, facturas y pagos
 								</span>
 							</div>
 						</Button>

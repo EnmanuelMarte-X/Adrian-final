@@ -26,7 +26,9 @@ import { useWindowWidth } from "@/hooks/use-window-width";
 const columns: ColumnDef<ProductType>[] = [
 	{
 		accessorKey: "name",
-		header: "Nombre",
+		header: ({ column }) => {
+			return <span>Nombre</span>;
+		},
 		enableColumnFilter: true,
 		enableSorting: true,
 		enableResizing: true,
@@ -44,19 +46,25 @@ const columns: ColumnDef<ProductType>[] = [
 	},
 	{
 		accessorKey: "brand",
-		header: "Marca",
+		header: ({ column }) => {
+			return <span>Marca</span>;
+		},
 		enableColumnFilter: true,
 		enableSorting: true,
 	},
 	{
 		accessorKey: "category",
-		header: "Categoría",
+		header: ({ column }) => {
+			return <span>Categoría</span>;
+		},
 		enableColumnFilter: true,
 		enableSorting: true,
 	},
 	{
 		accessorKey: "cost",
-		header: () => <div className="text-right w-full">Costo</div>,
+		header: ({ column }) => {
+			return <span className="text-right w-full block">Costo</span>;
+		},
 		enableSorting: true,
 		cell(row) {
 			const amount = Number.parseFloat(String(row.cell.getValue()));
@@ -69,29 +77,33 @@ const columns: ColumnDef<ProductType>[] = [
 	},
 	{
 		accessorKey: "capacity",
-		header: () => <div className="text-right w-full">Capacidad</div>,
+		header: ({ column }) => {
+			return <span className="text-center w-full block">Capacidad</span>;
+		},
 		enableSorting: true,
 		cell(row) {
-			return <div className="text-right">{row.cell.getValue() as string}</div>;
+			return <div className="text-center font-medium">{row.cell.getValue() as string}</div>;
 		},
 	},
 	{
 		accessorKey: "capacityUnit",
-		header: () => "Unidad",
+		header: () => {
+			return <span className="text-center w-full block">Unidad</span>;
+		},
 		enableSorting: false,
 		cell(row) {
 			const unit = row.cell.getValue() as ProductCapacityUnit;
 
 			if (unit === "count") {
 				return (
-					<div className="text-sm text-muted-foreground font-medium">
-						Unidades
+					<div className="text-center text-xs text-muted-foreground font-medium">
+						UD
 					</div>
 				);
 			}
 
 			return (
-				<div className="uppercase text-xs text-muted-foreground font-medium">
+				<div className="text-center uppercase text-xs text-muted-foreground font-medium">
 					{unit}
 				</div>
 			);
@@ -99,7 +111,9 @@ const columns: ColumnDef<ProductType>[] = [
 	},
 	{
 		accessorKey: "stock",
-		header: "Stock",
+		header: ({ column }) => {
+			return <span className="text-center w-full block">Stock</span>;
+		},
 		enableColumnFilter: true,
 		enableSorting: true,
 		cell({ row }) {
@@ -108,16 +122,18 @@ const columns: ColumnDef<ProductType>[] = [
 					sum + (location.stock || 0),
 				0,
 			);
-			return <div className="text-right">{totalStock}</div>;
+			return <div className="text-center font-medium">{totalStock}</div>;
 		},
 	},
 	{
 		accessorKey: "_id",
-		header: "Fecha de creación",
+		header: ({ column }) => {
+			return <span className="text-center w-full block">Fecha de creación</span>;
+		},
 		enableSorting: true,
 		cell: ({ row }) => {
 			return (
-				<div className="font-medium">
+				<div className="text-center font-medium text-sm">
 					{dateFormat(getDateFromObjectId(row.original._id))}
 				</div>
 			);
@@ -125,7 +141,9 @@ const columns: ColumnDef<ProductType>[] = [
 	},
 	{
 		accessorKey: "retailPrice",
-		header: () => <div className="text-right w-full">Precio de venta</div>,
+		header: ({ column }) => {
+			return <span className="text-right w-full block">Precio de venta</span>;
+		},
 		enableSorting: true,
 		cell(row) {
 			const amount = Number.parseFloat(String(row.cell.getValue()));
@@ -138,7 +156,9 @@ const columns: ColumnDef<ProductType>[] = [
 	},
 	{
 		accessorKey: "wholesalePrice",
-		header: () => <div className="text-right w-full">Precio por mayor</div>,
+		header: ({ column }) => {
+			return <span className="text-right w-full block">Precio por mayor</span>;
+		},
 		enableSorting: true,
 		cell(row) {
 			const amount = Number.parseFloat(String(row.cell.getValue()));

@@ -8,9 +8,12 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Edit, MoreHorizontal, Eye, Trash2 } from "lucide-react";
+import { MoreHorizontal, Eye, Trash2, CopyIcon, BanknoteIcon, PrinterIcon } from "lucide-react";
+import { toast } from "sonner";
+import { tryCatch } from "@/lib/utils";
 import Link from "next/link";
 import { DeleteOrderAlertDialog } from "./DeleteOrderAlertDialog";
+import { OrderPaymentsSheet } from "./OrderPaymentsSheet";
 import type { OrderType } from "@/types/models/orders";
 import { useAuthorization } from "@/hooks/use-auth";
 
@@ -30,8 +33,21 @@ export function OrdersActions({
 		e.stopPropagation();
 	};
 
-	const handleEdit = (e: React.MouseEvent) => {
+	const handlePrint = (e: React.MouseEvent) => {
 		e.stopPropagation();
+		const printUrl = `/recipient/${order._id}`;
+		window.open(printUrl, "_blank", "width=800,height=600");
+	};
+
+	const handleCopyId = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		if (!order._id) {
+			toast.error("No se pudo copiar el ID: ID no disponible.");
+			return;
+		}
+		console.log("Copiando ID de la orden:", order._id);
+		tryCatch(navigator.clipboard.writeText(order._id));
+		toast.info("ID copiado en el portapapeles.");
 	};
 
 	return (
@@ -67,11 +83,20 @@ export function OrdersActions({
 							<span>Ver detalles</span>
 						</Link>
 					</DropdownMenuItem>
-					<DropdownMenuItem asChild onClick={handleEdit}>
-						<Link href={`/dashboard/orders/edit/${order.orderId}`}>
-							<Edit className="mr-2 size-4" />
-							<span>Editar</span>
-						</Link>
+					<DropdownMenuItem onClick={handleCopyId}>
+						<CopyIcon className="mr-2 size-4" />
+						<span>Copiar ID</span>
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<OrderPaymentsSheet orderId={order._id || ""}>
+						<DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+							<BanknoteIcon className="mr-2 size-4" />
+							<span>Ver pagos</span>
+						</DropdownMenuItem>
+					</OrderPaymentsSheet>
+					<DropdownMenuItem onClick={handlePrint}>
+						<PrinterIcon className="mr-2 size-4" />
+						<span>Imprimir</span>
 					</DropdownMenuItem>
 					{isAdmin && (
 						<>

@@ -1,4 +1,6 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useEffect } from "react";
 import {
 	Card,
 	CardContent,
@@ -21,13 +23,12 @@ import {
 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export const metadata: Metadata = {
-	title: "Devoluciones | Jhenson Supply",
-	description:
-		"Proceso fácil y rápido para devolver productos. Conoce nuestra política de devoluciones y cómo iniciar el proceso.",
-};
-
 export default function ReturnsPage() {
+	// Set document title for Client Component
+	useEffect(() => {
+		document.title = "Devoluciones | Jhenson Supply";
+	}, []);
+
 	const returnSteps = [
 		{
 			step: 1,
@@ -227,10 +228,24 @@ export default function ReturnsPage() {
 									equipo está aquí para ayudarte.
 								</p>
 								<div className="flex flex-col gap-2">
-									<Button variant="outline" className="justify-start">
+									<Button 
+										variant="outline" 
+										className="justify-start"
+										onClick={() => {
+											const subject = encodeURIComponent('Consulta sobre devolución - Jhenson Supply');
+											const body = encodeURIComponent('Hola,\n\nTengo una pregunta sobre el proceso de devolución.\n\nDetalles de mi consulta:\n\n\n\nGracias por su tiempo.');
+											window.open(`mailto:info@jhensonsupply.com?subject=${subject}&body=${body}`, '_blank');
+										}}
+									>
 										📧 Contactar Soporte
 									</Button>
-									<Button variant="outline" className="justify-start">
+									<Button 
+										variant="outline" 
+										className="justify-start"
+										onClick={() => {
+											window.open('tel:+18498636444', '_self');
+										}}
+									>
 										📞 Llamar Ahora
 									</Button>
 								</div>

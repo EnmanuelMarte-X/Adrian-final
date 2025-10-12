@@ -12,7 +12,6 @@ import { useOrderById } from "@/contexts/orders/queries";
 import {
 	AlertCircle,
 	ArrowLeftIcon,
-	PrinterIcon,
 	ReceiptIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -40,11 +39,6 @@ export default function OrderSlugPage({
 	const { data: order, isError, isLoading } = useOrderById(orderId);
 	const windowWidth = useWindowWidth();
 	const isLargeScreen = windowWidth >= 1200;
-
-	const handlePrint = () => {
-		const printUrl = `/recipient/${orderId}`;
-		window.open(printUrl, "_blank", "width=800,height=600");
-	};
 
 	const handleViewReceipt = () => {
 		const receiptUrl = `/recipient/${orderId}`;
@@ -118,16 +112,10 @@ export default function OrderSlugPage({
 								<span className="hidden sm:inline ml-1">Ver todas las ordenes</span>
 							</Button>
 						</Link>
-						<div className="flex gap-2">
-							<Button size="sm" variant="outline" onClick={handleViewReceipt}>
-								<ReceiptIcon className="size-3" />
-								<span className="hidden sm:inline ml-1">Ver factura</span>
-							</Button>
-							<Button size="sm" variant="ghost" onClick={handlePrint}>
-								<PrinterIcon className="size-3" />
-								<span className="hidden sm:inline ml-1">Imprimir</span>
-							</Button>
-						</div>
+						<Button size="sm" variant="outline" onClick={handleViewReceipt}>
+							<ReceiptIcon className="size-3" />
+							<span className="hidden sm:inline ml-1">Ver factura</span>
+						</Button>
 					</motion.div>
 					<motion.div
 						className="grid grid-cols-4 gap-x-3 gap-y-12"
@@ -348,9 +336,9 @@ export default function OrderSlugPage({
 										<span className="hidden sm:inline ml-1">Ver todas las ordenes</span>
 									</Button>
 								</Link>
-								<Button size="sm" variant="ghost" onClick={handlePrint}>
-									<PrinterIcon className="size-3" />
-									<span className="hidden sm:inline ml-1">Imprimir</span>
+								<Button size="sm" variant="ghost" onClick={handleViewReceipt}>
+									<ReceiptIcon className="size-3" />
+									<span className="hidden sm:inline ml-1">Ver factura</span>
 								</Button>
 							</motion.div>
 							<motion.div

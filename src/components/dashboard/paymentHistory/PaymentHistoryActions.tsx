@@ -15,7 +15,10 @@ import {
 	FileTextIcon,
 	PrinterIcon,
 	Trash2Icon,
+	CopyIcon,
 } from "lucide-react";
+import { toast } from "sonner";
+import { tryCatch } from "@/lib/utils";
 import Link from "next/link";
 import { useState } from "react";
 import { useAuthorization } from "@/hooks/use-auth";
@@ -41,6 +44,17 @@ export function PaymentHistoryActions({
 		setDeleteOpen(true);
 	};
 
+	const handleCopyId = (e: React.MouseEvent) => {
+		e.stopPropagation();
+		if (!paymentHistory._id) {
+			toast.error("No se pudo copiar el ID: ID no disponible.");
+			return;
+		}
+		console.log("Copiando ID del pago:", paymentHistory._id);
+		tryCatch(navigator.clipboard.writeText(paymentHistory._id));
+		toast.info("ID copiado en el portapapeles.");
+	};
+
 	return (
 		<>
 			{(isAdmin  && paymentHistory._id) && (
@@ -64,11 +78,15 @@ export function PaymentHistoryActions({
 			<DropdownMenuContent align="end">
 				<DropdownMenuLabel>Acciones</DropdownMenuLabel>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem onClick={handlePrint}>
-					<PrinterIcon className="mr-2 size-4" />
-					<span>Ver recibo</span>
-				</DropdownMenuItem>
-				<DropdownMenuSeparator />
+			<DropdownMenuItem onClick={handlePrint}>
+				<PrinterIcon className="mr-2 size-4" />
+				<span>Ver recibo</span>
+			</DropdownMenuItem>
+			<DropdownMenuItem onClick={handleCopyId}>
+				<CopyIcon className="mr-2 size-4" />
+				<span>Copiar ID</span>
+			</DropdownMenuItem>
+			<DropdownMenuSeparator />
 				<Link
 					href={`/dashboard/orders/${typeof paymentHistory.orderId === "string" ? paymentHistory.orderId : paymentHistory.orderId?._id}`}
 				>

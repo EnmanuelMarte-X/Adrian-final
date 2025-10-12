@@ -150,3 +150,30 @@ export const useDeleteStorageMutation = () =>
 			queryClient.removeQueries({ queryKey: ["storage", id] });
 		},
 	});
+
+export const useFixStorageCountsMutation = () =>
+	useMutation({
+		mutationFn: async () => {
+			const response = await fetch("/api/storages/fix-counts", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			if (!response.ok) {
+				throw new Error(`Failed to fix storage counts: ${response.status}`);
+			}
+
+			return response.json();
+		},
+		onSuccess: () => {
+			// Invalidate all storage-related queries to refresh the data
+			queryClient.invalidateQueries({ queryKey: ["storages"] });
+			queryClient.invalidateQueries({ queryKey: ["storage"] });
+			queryClient.invalidateQueries({ queryKey: ["storagesCount"] });
+			
+			// Also force a refetch of the current storage
+			queryClient.refetchQueries({ queryKey: ["storage"] });
+		},
+	});

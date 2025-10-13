@@ -184,8 +184,8 @@ export function OrdersFilters({ filters, onFiltersChange }: OrderFiltersProps) {
 				<TextFilter
 					id="orderId"
 					initialValue={filters.orderId?.toString() ?? ""}
-					label="ID de Orden"
-					placeholder="Número de orden"
+					label="ID de factura"
+					placeholder="Número de factura"
 					urlSetter={setOrderIdParam}
 				/>
 

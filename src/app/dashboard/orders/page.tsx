@@ -12,7 +12,7 @@ import { Spinner } from "@/components/ui/spinner";
 
 function OrdersPageContent() {
 	const [pagination, setPagination] = usePaginationState({
-		pageSize: 25,
+		pageSize: 20,
 	});
 
 	const [sorting, setSorting] = useState<SortingState>([

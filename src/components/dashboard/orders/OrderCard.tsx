@@ -1,9 +1,16 @@
+"use client";
+
 import { OrdersActions } from "./OrdersActions";
 import { currencyFormat } from "@/config/formats";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import type { OrderType } from "@/types/models/orders";
 import { CalendarIcon, PackageIcon, UserIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { usePaymentHistoryByOrderId } from "@/contexts/paymentHistory/queries";
+import { calculateInvoiceOwing } from "@/lib/invoice-utils";
+import { Spinner } from "@/components/ui/spinner";
+import { getFirstNameAndLastInitial } from "@/lib/utils";
 
 export function OrderCard({ order }: { order: OrderType }) {
 	const total =
@@ -12,6 +19,11 @@ export function OrderCard({ order }: { order: OrderType }) {
 				sum + product.price * product.quantity - (product.discount || 0) / 10,
 			0,
 		) || 0;
+
+	const { data: payments = [], isLoading } = usePaymentHistoryByOrderId(
+		order._id || "",
+	);
+	const owing = calculateInvoiceOwing(order, payments);
 
 	return (
 		<OrdersActions
@@ -29,17 +41,38 @@ export function OrderCard({ order }: { order: OrderType }) {
 							{typeof order.buyerId === "object" &&
 								order.buyerId !== null &&
 								"name" in order.buyerId && (
-									<p className="text-muted-foreground text-sm">
-										{order.buyerId.name}
+									<p className="text-muted-foreground text-sm max-w-[23ch] truncate">
+										{getFirstNameAndLastInitial(order.buyerId.name)}
 									</p>
 								)}
 						</div>
+
 						<div className="flex flex-col items-end gap-y-2">
 							<span className="text-sm font-medium">
 								{currencyFormat.format(total)}
 							</span>
+
+							{/* Owing / pendiente debajo del total */}
+							<span
+								className={cn(
+									"text-xs font-medium",
+									owing > 0 ? "text-destructive" : "text-success",
+								)}
+							>
+								{isLoading ? (
+									<span className="inline-flex items-center gap-2">
+										<Spinner className="text-primary" />
+										<span className="text-xs text-muted-foreground">
+											Cargando
+										</span>
+									</span>
+								) : (
+									currencyFormat.format(owing)
+								)}
+							</span>
 						</div>
 					</div>
+
 					<div className="flex gap-3 mt-3">
 						<div className="inline-flex items-center text-muted-foreground gap-x-1">
 							<CalendarIcon className="size-3.5" />
@@ -47,19 +80,23 @@ export function OrderCard({ order }: { order: OrderType }) {
 								{format(new Date(order.date), "dd MMM yyyy", { locale: es })}
 							</p>
 						</div>
+
 						<div className="inline-flex items-center text-muted-foreground gap-x-1">
 							<PackageIcon className="size-3" />
 							<p className="text-xs font-medium">
 								{order.products?.length ?? 0} productos
 							</p>
 						</div>
+
 						{typeof order.sellerId === "object" &&
 							order.sellerId !== null &&
 							"firstName" in order.sellerId && (
 								<div className="inline-flex items-center text-muted-foreground gap-x-1">
 									<UserIcon className="size-3" />
 									<p className="text-xs font-medium max-w-[10ch] truncate">
-										{order.sellerId.firstName}
+										{getFirstNameAndLastInitial(
+											`${order.sellerId.firstName} ${order.sellerId.lastName ?? ""}`,
+										)}
 									</p>
 								</div>
 							)}

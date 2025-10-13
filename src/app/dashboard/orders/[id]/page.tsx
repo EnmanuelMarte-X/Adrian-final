@@ -109,7 +109,7 @@ export default function OrderSlugPage({
 						<Link href={"/dashboard/orders"}>
 							<Button variant="ghost" size="sm">
 								<ArrowLeftIcon className="size-4" />
-								<span className="hidden sm:inline ml-1">Ver todas las ordenes</span>
+								<span className="hidden sm:inline ml-1">Ver todas las facturas</span>
 							</Button>
 						</Link>
 						<Button size="sm" variant="outline" onClick={handleViewReceipt}>
@@ -333,7 +333,7 @@ export default function OrderSlugPage({
 								<Link href={"/dashboard/orders"}>
 									<Button variant="ghost" size="sm">
 										<ArrowLeftIcon className="size-4" />
-										<span className="hidden sm:inline ml-1">Ver todas las ordenes</span>
+										<span className="hidden sm:inline ml-1">Ver todas las facturas</span>
 									</Button>
 								</Link>
 								<Button size="sm" variant="ghost" onClick={handleViewReceipt}>

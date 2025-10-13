@@ -25,7 +25,7 @@ export function LastOrdersSection({ children }: { children: React.ReactNode }) {
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3, delay: 0.2 }}
 					>
-						Últimas ordenes
+						Últimas facturas
 					</motion.h2>
 					<motion.p
 						className="text-muted-foreground text-sm"
@@ -33,7 +33,7 @@ export function LastOrdersSection({ children }: { children: React.ReactNode }) {
 						animate={{ opacity: 1 }}
 						transition={{ duration: 0.3, delay: 0.3 }}
 					>
-						Lista de los últimas ordenes registrados en el sistema.
+						Lista de los últimas facturas registrados en el sistema.
 					</motion.p>
 				</div>
 				<div className="inline-flex items-center gap-x-2">
@@ -46,7 +46,7 @@ export function LastOrdersSection({ children }: { children: React.ReactNode }) {
 						>
 							<CircleAlertIcon className="w-6 h-6 text-destructive" />
 							<p className="text-destructive text-sm">
-								Error al cargar las ordenes. Por favor inténtelo de nuevo.
+								Error al cargar las facturas. Por favor inténtelo de nuevo.
 							</p>
 						</motion.div>
 					)}

@@ -6,13 +6,13 @@ import type { SortingState } from "@tanstack/react-table";
 import type { ProductFilters } from "@/contexts/products/types";
 import { ProductsFilters } from "@/components/dashboard/products/ProductsFilters";
 import { CreateProductSheet } from "@/components/dashboard/products/CreateProductSheet";
-import { useQueryPaginationState } from "@/hooks/use-pagination-state";
+import { usePaginationState } from "@/hooks/use-pagination-state";
 import { motion } from "motion/react";
 import { Spinner } from "@/components/ui/spinner";
 
 function ProductsPageContent() {
-	const [pagination, setPagination] = useQueryPaginationState({
-		pageSize: 25,
+	const [pagination, setPagination] = usePaginationState({
+		pageSize: 20,
 	});
 
 	const [sorting, setSorting] = useState<SortingState>([

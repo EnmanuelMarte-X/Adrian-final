@@ -437,7 +437,6 @@ export function BarcodeScanner({
 							</motion.div>
 						)}
 
-						{/* Resultado de orden/factura */}
 						{order && currentSearchType === "order" && (
 							<motion.div
 								initial={{ opacity: 0, y: 10 }}

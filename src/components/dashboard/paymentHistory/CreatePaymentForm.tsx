@@ -14,27 +14,7 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { paymentMethodIcons, unknownPaymentMethodIcon } from "@/config/orders";
 import { ClientSelect } from "../clients/ClientSelect";
 import { OrderWithDebtSelect } from "../orders/OrderWithDebtSelect";
-import type { OrderType } from "@/types/models/orders";
-import type { ClientType } from "@/types/models/clients";
-import { TAX_PERCENTAGE } from "@/config/shop";
 import { useEffect } from "react";
-
-// Función para calcular el total de una factura
-const calculateOrderTotal = (order: OrderType): number => {
-	const subtotal =
-		order?.products?.reduce((total, product) => {
-			return total + product.price * product.quantity;
-		}, 0) ?? 0;
-	const totalDiscount =
-		order?.products?.reduce((totalDiscount, product) => {
-			return totalDiscount + (product.discount || 0);
-		}, 0) ?? 0;
-	const tax = subtotal * TAX_PERCENTAGE;
-	const total = subtotal - totalDiscount + tax;
-	return total;
-};
-
-
 
 export function CreatePaymentForm() {
 	const { control, register, setValue, watch, getValues } =
@@ -42,7 +22,6 @@ export function CreatePaymentForm() {
 
 	const watchedDate = watch("date");
 	const watchedMethod = watch("method");
-	const watchedOrderId = watch("orderId");
 
 	const handleMethodChange = (value: string) => {
 		setValue("method", value as PaymentHistoryType["method"]);
@@ -55,14 +34,19 @@ export function CreatePaymentForm() {
 	const _clientId = watch("clientId");
 	const clientId = typeof _clientId === "string" ? _clientId : _clientId?._id;
 
-	// Limpiar la factura cuando se cambia el cliente
 	useEffect(() => {
 		const currentOrderId = getValues("orderId");
-		if (currentOrderId && clientId) {
-			// Si hay una factura seleccionada y se cambió el cliente,
-			// limpiar la factura y el monto para forzar una nueva selección
-			setValue("orderId", "");
-			setValue("amount", 0);
+		if (!currentOrderId) {
+			return;
+		}
+
+		const order = getValues("orderId");
+		if (order && clientId) {
+			const isFromInvoiceSelection = order !== "";
+			if (!isFromInvoiceSelection) {
+				setValue("orderId", "");
+				setValue("amount", 0);
+			}
 		}
 	}, [clientId, setValue, getValues]);
 
@@ -79,22 +63,23 @@ export function CreatePaymentForm() {
 						rules={{ required: "Debe seleccionar una factura" }}
 						render={({ field }) => (
 							<div className="space-y-1 w-full">
-							<OrderWithDebtSelect
-								className="w-full"
-								value={String(field.value)}
-								onChange={(order, remainingBalance) => {
-									field.onChange(order?._id);
-									// Seleccionar automáticamente el cliente de la factura
-									if (order?.buyerId) {
-										const buyerId = typeof order.buyerId === 'string' ? order.buyerId : order.buyerId._id;
-										setValue('clientId', buyerId);
-										// Establecer el saldo pendiente como sugerencia
-										setValue('amount', remainingBalance || 0);
-									}
-								}}
-								filters={{ buyerId: clientId }}
-								placeholder="Seleccionar factura con saldo pendiente"
-							/>
+								<OrderWithDebtSelect
+									className="w-full"
+									value={String(field.value)}
+									onChange={(order, remainingBalance) => {
+										field.onChange(order?._id);
+										if (order?.buyerId) {
+											const buyerId =
+												typeof order.buyerId === "string"
+													? order.buyerId
+													: order.buyerId._id;
+											setValue("clientId", buyerId);
+											setValue("amount", remainingBalance || 0);
+										}
+									}}
+									filters={{ buyerId: clientId }}
+									placeholder="Seleccionar factura con saldo pendiente"
+								/>
 							</div>
 						)}
 					/>
@@ -115,8 +100,7 @@ export function CreatePaymentForm() {
 									value={String(field.value)}
 									onChange={(client) => {
 										field.onChange(client?._id);
-										// Cuando se selecciona manualmente un cliente diferente,
-										// limpiar la factura y el monto para evitar inconsistencias
+										
 										const currentOrderId = getValues("orderId");
 										if (currentOrderId) {
 											setValue("orderId", "");
@@ -130,8 +114,6 @@ export function CreatePaymentForm() {
 					/>
 				</div>
 			</div>
-
-
 
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 				<div className="space-y-2">

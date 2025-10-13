@@ -8,7 +8,7 @@ import type {
 import { DataTable } from "@/components/ui/data-table";
 import type { Dispatch, SetStateAction } from "react";
 import { DataPagination } from "@/components/ui/data-pagination";
-import { currencyFormat, dateFormat } from "@/config/formats";
+import { dateFormat } from "@/config/formats";
 import { useOrders } from "@/contexts/orders/queries";
 import { OrdersActions } from "./OrdersActions";
 import type { OrderFilters } from "@/contexts/orders/types";
@@ -21,7 +21,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { useSidebar } from "@/components/ui/sidebar";
 import { useWindowWidth } from "@/hooks/use-window-width";
-import { BanknoteIcon, CoinsIcon, ShoppingCartIcon } from "lucide-react";
+import { ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
 import { TAX_PERCENTAGE } from "@/config/shop";
 import { InvoiceTotalWithTooltip } from "./InvoiceTotalWithTooltip";

@@ -93,11 +93,11 @@ export function CreditOrderReceipt({
 					margin: "0 auto",
 					color: "#000",
 					minWidth: "320px",
-					maxWidth: "640px",
-					paddingTop: "48px",
-					paddingBottom: "48px",
-					paddingLeft: "10px",
-					paddingRight: "10px",
+					maxWidth: "900px",
+					paddingTop: "24px",
+					paddingBottom: "24px",
+					paddingLeft: "8px",
+					paddingRight: "8px",
 				}}
 			>
 				<div id="receipt-content">
@@ -172,6 +172,22 @@ export function CreditOrderReceipt({
 										<span style={{ marginLeft: "4px" }}>
 											B02{String(order.cfSequence).padStart(8, "0")}
 										</span>
+									</div>
+								)}
+								{isValidObjectId(order._id) && (
+									<div
+										style={{
+											paddingBlock: "2px",
+										}}
+									>
+										<Barcode
+											value={String(order._id)}
+											format="CODE128"
+											width={1.3}
+											height={40}
+											fontSize={12}
+											displayValue={false}
+										/>
 									</div>
 								)}
 							</div>
@@ -316,35 +332,35 @@ export function CreditOrderReceipt({
 									}}
 								>
 									<th
-									   style={{
-										   padding: "6px 4px",
-										   textAlign: "left",
-										   fontWeight: "600",
-										   fontSize: "10px",
-										   textTransform: "uppercase",
-										   borderBottom: "1px solid #e5e7eb",
-									   }}
+										style={{
+											padding: "4px 3px",
+											textAlign: "left",
+											fontWeight: "600",
+											fontSize: "9px",
+											textTransform: "uppercase",
+											borderBottom: "1px solid #e5e7eb",
+										}}
 									>
 										Descripción
 									</th>
 									<th
-									   style={{
-										   padding: "6px 4px",
-										   textAlign: "center",
-										   fontWeight: "600",
-										   fontSize: "10px",
-										   textTransform: "uppercase",
-										   borderBottom: "1px solid #e5e7eb",
-									   }}
+										style={{
+											padding: "4px 3px",
+											textAlign: "center",
+											fontWeight: "600",
+											fontSize: "9px",
+											textTransform: "uppercase",
+											borderBottom: "1px solid #e5e7eb",
+										}}
 									>
 										Precio
 									</th>
 									<th
 										style={{
-											padding: "12px 4px",
+											padding: "4px 3px",
 											textAlign: "center",
 											fontWeight: "600",
-											fontSize: "10px",
+											fontSize: "9px",
 											textTransform: "uppercase",
 											borderBottom: "1px solid #e5e7eb",
 										}}
@@ -353,10 +369,10 @@ export function CreditOrderReceipt({
 									</th>
 									<th
 										style={{
-											padding: "12px 4px",
+											padding: "4px 3px",
 											textAlign: "center",
 											fontWeight: "600",
-											fontSize: "10px",
+											fontSize: "9px",
 											textTransform: "uppercase",
 											borderBottom: "1px solid #e5e7eb",
 										}}
@@ -365,10 +381,10 @@ export function CreditOrderReceipt({
 									</th>
 									<th
 										style={{
-											padding: "12px 4px",
+											padding: "4px 3px",
 											textAlign: "right",
 											fontWeight: "600",
-											fontSize: "10px",
+											fontSize: "9px",
 											textTransform: "uppercase",
 											borderBottom: "1px solid #e5e7eb",
 										}}
@@ -386,40 +402,40 @@ export function CreditOrderReceipt({
 										}}
 									>
 										<td
-										   style={{
-											   padding: "6px 4px",
-											   maxWidth: "180px",
-											   wordBreak: "break-word",
-											   borderBottom:
-												   index === (order.products?.length || 0) - 1
-													   ? "none"
-													   : "1px solid #f1f5f9",
-										   }}
+											style={{
+												padding: "3px 3px",
+												maxWidth: "220px",
+												wordBreak: "break-word",
+												borderBottom:
+													index === (order.products?.length || 0) - 1
+														? "none"
+														: "1px solid #f1f5f9",
+											}}
 										>
-											<div style={{ fontSize: "11px", fontWeight: "600" }}>
+											<div style={{ fontSize: "10px", fontWeight: "600" }}>
 												{product.name || product.productId}
 											</div>
 											<div
 												style={{
-													fontSize: "9px",
+													fontSize: "8px",
 													color: "#64748b",
 													fontStyle: "italic",
-													marginTop: "2px",
+													marginTop: "1px",
 												}}
 											>
 												{product.name ? "Producto estándar" : "ID de producto"}
 											</div>
 										</td>
 										<td
-										   style={{
-											   padding: "6px 4px",
-											   textAlign: "center",
-											   fontSize: "11px",
-											   borderBottom:
-												   index === (order.products?.length || 0) - 1
-													   ? "none"
-													   : "1px solid #f1f5f9",
-										   }}
+											style={{
+												padding: "3px 3px",
+												textAlign: "center",
+												fontSize: "10px",
+												borderBottom:
+													index === (order.products?.length || 0) - 1
+														? "none"
+														: "1px solid #f1f5f9",
+											}}
 										>
 											{currencyFormat.format(product.retailPrice)}
 										</td>
@@ -438,9 +454,9 @@ export function CreditOrderReceipt({
 										</td>
 										<td
 											style={{
-												padding: "12px 4px",
+												padding: "3px 3px",
 												textAlign: "center",
-												fontSize: "11px",
+												fontSize: "10px",
 												borderBottom:
 													index === (order.products?.length || 0) - 1
 														? "none"
@@ -452,16 +468,16 @@ export function CreditOrderReceipt({
 												: "0%"}
 										</td>
 										<td
-										   style={{
-											   padding: "6px 4px",
-											   textAlign: "right",
-											   fontSize: "11px",
-											   fontWeight: "600",
-											   borderBottom:
-												   index === (order.products?.length || 0) - 1
-													   ? "none"
-													   : "1px solid #f1f5f9",
-										   }}
+											style={{
+												padding: "3px 3px",
+												textAlign: "right",
+												fontSize: "10px",
+												fontWeight: "600",
+												borderBottom:
+													index === (order.products?.length || 0) - 1
+														? "none"
+														: "1px solid #f1f5f9",
+											}}
 										>
 											{currencyFormat.format(
 												product.retailPrice * product.quantity -
@@ -478,21 +494,21 @@ export function CreditOrderReceipt({
 						style={{
 							display: "flex",
 							justifyContent: "flex-end",
-							marginTop: "12px",
+							marginTop: "8px",
 							width: "100%",
 						}}
 					>
 						<div
 							style={{
 								minWidth: "0",
-								width: "60%",
+								width: "70%",
 								backgroundColor: "white",
-								padding: "12px", // padding más generoso
-								borderRadius: "6px",
+								padding: "8px",
+								borderRadius: "4px",
 								border: "1px solid #e9ecef",
-								fontSize: "9px", // fuente más pequeña
-								marginTop: "2px", // margen superior más pequeño
-								marginBottom: "2px", // margen inferior más pequeño
+								fontSize: "9px",
+								marginTop: "2px",
+								marginBottom: "2px",
 							}}
 						>
 							<div
@@ -605,56 +621,6 @@ export function CreditOrderReceipt({
 							</div>
 						</div>
 					</div>
-
-					{isValidObjectId(order._id) && (
-						<div
-							style={{
-								width: "100%",
-								border: "1px solid #d1d5db",
-								borderRadius: "8px",
-								overflow: "hidden",
-								backgroundColor: "#ffffff",
-								marginTop: "6px", // margen superior más pequeño
-								marginBottom: "2px", // margen inferior más pequeño
-							}}
-						>
-							<div
-								style={{
-									padding: "2px 4px", // menos alto
-									borderBottom: "1px solid #e5e7eb",
-									backgroundColor: "#f0fdf4",
-								}}
-							>
-								<h3
-									style={{
-										fontSize: "10px",
-										fontWeight: "600",
-										margin: "0",
-										color: "#111827",
-										textAlign: "center",
-									}}
-								>
-									Código de Identificación
-								</h3>
-							</div>
-							<div
-								style={{
-									display: "flex",
-									alignItems: "center",
-									justifyContent: "center",
-									padding: "2px", // menos alto
-								}}
-							>
-								<Barcode
-									value={String(order._id)}
-									format="CODE128"
-									width={1.5}
-									height={50}
-									fontSize={12}
-								/>
-							</div>
-						</div>
-					)}
 				</div>
 			</div>
 		</div>

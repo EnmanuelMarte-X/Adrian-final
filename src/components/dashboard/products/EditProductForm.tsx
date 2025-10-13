@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { productCapacityUnits } from "@/contexts/products/units";
 import { Textarea } from "@/components/ui/textarea";
 import { ProductStoragesFrom } from "./ProductStoragesFrom";
+import { ProductImageDropzone } from "./ProductImageDropzone";
 
 type ProductStorageWithDisplay = ProductStorageType & {
 	displayName: string;
@@ -35,7 +36,14 @@ export function EditProductFrom({
 		})) || [],
 	);
 
-	const stock = productStorages.reduce((sum, storage) => sum + storage.stock, 0);
+	const [productImages, setProductImages] = useState<string[]>(
+		product?.images?.map((img) => img.url) || [],
+	);
+
+	const stock = productStorages.reduce(
+		(sum, storage) => sum + storage.stock,
+		0,
+	);
 
 	const { control, register, handleSubmit, setValue, reset } = useForm({
 		defaultValues: {
@@ -68,6 +76,7 @@ export function EditProductFrom({
 				wholesalePrice: product.wholesalePrice,
 				cost: product.cost,
 			});
+			setProductImages(product.images?.map((img) => img.url) || []);
 			setProductStorages(
 				product.locations?.map((location) => ({
 					...location,
@@ -84,7 +93,8 @@ export function EditProductFrom({
 		},
 	);
 
-	const onSubmit = async (data: Partial<ProductType>) => {
+	type FormData = Omit<ProductType, "images" | "_id" | "locations">;
+	const onSubmit = async (data: Partial<FormData>) => {
 		if ((data.retailPrice ?? 0) < (data.cost ?? 0)) {
 			toast.error("El precio de venta no puede ser menor al costo.");
 			return;
@@ -118,6 +128,10 @@ export function EditProductFrom({
 		const updatedData = {
 			...data,
 			locations: productStorages,
+			images: productImages.map((url) => ({
+				url,
+				alt: product?.name || "Producto",
+			})),
 		};
 
 		toast.promise(updateProduct(updatedData), {
@@ -338,6 +352,15 @@ export function EditProductFrom({
 					productId={product?._id}
 					initialStorages={productStorages as ProductStorageWithDisplay[]}
 					onStoragesChange={handleStoragesChange}
+				/>
+			</div>
+			<div className="mt-6 px-5">
+				<Label htmlFor="images" className="mb-4">
+					Imágenes del Producto
+				</Label>
+				<ProductImageDropzone
+					images={productImages}
+					onImagesChange={setProductImages}
 				/>
 			</div>
 		</form>

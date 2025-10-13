@@ -107,7 +107,7 @@ const columns: ColumnDef<PaymentHistoryType>[] = [
 	},
 	{
 		accessorKey: "orderId",
-		header: "Orden",
+		header: "Factura",
 		enableColumnFilter: true,
 		enableSorting: true,
 		cell: ({ row }) => {

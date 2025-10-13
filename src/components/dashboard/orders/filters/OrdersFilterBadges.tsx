@@ -87,7 +87,7 @@ function OrdersFilterBadgesComponent({
 							`Producto: ${Array.isArray(value) ? value[0] : value}`}
 						{key === "buyerId" && `Cliente: ${value}`}
 						{key === "sellerId" && `Vendedor: ${value}`}
-						{key === "orderId" && `Orden: ${value}`}
+						{key === "orderId" && `Factura: ${value}`}
 						{key === "cfSequence" && `CF: ${value}`}
 						{key === "ncfSequence" && `NCF: ${value}`}
 						<Button

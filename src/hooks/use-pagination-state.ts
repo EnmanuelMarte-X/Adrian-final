@@ -1,6 +1,7 @@
 import type { PaginationState } from "@tanstack/react-table";
 import { parseAsInteger, useQueryState } from "nuqs";
 import { useState } from "react";
+import { DEFAULT_PAGE_SIZE } from "@/config/pagination";
 
 export const useQueryPaginationState = (
 	initialState?: Partial<PaginationState>,
@@ -11,7 +12,7 @@ export const useQueryPaginationState = (
 	);
 	const [pageSize, setPageSize] = useQueryState(
 		"pageSize",
-		parseAsInteger.withDefault(initialState?.pageSize ?? 10),
+		parseAsInteger.withDefault(initialState?.pageSize ?? DEFAULT_PAGE_SIZE),
 	);
 
 	const handleChangePagination = (
@@ -36,7 +37,7 @@ export const useQueryPaginationState = (
 export const usePaginationState = (initialState?: Partial<PaginationState>) => {
 	const [state, setState] = useState<PaginationState>({
 		pageIndex: initialState?.pageIndex ?? 1,
-		pageSize: initialState?.pageSize ?? 10,
+		pageSize: initialState?.pageSize ?? DEFAULT_PAGE_SIZE,
 	});
 
 	return [state, setState] as const;

@@ -45,7 +45,7 @@ export function OrdersActions({
 			toast.error("No se pudo copiar el ID: ID no disponible.");
 			return;
 		}
-		console.log("Copiando ID de la orden:", order._id);
+		
 		tryCatch(navigator.clipboard.writeText(order._id));
 		toast.info("ID copiado en el portapapeles.");
 	};

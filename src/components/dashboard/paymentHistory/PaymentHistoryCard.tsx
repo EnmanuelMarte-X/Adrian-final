@@ -7,12 +7,9 @@ import {
 import { paymentMethods } from "@/contexts/paymentHistory/payment-method";
 import type { PaymentMethod } from "@/types/models/paymentHistory";
 import type { PaymentHistoryType } from "@/types/models/paymentHistory";
-import {
-	CalendarIcon,
-	FileTextIcon,
-	UserIcon,
-} from "lucide-react";
+import { CalendarIcon } from "lucide-react";
 import { PaymentHistoryActions } from "./PaymentHistoryActions";
+import { getFirstNameAndLastInitial } from "@/lib/utils";
 
 export function PaymentHistoryCard({
 	payment,
@@ -25,7 +22,9 @@ export function PaymentHistoryCard({
 
 	const paymentMethod = paymentMethods.find((m) => m.id === payment.method);
 	const paymentMethodName = paymentMethod?.name || unknownPaymentMethod;
-	const paymentMethodIcon = paymentMethodIcons[payment.method as PaymentMethod] || unknownPaymentMethodIcon;
+	const paymentMethodIcon =
+		paymentMethodIcons[payment.method as PaymentMethod] ||
+		unknownPaymentMethodIcon;
 
 	const paymentId = payment._id || "unknown";
 
@@ -40,14 +39,14 @@ export function PaymentHistoryCard({
 					<div className="inline-flex justify-between gap-x-2">
 						<div className="flex flex-col gap-y-2 items-start">
 							<h3 className="font-medium">
-								{`Pago #${paymentId.slice(-6)}`}
+								{`${getFirstNameAndLastInitial(clientName) || "Cliente"} - Factura #${orderId}`}
 							</h3>
-							<p className="text-muted-foreground text-sm">
-								{paymentMethodName}
-							</p>
+							<span className="text-muted-foreground max-w-[10ch] truncate">
+								{paymentId}
+							</span>
 						</div>
 						<div className="flex flex-col items-end gap-y-2">
-							<span className="text-lg font-semibold text-foreground">
+							<span className="text-md font-semibold text-foreground">
 								{currencyFormat.format(payment.amount)}
 							</span>
 							<div className="inline-flex gap-x-1 items-center text-[.8rem] text-muted-foreground">
@@ -57,16 +56,6 @@ export function PaymentHistoryCard({
 						</div>
 					</div>
 					<div className="flex gap-3 mt-3">
-						<div className="inline-flex items-center text-muted-foreground gap-x-1">
-							<UserIcon className="size-3.5" />
-							<p className="text-xs font-medium">
-								{clientName || "Cliente"}
-							</p>
-						</div>
-						<div className="inline-flex items-center text-muted-foreground gap-x-1">
-							<FileTextIcon className="size-3" />
-							<p className="text-xs font-medium">Orden #{orderId}</p>
-						</div>
 						<div className="inline-flex items-center text-muted-foreground gap-x-1">
 							<CalendarIcon className="size-3" />
 							<p className="text-xs font-medium">{dateFormat(payment.date)}</p>

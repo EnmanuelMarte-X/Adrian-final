@@ -229,3 +229,12 @@ export function mongoIdToShort(id: string): string {
 export function shortToMongoId(short: string): string {
 	return decodeBase62(short).toString(16).padStart(24, "0");
 }
+
+
+export function getFirstNameAndLastInitial(fullName: string): string {
+	const names = fullName.trim().split(" ");
+	if (names.length === 0) return "";
+	const firstName = names[0];
+	const lastInitial = names.length > 1 ? `${names[names.length - 1][0]}.` : "";
+	return `${firstName} ${lastInitial}`.trim();
+}

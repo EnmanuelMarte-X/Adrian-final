@@ -6,13 +6,13 @@ import type { SortingState } from "@tanstack/react-table";
 import type { PaymentHistoryFilters } from "@/contexts/paymentHistory/types";
 import { PaymentHistoryFilters as PaymentHistoryFiltersComponent } from "@/components/dashboard/paymentHistory/PaymentHistoryFilters";
 import { CreatePaymentSheet } from "@/components/dashboard/paymentHistory/CreatePaymentSheet";
-import { useQueryPaginationState } from "@/hooks/use-pagination-state";
+import { usePaginationState } from "@/hooks/use-pagination-state";
 import { motion } from "motion/react";
 import { Spinner } from "@/components/ui/spinner";
 
 function CreditPageContent() {
-	const [pagination, setPagination] = useQueryPaginationState({
-		pageSize: 25,
+	const [pagination, setPagination] = usePaginationState({
+		pageSize: 20,
 	});
 
 	const [sorting, setSorting] = useState<SortingState>([

@@ -51,7 +51,7 @@ export function CreateProductForm({
 					/>
 				</div>
 				<div className="flex flex-col gap-y-2 col-span-2">
-					<Label htmlFor="description">Descripción</Label>
+					<Label htmlFor="description" required>Descripción</Label>
 					<Textarea
 						id="description"
 						placeholder="Descripción asombrosa detallada del producto..."

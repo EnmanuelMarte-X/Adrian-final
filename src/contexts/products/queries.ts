@@ -182,7 +182,30 @@ export const useCreateProductMutation = (options?: {
 			});
 
 			if (!response.ok) {
-				throw new Error(`Failed to create product: ${response.status}`);
+				// Try to parse response body to provide a better error message
+				let parsed: Record<string, unknown> | null = null;
+				try {
+					parsed = await response.json();
+				} catch (_) {
+					// ignore parse errors
+				}
+
+				let serverMessage: string | undefined;
+				if (parsed && typeof parsed === "object") {
+					const err = parsed.error as Record<string, unknown> | undefined;
+					if (err && typeof err === "object") {
+						const m = err.message;
+						if (typeof m === "string") serverMessage = m;
+					}
+
+					if (!serverMessage) {
+						const m = parsed.message;
+						if (typeof m === "string") serverMessage = m;
+					}
+				}
+
+				const message = serverMessage || `Failed to create product: ${response.status}`;
+				throw new Error(message);
 			}
 		},
 		onSuccess: () => {

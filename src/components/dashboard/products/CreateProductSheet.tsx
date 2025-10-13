@@ -72,9 +72,9 @@ export function CreateProductSheet({
 
 	const { mutateAsync: createProduct } = useCreateProductMutation({
 		onSuccess: () => {
+			// Reset state and close sheet. Success toast is handled by toast.promise
 			resetAll();
 			setIsOpen(false);
-			toast.success("Producto creado exitosamente!");
 		},
 	});
 
@@ -210,10 +210,14 @@ export function CreateProductSheet({
 				})),
 			};
 
-			toast.promise(createProduct(productData as ProductType), {
+			// Await the promise so any thrown errors can be handled if needed.
+			await toast.promise(createProduct(productData as ProductType), {
 				loading: "Creando producto...",
 				success: "Producto creado exitosamente!",
-				error: "No se pudo crear el producto. Por favor intenta de nuevo.",
+				// Use the error value from the rejected promise if available
+				error: (err: unknown) =>
+					(err instanceof Error && err.message) ||
+					"No se pudo crear el producto. Por favor intenta de nuevo.",
 			});
 		} catch {
 			toast.error(

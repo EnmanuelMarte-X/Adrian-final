@@ -124,9 +124,20 @@ export function CreatePaymentForm() {
 						id="amount"
 						type="number"
 						step="0.01"
+                        
 						min="0"
 						placeholder="Ingrese el monto a pagar"
-						{...register("amount")}
+						{...register("amount", {
+							valueAsNumber: true,
+							setValueAs: (v) => {
+								// When empty string or null, return as-is (handled by RHF validation)
+								if (v === "" || v === null || v === undefined) return v;
+								const num = Number(v);
+								if (Number.isNaN(num)) return v;
+								// Round to 2 decimals
+								return Math.round(num * 100) / 100;
+							},
+						})}
 					/>
 				</div>
 

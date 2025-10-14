@@ -98,6 +98,7 @@ export function CreditOrderReceipt({
 					paddingBottom: "24px",
 					paddingLeft: "8px",
 					paddingRight: "8px",
+					fontSize: "11px", // estándar entre 10-12px
 				}}
 			>
 				<div id="receipt-content">
@@ -123,7 +124,7 @@ export function CreditOrderReceipt({
 							<div>
 								<h1
 									style={{
-										fontSize: "20px",
+										fontSize: "11px",
 										fontWeight: "600",
 										margin: "0",
 									}}
@@ -143,7 +144,7 @@ export function CreditOrderReceipt({
 						<div style={{ textAlign: "right" }}>
 							<h2
 								style={{
-									fontSize: "24px",
+									fontSize: "11px",
 									fontWeight: "400",
 									margin: "0 0 16px 0",
 									color: "#1f2937",
@@ -178,13 +179,15 @@ export function CreditOrderReceipt({
 									<div
 										style={{
 											paddingBlock: "2px",
+											display: "flex",
+											justifyContent: "flex-end",
 										}}
 									>
 										<Barcode
-											value={String(order._id)}
+											value={String(order.orderId).slice(-11).padStart(11, "0")}
 											format="CODE128"
-											width={1.3}
-											height={40}
+											width={2}
+											height={50}
 											fontSize={12}
 											displayValue={false}
 										/>
@@ -205,7 +208,7 @@ export function CreditOrderReceipt({
 						<div>
 							<h3
 								style={{
-									fontSize: "14px",
+									fontSize: "11px",
 									fontWeight: "600",
 									margin: "0 0 8px 0",
 									color: "#374151",
@@ -255,7 +258,7 @@ export function CreditOrderReceipt({
 						<div>
 							<h3
 								style={{
-									fontSize: "14px",
+									fontSize: "11px",
 									fontWeight: "600",
 									margin: "0 0 8px 0",
 									color: "#374151",
@@ -288,7 +291,7 @@ export function CreditOrderReceipt({
 													"Email no disponible",
 												)}
 											</div>
-											<div>
+											<div style={{ color: "#dc3545", fontWeight: "600" }}>
 												Deuda: {currencyFormat.format(order.buyerId.debt || 0)}
 											</div>
 											<div>
@@ -314,14 +317,15 @@ export function CreditOrderReceipt({
 							borderRadius: "8px",
 							overflow: "hidden",
 							backgroundColor: "#ffffff",
-							marginTop: "40px",
+							marginTop: "30px",
 						}}
 					>
 						<table
 							style={{
 								width: "100%",
 								borderCollapse: "collapse",
-								fontSize: "12px",
+								fontSize: "11px",
+								border: "1px solid #e5e7eb",
 							}}
 						>
 							<thead>
@@ -333,68 +337,68 @@ export function CreditOrderReceipt({
 								>
 									<th
 										style={{
-											padding: "4px 3px",
-											textAlign: "left",
-											fontWeight: "600",
-											fontSize: "9px",
-											textTransform: "uppercase",
-											borderBottom: "1px solid #e5e7eb",
-										}}
+												padding: "4px 12px",
+												textAlign: "left",
+												fontWeight: "600",
+												fontSize: "9px",
+												textTransform: "uppercase",
+												border: "1px solid #e5e7eb",
+											}}
 									>
 										Descripción
 									</th>
 									<th
 										style={{
-											padding: "4px 3px",
-											textAlign: "center",
-											fontWeight: "600",
-											fontSize: "9px",
-											textTransform: "uppercase",
-											borderBottom: "1px solid #e5e7eb",
-										}}
+												padding: "4px 12px",
+												textAlign: "center",
+												fontWeight: "600",
+												fontSize: "9px",
+												textTransform: "uppercase",
+												border: "1px solid #e5e7eb",
+											}}
 									>
 										Precio
 									</th>
 									<th
 										style={{
-											padding: "4px 3px",
-											textAlign: "center",
-											fontWeight: "600",
-											fontSize: "9px",
-											textTransform: "uppercase",
-											borderBottom: "1px solid #e5e7eb",
-										}}
+												padding: "4px 12px",
+												textAlign: "center",
+												fontWeight: "600",
+												fontSize: "9px",
+												textTransform: "uppercase",
+												border: "1px solid #e5e7eb",
+											}}
 									>
 										Cant.
 									</th>
 									<th
 										style={{
-											padding: "4px 3px",
-											textAlign: "center",
-											fontWeight: "600",
-											fontSize: "9px",
-											textTransform: "uppercase",
-											borderBottom: "1px solid #e5e7eb",
-										}}
+												padding: "4px 12px",
+												textAlign: "center",
+												fontWeight: "600",
+												fontSize: "9px",
+												textTransform: "uppercase",
+												border: "1px solid #e5e7eb",
+											}}
 									>
 										Dec.
 									</th>
 									<th
 										style={{
-											padding: "4px 3px",
-											textAlign: "right",
-											fontWeight: "600",
-											fontSize: "9px",
-											textTransform: "uppercase",
-											borderBottom: "1px solid #e5e7eb",
-										}}
+												padding: "4px 12px",
+												textAlign: "right",
+												fontWeight: "600",
+												fontSize: "9px",
+												textTransform: "uppercase",
+												border: "1px solid #e5e7eb",
+											}}
 									>
 										Total
 									</th>
 								</tr>
 							</thead>
 							<tbody>
-								{order.products?.map((product, index) => (
+								{order.products?.map((product) => (
 									<tr
 										key={product.productId}
 										style={{
@@ -403,64 +407,42 @@ export function CreditOrderReceipt({
 									>
 										<td
 											style={{
-												padding: "3px 3px",
+												padding: "4px 12px",
 												maxWidth: "220px",
 												wordBreak: "break-word",
-												borderBottom:
-													index === (order.products?.length || 0) - 1
-														? "none"
-														: "1px solid #f1f5f9",
+												border: "1px solid #e5e7eb",
 											}}
 										>
-											<div style={{ fontSize: "10px", fontWeight: "600" }}>
+											<div style={{ fontSize: "9px", fontWeight: "600" }}>
 												{product.name || product.productId}
-											</div>
-											<div
-												style={{
-													fontSize: "8px",
-													color: "#64748b",
-													fontStyle: "italic",
-													marginTop: "1px",
-												}}
-											>
-												{product.name ? "Producto estándar" : "ID de producto"}
 											</div>
 										</td>
 										<td
 											style={{
-												padding: "3px 3px",
+												padding: "4px 12px",
 												textAlign: "center",
-												fontSize: "10px",
-												borderBottom:
-													index === (order.products?.length || 0) - 1
-														? "none"
-														: "1px solid #f1f5f9",
+												fontSize: "9px",
+												border: "1px solid #e5e7eb",
 											}}
 										>
 											{currencyFormat.format(product.retailPrice)}
 										</td>
 										<td
 											style={{
-												padding: "12px 4px",
+												padding: "4px 12px",
 												textAlign: "center",
-												fontSize: "11px",
-												borderBottom:
-													index === (order.products?.length || 0) - 1
-														? "none"
-														: "1px solid #f1f5f9",
+												fontSize: "9px",
+												border: "1px solid #e5e7eb",
 											}}
 										>
 											{product.quantity}
 										</td>
 										<td
 											style={{
-												padding: "3px 3px",
+												padding: "4px 12px",
 												textAlign: "center",
-												fontSize: "10px",
-												borderBottom:
-													index === (order.products?.length || 0) - 1
-														? "none"
-														: "1px solid #f1f5f9",
+												fontSize: "9px",
+												border: "1px solid #e5e7eb",
 											}}
 										>
 											{(product.discount || 0) > 0
@@ -469,14 +451,11 @@ export function CreditOrderReceipt({
 										</td>
 										<td
 											style={{
-												padding: "3px 3px",
+												padding: "4px 12px",
 												textAlign: "right",
-												fontSize: "10px",
+												fontSize: "9px",
 												fontWeight: "600",
-												borderBottom:
-													index === (order.products?.length || 0) - 1
-														? "none"
-														: "1px solid #f1f5f9",
+												border: "1px solid #e5e7eb",
 											}}
 										>
 											{currencyFormat.format(

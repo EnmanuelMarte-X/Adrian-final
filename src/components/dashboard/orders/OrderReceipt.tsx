@@ -429,9 +429,9 @@ export function OrderReceipt({
 					</div>
 					<div style={{ display: "flex", justifyContent: "center" }}>
 						<Barcode
-							value={String(order._id)}
-							format="CODE128B"
-							width={1.4}
+							value={String(order.orderId).slice(-11).padStart(11, "0")}
+							format="CODE128"
+							width={2}
 							height={80}
 							fontSize={12}
 							margin={5}

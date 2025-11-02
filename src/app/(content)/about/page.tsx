@@ -12,10 +12,10 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
 	const stats = [
-		{ label: "Años de experiencia", value: "10+" },
+		{ label: "Años de experiencia", value: "18+" },
 		{ label: "Clientes satisfechos", value: "5,000+" },
-		{ label: "Productos disponibles", value: "1,500+" },
-		{ label: "Ciudades atendidas", value: "50+" },
+		{ label: "Productos disponibles", value: "3,000+" },
+		{ label: "Ciudades atendidas", value: "12+" },
 	];
 
 	const values = [
@@ -23,13 +23,13 @@ export default function AboutPage() {
 			icon: <Target className="w-8 h-8 text-primary" />,
 			title: "Calidad",
 			description:
-				"Nos comprometemos a ofrecer solo productos de la más alta calidad para nuestros clientes.",
+				"Ofrecemos productos y servicios que cumplen con los más altos estándares de excelencia.",
 		},
 		{
 			icon: <Users className="w-8 h-8 text-primary" />,
 			title: "Servicio al cliente",
 			description:
-				"Nuestro equipo está dedicado a brindar un servicio excepcional y personalizado.",
+				"Garantizamos atención personalizada y un soporte excepcional en todo momento.",
 		},
 		{
 			icon: <Award className="w-8 h-8 text-primary" />,
@@ -41,7 +41,7 @@ export default function AboutPage() {
 			icon: <Heart className="w-8 h-8 text-primary" />,
 			title: "Confianza",
 			description:
-				"Construimos relaciones duraderas basadas en la transparencia y confiabilidad.",
+				"Fomentamos relaciones basadas en la transparencia, integridad y fiabilidad.",
 		},
 	];
 
@@ -49,15 +49,15 @@ export default function AboutPage() {
 		<div className="min-h-screen py-12">
 			<div className="max-w-6xl mx-auto px-4">
 				<div className="text-center mb-16">
-					<Badge variant="secondary" className="mb-4">
+					<Badge variant="secondary" className="mb-6">
 						Acerca de nosotros
 					</Badge>
-					<h1 className="text-4xl md:text-5xl font-bold mb-6">
-						Tu socio confiable en suministros de belleza
+					<h1 className="text-4xl md:text-5xl font-bold mb-10">
+						Tu socio confiable en suministros de producto de belleza
 					</h1>
 					<p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-						Desde 2015, Jhenson Supply ha sido el líder en distribución de
-						productos de belleza y cuidado personal, ayudando a miles de
+						Desde 2006, Jhenson Supply ha sido el líder en distribución de
+						productos de belleza para el cabello, ayudando a miles de
 						negocios a crecer y prosperar.
 					</p>
 				</div>
@@ -82,7 +82,7 @@ export default function AboutPage() {
 						<h2 className="text-3xl font-bold mb-6">Nuestra historia</h2>
 						<div className="space-y-4 text-muted-foreground">
 							<p>
-								Todo comenzó en 2015 cuando Jhenson vio una oportunidad en el
+								Todo comenzó en 2006 cuando Jhenson vio una oportunidad en el
 								mercado de suministros de belleza. Con una pequeña inversión y
 								mucha determinación, inició lo que hoy es una de las
 								distribuidoras más confiables del sector.
@@ -108,22 +108,20 @@ export default function AboutPage() {
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
 					<Card>
-						<CardContent className="pt-6">
+						<CardContent className="pt-3">
 							<h3 className="text-2xl font-bold mb-4">Nuestra misión</h3>
 							<p className="text-muted-foreground">
-								Proveer productos de belleza y cuidado personal de alta calidad,
-								junto con un servicio excepcional que permita a nuestros
-								clientes hacer crecer sus negocios de manera sostenible.
+								Nos dedicamos a ofrecer productos de belleza de la mejor calidad, 
+								acompañados de un servicio que supere tus expectativas.
 							</p>
 						</CardContent>
 					</Card>
 					<Card>
-						<CardContent className="pt-6">
+						<CardContent className="pt-4">
 							<h3 className="text-2xl font-bold mb-4">Nuestra visión</h3>
 							<p className="text-muted-foreground">
-								Ser la distribuidora de productos de belleza más confiable y
-								reconocida, estableciendo el estándar de excelencia en servicio
-								al cliente y calidad de productos.
+								Buscamos ser la distribuidora líder en belleza, 
+								destacándonos por nuestra calidad y servicio.
 							</p>
 						</CardContent>
 					</Card>

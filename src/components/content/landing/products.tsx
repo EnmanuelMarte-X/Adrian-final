@@ -243,13 +243,12 @@ export function ProductsSection() {
 						<PackageIcon className="h-4 w-4" />
 						Catálogo de Productos
 					</motion.div>
+
 					<h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
 						Productos de Calidad Premium
 					</h2>
 					<p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-						Descubre nuestra exclusiva selección de productos de belleza y
-						cuidado personal. Calidad garantizada, precios competitivos y
-						disponibilidad inmediata.
+						Descubre nuestra exclusiva selección de productos de belleza para el cabello. Calidad garantizada, precios competitivos y disponibilidad inmediata.
 					</p>
 				</motion.div>
 

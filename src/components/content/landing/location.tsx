@@ -12,7 +12,7 @@ export const LocationSection = () => (
 					Nuestra Ubicación
 				</h2>
 				<p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-					Visítanos en nuestra tienda física o contáctanos para más información
+					Te esperamos en nuestros puntos de distribución. Contáctanos y agenda tu cita para cuando más te convenga.
 				</p>
 			</div>
 
@@ -26,7 +26,7 @@ export const LocationSection = () => (
 										<MapPinIcon className="size-6 text-primary" />
 									</div>
 									<div>
-										<h3 className="text-lg font-semibold mb-2">
+										<h3 className="text-lg font-semibold mb-1">
 											Dirección
 										</h3>
 										<p className="text-muted-foreground leading-relaxed">
@@ -43,7 +43,7 @@ export const LocationSection = () => (
 										<PhoneIcon className="size-6 text-primary" />
 									</div>
 									<div>
-										<h3 className="text-lg font-semibold text-foreground mb-2">
+										<h3 className="mb-1 text-lg font-semibold text-foreground">
 											Contacto
 										</h3>
 										<p className="text-muted-foreground">
@@ -59,12 +59,11 @@ export const LocationSection = () => (
 										<ClockIcon className="size-6 text-primary" />
 									</div>
 									<div>
-										<h3 className="text-lg font-semibold mb-2">
+										<h3 className="text-lg font-semibold mb-1">
 											Horarios de Atención
 										</h3>
 										<div className="text-muted-foreground space-y-1">
-											<p>Lunes - Viernes: 8:00 AM - 6:00 PM</p>
-											<p>Sábados: 8:00 AM - 4:00 PM</p>
+											<p>Lunes - Sábados: 8:00 AM - 6:00 PM</p>
 											<p>Domingos: Cerrado</p>
 										</div>
 									</div>

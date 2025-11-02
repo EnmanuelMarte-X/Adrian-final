@@ -137,8 +137,7 @@ export default function ContactPage() {
 									<Phone className="w-5 h-5 text-primary mt-1" />
 									<div>
 										<h3 className="font-semibold">Teléfono</h3>
-										<p className="text-muted-foreground">+1 (555) 123-4567</p>
-										<p className="text-muted-foreground">+1 (555) 987-6543</p>
+										<p className="text-muted-foreground">+1 (849) 863-6444</p>
 									</div>
 								</div>
 
@@ -147,11 +146,11 @@ export default function ContactPage() {
 									<div>
 										<h3 className="font-semibold">Dirección</h3>
 										<p className="text-muted-foreground">
-											123 Commerce Street
+											C. Sta. Lucía
 											<br />
-											Ciudad, Estado 12345
+											Santo Domingo Este 11605
 											<br />
-											País
+											República Dominicana
 										</p>
 									</div>
 								</div>
@@ -161,9 +160,7 @@ export default function ContactPage() {
 									<div>
 										<h3 className="font-semibold">Horarios de atención</h3>
 										<p className="text-muted-foreground">
-											Lunes a Viernes: 9:00 AM - 6:00 PM
-											<br />
-											Sábados: 10:00 AM - 4:00 PM
+											Lunes a Sábado: 9:00 AM - 6:00 PM
 											<br />
 											Domingos: Cerrado
 										</p>

@@ -214,10 +214,10 @@ export function EditProductFrom({
 						control={control}
 						name="category"
 						render={({ field }) => (
+							// Pass explicit value/onValueChange to avoid duplicating props
 							<ProductCategorySelect
-								{...field}
 								value={field.value}
-								defaultValue={product?.category}
+								onValueChange={field.onChange}
 								className="w-full truncate"
 							/>
 						)}

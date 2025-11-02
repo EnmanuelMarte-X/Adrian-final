@@ -24,6 +24,7 @@ import type { ProductFilters } from "@/contexts/products/types";
 import Link from "next/link";
 import { PriceRangeFilter } from "@/components/dashboard/products/filters/PriceRangeFilter";
 import { capacityUnitLabels } from "@/config/products";
+import { ProductCategorySelect } from "@/components/dashboard/products/ProductCategorySelect";
 
 const ProductCard = ({ product }: { product: ProductType }) => {
 	const totalStock =
@@ -184,7 +185,7 @@ export default function ProductsPage() {
 							Catálogo de Productos
 						</h1>
 						<p className="text-base md:text-lg text-foreground/90 max-w-xl mx-auto leading-relaxed">
-							Explora nuestra completa selección de productos de belleza premium
+							Explora nuestra completa selección de productos de belleza para el cabello premium
 						</p>
 					</motion.div>
 				</div>
@@ -216,6 +217,15 @@ export default function ProductsPage() {
 											handleFilterChange("brand", e.target.value || undefined)
 										}
 										className="pl-10"
+									/>
+								</div>
+
+								{/* Category selector visible in the main filter row */}
+								<div className="relative flex-1 max-w-xs lg:block hidden">
+									<ProductCategorySelect
+										className="w-full"
+										value={filters.category || undefined}
+										onValueChange={(val) => handleFilterChange("category", val || undefined)}
 									/>
 								</div>
 
@@ -277,15 +287,11 @@ export default function ProductsPage() {
 									>
 										Categoría
 									</label>
-									<Input
-										id="category-filter"
-										placeholder="Filtrar por categoría"
-										value={filters.category || ""}
-										onChange={(e) =>
-											handleFilterChange(
-												"category",
-												e.target.value || undefined,
-											)
+									<ProductCategorySelect
+										className="w-full"
+										value={filters.category || undefined}
+										onValueChange={(val) =>
+											handleFilterChange("category", val || undefined)
 										}
 									/>
 								</div>

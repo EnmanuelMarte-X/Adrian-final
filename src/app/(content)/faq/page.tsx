@@ -31,7 +31,7 @@ export default function FAQPage() {
 				{
 					question: "¿Cuál es el monto mínimo de pedido?",
 					answer:
-						"El monto mínimo de pedido es de $50 USD para pedidos individuales. Para mayoristas y distribuidores, ofrecemos condiciones especiales con montos mínimos diferentes.",
+						"El monto mínimo dependerá del producto y del costo de envío. No contamos con un monto mínimo establecido para realizar pedidos.	",
 				},
 				{
 					question: "¿Puedo cancelar o modificar mi pedido?",
@@ -56,12 +56,12 @@ export default function FAQPage() {
 				{
 					question: "¿Cobran por el envío?",
 					answer:
-						"Ofrecemos envío gratuito para pedidos superiores a $100 USD. Para pedidos menores, el costo de envío se calcula según el peso y destino del paquete.",
+						"Ofrecemos envío gratuito en pedidos superiores a $10,000, sujeto a la zona de entrega. Puede consultar con nosotros para verificar si su ubicación aplica al envío gratis.",
 				},
 				{
 					question: "¿Puedo rastrear mi pedido?",
 					answer:
-						"Sí, una vez que tu pedido sea enviado, recibirás un número de seguimiento por email para que puedas rastrear tu paquete en tiempo real.",
+						"Sí, una vez que tu pedido sea enviado, recibirás información del seguimiento de tu paquete.",
 				},
 				{
 					question: "¿Hacen entregas los fines de semana?",
@@ -81,7 +81,7 @@ export default function FAQPage() {
 				{
 					question: "¿Tienen garantía los productos?",
 					answer:
-						"Todos nuestros productos incluyen garantía del fabricante. En caso de productos defectuosos, ofrecemos cambio o reembolso completo dentro de los primeros 30 días.",
+						"Todos nuestros productos incluyen garantía del fabricante. En caso de productos defectuosos, ofrecemos cambio o reembolso completo dentro de las primeras 24 horas.",
 				},
 				{
 					question: "¿Puedo solicitar muestras de productos?",
@@ -107,11 +107,6 @@ export default function FAQPage() {
 					question: "¿Ofrecen descuentos por volumen?",
 					answer:
 						"Sí, ofrecemos descuentos progresivos según el volumen de compra. Los mayoristas y distribuidores pueden acceder a precios especiales contactando nuestro equipo comercial.",
-				},
-				{
-					question: "¿Tienen programa de fidelidad?",
-					answer:
-						"Sí, nuestro programa de puntos te permite acumular recompensas con cada compra. Por cada $1 USD gastado, obtienes 1 punto que puedes canjear por descuentos.",
 				},
 				{
 					question: "¿Ofrecen capacitación sobre productos?",

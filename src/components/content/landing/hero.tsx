@@ -46,7 +46,7 @@ export function Hero() {
 									className="bg-primary/10 text-primary"
 								>
 									<SparklesIcon className="mr-2 h-4 w-4" />
-									Shampoos y Productos de Belleza
+										Productos de Belleza Para tu Cabello
 								</Badge>
 							</motion.div>
 							<motion.h1
@@ -55,10 +55,9 @@ export function Hero() {
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.4, delay: 0.4 }}
 							>
-								Cuidado
-								<span className="text-brand"> Personal</span>
+								Donde Tu <span className="text-brand">Belleza</span>
 								<br />
-								Para Ti
+								Es Real
 							</motion.h1>
 							<motion.p
 								className="text-xl text-muted-foreground"
@@ -66,8 +65,9 @@ export function Hero() {
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.4, delay: 0.5 }}
 							>
-								Descubre nuestra amplia gama de shampoos, acondicionadores,
-								productos de belleza y cuidado personal. Calidad premium,
+								Descubre nuestra amplia gama de productos de belleza <br/>        
+								para el cabello, incluyendo shampoos, tratamientos,
+								acondicionadores, mascarillas y más. Calidad premium,
 								precios competitivos y envío rápido.
 							</motion.p>
 						</motion.div>
@@ -143,7 +143,7 @@ export function Hero() {
 						>
 							<Image
 								src="/productos-shampoo-belleza.jpg"
-								alt="Shampoos y productos de belleza"
+								alt="Productos de Belleza Para tu Cabello"
 								fill
 								className="object-cover text-center text-muted-foreground"
 								priority

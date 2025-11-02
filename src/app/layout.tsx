@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Providers } from "@/components/providers";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
 			<head>
 				<meta name="theme-color" content="#5aae19" />
 			</head>
+			<Analytics />
 			<body
 				className={cn(
 					"bg-background text-foreground antialiased",

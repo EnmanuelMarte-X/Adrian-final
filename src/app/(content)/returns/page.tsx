@@ -34,7 +34,7 @@ export default function ReturnsPage() {
 			step: 1,
 			title: "Verificar elegibilidad",
 			description:
-				"El producto debe estar en condición original dentro de 30 días de la compra",
+				"El producto debe estar en condición original dentro de 24 horas de la compra",
 			icon: <CheckCircle className="w-6 h-6 text-green-500" />,
 		},
 		{
@@ -62,13 +62,13 @@ export default function ReturnsPage() {
 	const eligibilityCriteria = [
 		"Producto en condición original y sin usar",
 		"Embalaje original incluido",
-		"Dentro de 30 días calendario de la compra",
+		"Dentro de 24 horas de la compra",
 		"Recibo o comprobante de compra",
-		"Productos no personalizados o de higiene personal",
+		"Productos no personalizados o modificados",
 	];
 
 	const nonReturnableItems = [
-		"Productos de higiene personal abiertos",
+		"Productos abiertos",
 		"Artículos personalizados o modificados",
 		"Productos en liquidación o oferta final",
 		"Cosméticos abiertos o usados",

@@ -85,8 +85,9 @@ export function CreateProductSheet({
 		reset();
 	};
 
-	// Lista de categorías válidas (debería venir de la misma fuente que ProductCategorySelect)
-	const validCategories = ["Category A", "Category B", "Category C"];
+	// NOTE: removed hardcoded validCategories whitelist to accept categories
+	// provided by the ProductCategorySelect source. Validation will only check
+	// presence (non-empty) of the category in the form values.
 
 	const validateForm = (values: ProductType) => {
 		// Validar campos obligatorios
@@ -105,11 +106,7 @@ export function CreateProductSheet({
 			return false;
 		}
 
-		// Validar que la categoría sea válida
-		if (!validCategories.includes(values.category)) {
-			toast.error("Debe seleccionar una categoría válida.");
-			return false;
-		}
+		// (No whitelist check) Only ensure category is present (non-empty)
 
 		// Validar que la unidad de capacidad sea válida
 		if (!values.capacityUnit || !productCapacityUnits.includes(values.capacityUnit as ProductCapacityUnit)) {
@@ -236,9 +233,12 @@ export function CreateProductSheet({
 	};
 
 	const handleCategoryChange = (category: string) => {
-		// Validar que la categoría sea válida antes de establecerla
-		if (category?.trim() && validCategories.includes(category)) {
+		// Set the category value directly (no whitelist). Accept any non-empty value.
+		if (category?.trim()) {
 			setValue("category", category);
+		} else {
+			// allow clearing the category
+			setValue("category", "");
 		}
 	};
 	const handleImagesChange = (imageUrls: string[]) => setProductImages(imageUrls);

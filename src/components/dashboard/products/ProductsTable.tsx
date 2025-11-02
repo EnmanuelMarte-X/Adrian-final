@@ -57,6 +57,11 @@ const columns: ColumnDef<ProductType>[] = [
 		header: ({ column }) => {
 			return <span>Categoría</span>;
 		},
+		cell: ({ row }) => {
+			return (
+				<div className="font-medium">{row.original.category || "Sin categoría"}</div>
+			);
+		},
 		enableColumnFilter: true,
 		enableSorting: true,
 	},

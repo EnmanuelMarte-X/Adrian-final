@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import { ProductCapacityUnitSelect } from "./ProductCapacityUnitSelect";
 import { ProductCategorySelect } from "./ProductCategorySelect";
 import { Textarea } from "@/components/ui/textarea";
@@ -63,24 +63,36 @@ export function CreateProductForm({
 					<Label required htmlFor="category">
 						Categoría
 					</Label>
-					<ProductCategorySelect
-						className="w-full"
-						{...register("category", { 
+					<Controller
+						control={useFormContext().control}
+						name="category"
+						rules={{
 							required: "La categoría es obligatoria",
 							validate: (value) => {
 								if (!value || !value.trim()) {
 									return "Debe seleccionar una categoría";
 								}
 								return true;
-							}
-						})}
-						onValueChange={onCategoryChange}
+							},
+						}}
+						render={({ field, fieldState }) => (
+							<>
+								<ProductCategorySelect
+									className="w-full"
+									value={field.value || ""}
+									onValueChange={(val) => {
+										field.onChange(val);
+										onCategoryChange?.(val);
+									}}
+								/>
+								{fieldState.error && (
+									<span className="text-sm text-red-500">
+										{String(fieldState.error.message)}
+									</span>
+								)}
+							</>
+						)}
 					/>
-					{errors.category && (
-						<span className="text-sm text-red-500">
-							{String(errors.category.message)}
-						</span>
-					)}
 				</div>
 				<div className="flex flex-col gap-y-2">
 					<Label required htmlFor="cost" className="text-right">

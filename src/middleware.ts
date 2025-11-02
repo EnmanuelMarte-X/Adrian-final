@@ -15,8 +15,13 @@ export default withAuth(
 		}
 
 		// Verificar autenticación para APIs
+		// Permitir que ciertas APIs públicas (por ejemplo listados de productos)
+		// sean accesibles sin autenticación para poder mostrarlas desde la landing.
 		if (path.startsWith("/api/") && path !== "/api/auth") {
-			if (!isAuth) {
+			// Rutas públicas bajo /api/products*
+			if (path.startsWith("/api/products")) {
+				// dejar pasar sin token
+			} else if (!isAuth) {
 				return new NextResponse("Unauthorized", { status: 401 });
 			}
 		}
@@ -42,7 +47,11 @@ export default withAuth(
 		callbacks: {
 			authorized: ({ token, req }) => {
 				const path = req.nextUrl.pathname;
+				// Allow public access to product listing APIs so the public
+				// catalog can fetch products without authentication (e.g., incognito).
 				if (path.startsWith("/api/") && path !== "/api/auth") {
+					// If the API is under /api/products, allow it without token
+					if (path.startsWith("/api/products")) return true;
 					return !!token;
 				}
 				if (path.startsWith("/dashboard")) {

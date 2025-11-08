@@ -2,6 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ProductCapacityUnitSelect } from "./ProductCapacityUnitSelect";
 import { ProductCategorySelect } from "./ProductCategorySelect";
+import { ProductBrandSelect } from "./ProductBrandSelect";
 import { toast } from "sonner";
 import { useUpdateProductMutation } from "@/contexts/products/queries";
 import type {
@@ -190,11 +191,16 @@ export function EditProductFrom({
 					<Label htmlFor="brand" className="text-right">
 						Marca
 					</Label>
-					<Input
-						id="brand"
-						required
-						{...register("brand")}
-						className="col-span-3"
+					<Controller
+						control={control}
+						name="brand"
+						render={({ field }) => (
+							<ProductBrandSelect
+								value={field.value}
+								onValueChange={field.onChange}
+								className="w-full truncate"
+							/>
+						)}
 					/>
 				</div>
 				<div className="flex flex-col gap-y-2 sm:col-span-2">

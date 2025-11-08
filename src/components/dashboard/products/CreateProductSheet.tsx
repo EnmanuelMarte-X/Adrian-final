@@ -198,12 +198,16 @@ export function CreateProductSheet({
 			}
 
 			const images = prepareImagesForProduct(productImages);
+			// Send as `locations` and preserve showInStore flag from each storage.
+			// Previously this used a `storages` field and omitted showInStore,
+			// which caused the backend to default showInStore to true.
 			const productData = {
 				...data,
 				images,
-				storages: productStorages.map((s) => ({
+				locations: productStorages.map((s) => ({
 					storageId: s.storageId,
 					stock: s.stock,
+					showInStore: s.showInStore ?? true,
 				})),
 			};
 

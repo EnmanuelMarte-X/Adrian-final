@@ -1,0 +1,50 @@
+[
+  {
+    "id": "Shampoo",
+    "name": "Shampoes"
+  },
+  {
+    "id": "Macarilla",
+    "name": "Macarilla"
+  },
+  {
+    "id": "Acondicionador",
+    "name": "Acondicionador"
+  },
+  {
+    "id": "Tratamiento",
+    "name": "Tratamiento"
+  },
+  {
+    "id": "Oleo",
+    "name": "Oleo"
+  },
+  {
+    "id": "Tonico",
+    "name": "Tonico"
+  },
+  {
+    "id": "Caja de Ampollas",
+    "name": "Caja de Ampollas"
+  },
+  {
+    "id": "Kit",
+    "name": "Kit"
+  },
+  {
+    "id": "Goteros",
+    "name": "Goteros"
+  },
+  {
+    "id": "Gotas",
+    "name": "Gotas"
+  },
+  {
+    "id": "Leaven",
+    "name": "Leaven"
+  },
+  {
+    "id": "Fluido",
+    "name": "Fluido"
+  }
+]

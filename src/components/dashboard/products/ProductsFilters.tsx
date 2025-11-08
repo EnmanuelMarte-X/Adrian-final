@@ -6,6 +6,7 @@ import {
 	parseAsInteger,
 	parseAsString,
 	parseAsArrayOf,
+	parseAsBoolean,
 	type UseQueryStateReturn,
 } from "nuqs";
 import { priceFilterConfig } from "@/config/filters";
@@ -47,6 +48,7 @@ export function ProductsFilters({
 		]),
 	);
 	const [stockParam, setStockParam] = useQueryState("stock", parseAsInteger);
+    const [inStoreParam, setInStoreParam] = useQueryState("inStore", parseAsBoolean);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: This effect should only run when the filters change.
 	useEffect(() => {
@@ -68,6 +70,10 @@ export function ProductsFilters({
 			}
 		}
 
+		if (typeof inStoreParam === "boolean") {
+			newFilters.inStore = inStoreParam;
+		}
+
 		if (JSON.stringify(newFilters) !== JSON.stringify(filters)) {
 			onFiltersChange(newFilters);
 		}
@@ -79,6 +85,7 @@ export function ProductsFilters({
 		capacityUnitParam,
 		costRangeParam,
 		stockParam,
+		inStoreParam,
 	]);
 
 	const updateFilter = async <T, K>(
@@ -119,6 +126,18 @@ export function ProductsFilters({
 		updateFilter(stockValue, setStockParam);
 	};
 
+	const handleInStoreChange = (values: string[]) => {
+		let inStoreValue: boolean | undefined;
+
+		if (values.length === 0 || values.length === 2) {
+			inStoreValue = undefined;
+		} else {
+			inStoreValue = values.includes("show") ? true : false;
+		}
+
+		updateFilter(inStoreValue, setInStoreParam);
+	};
+
 	const clearFilters = async () => {
 		await Promise.all([
 			setNameParam(null),
@@ -127,6 +146,7 @@ export function ProductsFilters({
 			setCapacityParam(null),
 			setCapacityUnitParam(null),
 			setStockParam(null),
+			setInStoreParam(null),
 			setCostRangeParam([priceFilterConfig.min, priceFilterConfig.max]),
 			setPage?.(1),
 		]);
@@ -151,6 +171,9 @@ export function ProductsFilters({
 				break;
 			case "stock":
 				await setStockParam(null);
+				break;
+			case "inStore":
+				await setInStoreParam(null);
 				break;
 			case "cost":
 				await setCostRangeParam([priceFilterConfig.min, priceFilterConfig.max]);
@@ -192,6 +215,7 @@ export function ProductsFilters({
 					onClearFilters={clearFilters}
 					updateFilter={updateFilter}
 					onStockChange={handleStockChange}
+					onInStoreChange={handleInStoreChange}
 					onCostRangeChange={handleCostRangeChange}
 					onCapacityChange={handleCapacityChange}
 					onCapacityUnitChange={handleCapacityUnitChange}

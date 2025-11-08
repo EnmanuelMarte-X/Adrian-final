@@ -10,6 +10,7 @@ import { FilterIcon, XIcon } from "lucide-react";
 import { memo } from "react";
 import { PriceRangeFilter } from "./PriceRangeFilter";
 import { StockFilter } from "./StockFilter";
+import { ShowInStoreFilter } from "./ShowInStoreFilter";
 import { CapacityFilter } from "./CapacityFilter";
 import { CapacityUnitFilter } from "./CapacityUnitFilter";
 import type { ProductCapacityUnit } from "@/types/models/products";
@@ -25,6 +26,7 @@ interface AdvancedFiltersProps {
 		urlSetter: UseQueryStateReturn<T, K>[1],
 	) => Promise<void>;
 	onStockChange: (values: string[]) => void;
+	onInStoreChange?: (values: string[]) => void;
 	onCostRangeChange: (range: [number, number]) => void;
 	onCapacityChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	onCapacityUnitChange: (unit: string | undefined) => void;
@@ -35,6 +37,7 @@ function AdvancedFiltersComponent({
 	filters,
 	onClearFilters,
 	onStockChange,
+	onInStoreChange,
 	onCostRangeChange,
 	onCapacityChange,
 	onCapacityUnitChange,
@@ -97,6 +100,11 @@ function AdvancedFiltersComponent({
 					<CapacityUnitFilter
 						value={filters.capacityUnit as ProductCapacityUnit | undefined}
 						onValueChange={onCapacityUnitChange}
+					/>
+
+					<ShowInStoreFilter
+						value={filters.inStore}
+						onChange={(values) => onInStoreChange?.(values)}
 					/>
 
 					{filters.storageId && (

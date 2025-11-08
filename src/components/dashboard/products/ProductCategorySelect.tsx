@@ -20,29 +20,16 @@ export interface ProductCategorySelectProps
 	className?: string;
 }
 
-const fetchCategories: () => Promise<{
-	categories: { id: string; name: string }[];
-}> = async () => {
-	return new Promise((resolve) => {
-		setTimeout(() => {
-			resolve({
-				categories: [
-					{ id: "Shampoo", name: "Shampoo" },
-					{ id: "Macarilla", name: "Macarilla" },
-					{ id: "Acondicionador", name: "Acondicionador" },
-					{ id: "Tratamiento", name: "Tratamiento" },
-					{ id: "Oleo", name: "Oleo" },
-					{ id: "Tonico", name: "Tonico" },
-					{ id: "Caja de Ampollas", name: "Caja de Ampollas" },
-					{ id: "Kit", name: "Kit" },
-					{ id: "Goteros", name: "Goteros" },
-					{ id: "Gotas", name: "Gotas" },
-					{ id: "Leaven", name: "Leaven" },
-					{ id: "Fluido", name: "Fluido" },
-				],
-			});
-		}, 0);
-	});
+const fetchCategories: () => Promise<{ id: string; name: string }[]> = async () => {
+	try {
+		const res = await fetch('/api/categories');
+		if (!res.ok) throw new Error('Error cargando categorías');
+		const data = await res.json();
+		return data.categories ?? [];
+	} catch (err) {
+		// Fallback to empty list (error will be shown via toast)
+		return [];
+	}
 };
 
 export function ProductCategorySelect({
@@ -59,10 +46,10 @@ export function ProductCategorySelect({
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ["categories"],
 		queryFn: fetchCategories,
-		initialData: { categories: [] },
+		initialData: [],
 	});
 
-	const categories = data?.categories ?? [];
+	const categories = data ?? [];
 
 	const [query, setQuery] = useState("");
 

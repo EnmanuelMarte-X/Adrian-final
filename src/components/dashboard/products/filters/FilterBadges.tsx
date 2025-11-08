@@ -9,6 +9,7 @@ import {
 	TextCursorInputIcon,
 	XIcon,
 } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { memo } from "react";
 import type { ProductFilters } from "@/contexts/products/types";
 
@@ -83,6 +84,15 @@ function FilterBadgesComponent({
 							<span className="inline-flex items-center gap-1 text-xs">
 								<DollarSignIcon className="size-3" />
 								{`Costo: $${value[0]} - $${value[1]}`}
+							</span>
+						)}
+						{key === "inStore" && typeof value === "boolean" && (
+							<span className="inline-flex items-center gap-1 text-xs">
+								{value ? (
+									<><Eye className="size-3" /> Mostrando en tienda</>
+								) : (
+									<><EyeOff className="size-3" /> No mostrado</>
+								)}
 							</span>
 						)}
 						{/* Caso para keys no definidas */}

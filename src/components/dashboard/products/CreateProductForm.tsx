@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormContext, Controller } from "react-hook-form";
+import { ProductBrandSelect } from "./ProductBrandSelect";
 import { ProductCapacityUnitSelect } from "./ProductCapacityUnitSelect";
 import { ProductCategorySelect } from "./ProductCategorySelect";
 import { Textarea } from "@/components/ui/textarea";
@@ -43,11 +44,24 @@ export function CreateProductForm({
 					<Label required htmlFor="brand">
 						Marca
 					</Label>
-					<Input
-						id="brand"
-						placeholder="Mi marca"
-						required
-						{...register("brand")}
+					<Controller
+						control={useFormContext().control}
+						name="brand"
+						rules={{ required: "La marca es obligatoria" }}
+						render={({ field, fieldState }) => (
+							<>
+								<ProductBrandSelect
+									className="w-full"
+									value={field.value || ""}
+									onValueChange={(val) => field.onChange(val)}
+								/>
+								{fieldState.error && (
+									<span className="text-sm text-red-500">
+										{String(fieldState.error.message)}
+									</span>
+								)}
+							</>
+						)}
 					/>
 				</div>
 				<div className="flex flex-col gap-y-2 col-span-2">

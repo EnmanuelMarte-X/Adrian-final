@@ -1,3 +1,5 @@
+"use client";
+
 import { useRole } from "@/hooks/use-auth";
 import type { ReactNode } from "react";
 import type { RoleType } from "@/config/roles";

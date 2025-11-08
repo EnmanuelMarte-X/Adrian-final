@@ -65,10 +65,14 @@ export const getProducts = async (
 	}
 
 	if (filters.inStore !== undefined) {
+		// Filter by whether any location is flagged to show in store.
+		// Previously this filtered by presence of images, which caused
+		// products with images to appear in the catalog even when all
+		// locations had showInStore=false.
 		if (filters.inStore) {
-			query.images = { $exists: true, $not: { $size: 0 } };
+			query.locations = { $elemMatch: { showInStore: true } };
 		} else {
-			query.images = { $size: 0 };
+			query.locations = { $not: { $elemMatch: { showInStore: true } } };
 		}
 	}
 

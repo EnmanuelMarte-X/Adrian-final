@@ -21,8 +21,6 @@ import { motion } from "motion/react";
 import { Palette } from "lucide-react";
 import { Suspense } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import { CategoryManager } from "@/components/dashboard/CategoryManager";
-import { BrandManager } from "@/components/dashboard/BrandManager";
 
 function SettingsPageContent() {
 	const { theme, setTheme } = useTheme();
@@ -66,25 +64,6 @@ function SettingsPageContent() {
 								</SelectContent>
 							</Select>
 						</div>
-					</CardContent>
-				</Card>
-
-				{/* Categories manager visible to admins */}
-				<Card>
-					<CardHeader>
-						<CardTitle>Categorías (Admin)</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<CategoryManager />
-					</CardContent>
-				</Card>
-
-				<Card>
-					<CardHeader>
-						<CardTitle>Marcas (Admin)</CardTitle>
-					</CardHeader>
-					<CardContent>
-						<BrandManager />
 					</CardContent>
 				</Card>
 

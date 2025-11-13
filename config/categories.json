@@ -1,50 +1,62 @@
 [
   {
-    "id": "Shampoo",
-    "name": "Shampoes"
-  },
-  {
-    "id": "Macarilla",
-    "name": "Macarilla"
+    "id": "Aceite",
+    "name": "Aceite"
   },
   {
     "id": "Acondicionador",
     "name": "Acondicionador"
   },
   {
-    "id": "Tratamiento",
-    "name": "Tratamiento"
-  },
-  {
-    "id": "Oleo",
-    "name": "Oleo"
-  },
-  {
-    "id": "Tonico",
-    "name": "Tonico"
-  },
-  {
     "id": "Caja de Ampollas",
     "name": "Caja de Ampollas"
   },
   {
-    "id": "Kit",
-    "name": "Kit"
+    "id": "Champú",
+    "name": "Champú"
   },
   {
-    "id": "Goteros",
-    "name": "Goteros"
+    "id": "Crema",
+    "name": "Crema"
+  },
+  {
+    "id": "Fluido",
+    "name": "Fluido"
   },
   {
     "id": "Gotas",
     "name": "Gotas"
   },
   {
+    "id": "Goteros",
+    "name": "Goteros"
+  },
+  {
+    "id": "Kit",
+    "name": "Kit"
+  },
+  {
     "id": "Leaven",
     "name": "Leaven"
   },
   {
-    "id": "Fluido",
-    "name": "Fluido"
+    "id": "Mascarilla",
+    "name": "Mascarilla"
+  },
+  {
+    "id": "Oleo",
+    "name": "Oleo"
+  },
+  {
+    "id": "Serum",
+    "name": "Serum"
+  },
+  {
+    "id": "Tonico",
+    "name": "Tonico"
+  },
+  {
+    "id": "Tratamiento",
+    "name": "Tratamiento"
   }
 ]

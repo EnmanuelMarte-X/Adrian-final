@@ -35,7 +35,7 @@ export function CategoryManager() {
       return res.json();
     },
     onSuccess: () => {
-      qc.invalidateQueries(["categories"]);
+      qc.invalidateQueries({ queryKey: ["categories"] });
       setNewName("");
       toast.success("Categoría creada");
     },
@@ -53,7 +53,7 @@ export function CategoryManager() {
       return res.json();
     },
     onSuccess: () => {
-      qc.invalidateQueries(["categories"]);
+      qc.invalidateQueries({ queryKey: ["categories"] });
       setEditingId(null);
       setEditingName("");
       toast.success("Categoría actualizada");
@@ -70,7 +70,7 @@ export function CategoryManager() {
       return res.json();
     },
     onSuccess: () => {
-      qc.invalidateQueries(["categories"]);
+      qc.invalidateQueries({ queryKey: ["categories"] });
       toast.success("Categoría eliminada");
     },
     onError: (err: any) => toast.error(err?.message || "Error"),
@@ -92,7 +92,7 @@ export function CategoryManager() {
               />
               <Button
                 onClick={() => createMutation.mutate({ name: newName })}
-                disabled={!newName || createMutation.isLoading}
+                disabled={!newName || createMutation.status === "pending"}
               >
                 <Plus className="mr-2" /> Agregar
               </Button>
@@ -119,7 +119,7 @@ export function CategoryManager() {
                       <>
                         <Button
                           onClick={() => updateMutation.mutate({ id: c.id, name: editingName })}
-                          disabled={!editingName || updateMutation.isLoading}
+                          disabled={!editingName || updateMutation.status === "pending"}
                         >
                           Guardar
                         </Button>
@@ -132,7 +132,7 @@ export function CategoryManager() {
                         <Button variant="ghost" onClick={() => { setEditingId(c.id); setEditingName(c.name); }}>
                           <Edit />
                         </Button>
-                        <Button variant="destructive" onClick={() => deleteMutation.mutate(c.id)}>
+                        <Button variant="destructive" onClick={() => deleteMutation.mutate(c.id)} disabled={deleteMutation.status === "pending"}>
                           <Trash />
                         </Button>
                       </>

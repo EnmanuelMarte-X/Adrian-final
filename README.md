@@ -1,2 +1,2 @@
 # A G3deon For Enterprises Project
-> Lastupdate 12/11/2025
+> Lastupdate 15/11/2025

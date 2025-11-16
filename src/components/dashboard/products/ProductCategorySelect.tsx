@@ -105,7 +105,8 @@ export function ProductCategorySelect({
 					<Input
 						placeholder="Buscar categoría..."
 						value={query}
-						onChange={(e) => setQuery((e.target as HTMLInputElement).value)}
+							onChange={(e) => setQuery((e.target as HTMLInputElement).value)}
+							onKeyDown={(e) => e.stopPropagation()}
 						className="w-full"
 					/>
 				</div>

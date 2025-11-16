@@ -97,6 +97,7 @@ export function ProductBrandSelect({
             placeholder="Buscar marca..."
             value={query}
             onChange={(e) => setQuery((e.target as HTMLInputElement).value)}
+            onKeyDown={(e) => e.stopPropagation()}
             className="w-full"
           />
         </div>

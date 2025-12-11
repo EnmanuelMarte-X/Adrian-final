@@ -6,12 +6,12 @@ WORKDIR /app
 # Instalar pnpm
 RUN npm install -g pnpm
 
-COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* tsconfig.json next.config.ts ./
-
-# Copiar archivo de entorno
-COPY .env.local .env.local
 # Copiar todos los archivos de configuración
 COPY package.json pnpm-lock.yaml* pnpm-workspace.yaml* tsconfig.json next.config.ts ./
+
+# Copiar archivo de entorno (.env.local si existe, sino .env.example)
+COPY .env.exampl[e] .env.loca[l] ./
+RUN if [ -f .env.local ]; then echo "Using .env.local"; elif [ -f .env.example ]; then cp .env.example .env.local && echo "Created .env.local from .env.example"; fi
 
 # Instalar dependencias
 RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else pnpm install --no-frozen-lockfile; fi

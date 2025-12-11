@@ -1,22 +1,23 @@
-# Crear usuario admin por defecto
-
-Después de levantar los contenedores, ejecuta este comando para crear un usuario admin:
-
-```sh
-docker-compose exec app pnpm exec tsx src/scripts/seed-admin.ts
-```
-
-Esto creará el usuario:
-- Email: admin@admin.com
-- Contraseña: admin1234
-
-Luego podrás iniciar sesión con esas credenciales.
 # Jhenson Supply - Docker Guide
 
 ## 📦 Requisitos Previos
 
 - Docker instalado ([Descargar Docker Desktop](https://www.docker.com/products/docker-desktop))
 - Docker Compose (viene con Docker Desktop)
+
+## ⚙️ Configuración Inicial (Primera vez)
+
+### 1. Crear archivo de variables de entorno
+
+```bash
+# Copiar el archivo de ejemplo
+cp .env.example .env.local
+
+# (Opcional) Editar las variables si es necesario
+# nano .env.local
+```
+
+> **Nota:** Si no creas el archivo `.env.local`, Docker usará automáticamente los valores del `.env.example`
 
 ## 🚀 Iniciar el Proyecto
 
@@ -33,19 +34,31 @@ Este comando:
 - Inicia MongoDB en `mongodb://admin:admin123@localhost:27017`
 - Inicia MongoDB Express en `http://localhost:8081`
 
-### 2. Iniciar sin reconstruir (después de la primera vez)
+### 2. Crear usuario admin por defecto
+
+Después de levantar los contenedores, ejecuta este comando para crear un usuario admin:
+
+```bash
+docker-compose exec app pnpm exec tsx src/scripts/seed-admin.ts
+```
+
+Esto creará el usuario:
+- **Email:** admin@admin.com
+- **Contraseña:** admin1234
+
+### 3. Iniciar sin reconstruir (después de la primera vez)
 
 ```bash
 docker-compose up
 ```
 
-### 3. Detener los servicios
+### 4. Detener los servicios
 
 ```bash
 docker-compose down
 ```
 
-### 4. Detener y eliminar datos
+### 5. Detener y eliminar datos
 
 ```bash
 docker-compose down -v

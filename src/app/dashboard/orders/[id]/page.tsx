@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/tooltip";
 import { UserDetailsDialog } from "@/components/dashboard/users/UserDetailsDialog";
 import { useWindowWidth } from "@/hooks/use-window-width";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { ClientDetailsDialog } from "@/components/dashboard/clients/ClientDetailsDialog";
 import { CreditOrderReceipt } from "@/components/dashboard/orders/CreditOrderReceipt";
 import { OrderReceipt } from "@/components/dashboard/orders/OrderReceipt";

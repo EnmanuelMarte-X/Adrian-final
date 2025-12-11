@@ -5,7 +5,7 @@ import { usePaginationState } from "@/hooks/use-pagination-state";
 import { getPaginationRequestFromState, getTotalPages } from "@/lib/utils";
 import { DataPagination } from "@/components/ui/data-pagination";
 import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { AlertCircleIcon, PackageIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { currencyFormat } from "@/config/formats";

@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { useCreateOrderMutation } from "@/contexts/orders/queries";
 import type { OrderProduct, OrderType } from "@/types/models/orders";
 import type { OrderProductWithDisplay } from "./OrderProductsForm";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import useFormPersist from "react-hook-form-persist";
 import { useSession } from "next-auth/react";
 import type { PaymentMethod } from "@/types/models/paymentHistory";

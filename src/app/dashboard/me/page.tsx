@@ -15,7 +15,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { signOut } from "next-auth/react";
 import { User, Mail, Shield, LogOut, UserCheck, Phone } from "lucide-react";
 import { ROLE_PERMISSIONS } from "@/config/roles";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Suspense } from "react";
 import { Spinner } from "@/components/ui/spinner";
 

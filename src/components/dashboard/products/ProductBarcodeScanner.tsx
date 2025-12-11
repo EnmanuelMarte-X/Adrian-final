@@ -40,7 +40,7 @@ import {
 import type { ProductType } from "@/types/models/products";
 import type { OrderTypeWithProducts } from "@/types/models/orders";
 import { toast } from "sonner";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useProduct } from "@/contexts/products/queries";
 import { currencyFormat } from "@/config/formats";
 import { TAX_PERCENTAGE } from "@/config/shop";

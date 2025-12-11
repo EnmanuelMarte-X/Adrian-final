@@ -39,10 +39,10 @@ export const authOptions: NextAuthOptions = {
 							email: user.email,
 							username: user.username,
 							firstName: user.firstName,
-							lastName: user.lastName,
+							lastName: typeof user.lastName === "string" ? user.lastName : "",
 							role: user.role,
-							avatar: user.avatar,
-							phone: user.phone,
+							avatar: typeof user.avatar === "string" ? user.avatar : undefined,
+							phone: typeof user.phone === "string" ? user.phone : undefined,
 						};
 					}
 

@@ -3,7 +3,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import { APIError } from "@/contexts/shared/exceptions";
 
-const FILE = path.join(process.cwd(), "config", "brands.json");
+const FILE = path.resolve("config", "brands.json");
 
 async function readBrands() {
   try {

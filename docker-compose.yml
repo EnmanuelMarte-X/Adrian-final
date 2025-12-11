@@ -1,0 +1,70 @@
+services:
+  # Aplicación Next.js
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jhenson-supply:latest
+    container_name: jhenson-supply-app
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: mongodb://admin:admin123@mongodb:27017/jhenson?authSource=admin
+      NEXTAUTH_SECRET: tu-secreto-super-seguro-aqui-cambialo-en-produccion-123456789
+      NEXTAUTH_URL: http://localhost:3000
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - jhenson-network
+    restart: unless-stopped
+
+  # MongoDB
+  mongodb:
+    image: mongo:7.0
+    container_name: jhenson-supply-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: jhenson
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - mongodb_config:/data/configdb
+      - ./docker-entrypoint.sh:/docker-entrypoint-initdb.d/init.sh:ro
+    networks:
+      - jhenson-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # MongoDB Express (opcional - UI para MongoDB)
+  mongo-express:
+    image: mongo-express:latest
+    container_name: jhenson-supply-mongo-express
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin123
+      ME_CONFIG_MONGODB_URL: mongodb://admin:admin123@mongodb:27017/
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin123
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mongodb
+    networks:
+      - jhenson-network
+    restart: unless-stopped
+
+networks:
+  jhenson-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  mongodb_config:

@@ -5,7 +5,7 @@ import {
 	PackagePlusIcon,
 	ScanIcon,
 } from "lucide-react";
-import { motion, type Variants } from "motion/react";
+import { motion, type Variants } from "framer-motion";
 import { CreateProductSheet } from "../products/CreateProductSheet";
 import { CreateOrderSheet } from "../orders/CreateOrderSheet";
 import { BarcodeScanner } from "../shared/BarcodeScanner";

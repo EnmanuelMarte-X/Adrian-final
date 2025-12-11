@@ -7,7 +7,7 @@ import type { PaymentHistoryFilters } from "@/contexts/paymentHistory/types";
 import { PaymentHistoryFilters as PaymentHistoryFiltersComponent } from "@/components/dashboard/paymentHistory/PaymentHistoryFilters";
 import { CreatePaymentSheet } from "@/components/dashboard/paymentHistory/CreatePaymentSheet";
 import { usePaginationState } from "@/hooks/use-pagination-state";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Spinner } from "@/components/ui/spinner";
 
 function CreditPageContent() {

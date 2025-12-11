@@ -12,7 +12,7 @@ import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ClientDetails } from "@/components/dashboard/clients/ClientDetails";
 import { use } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export default function ClientDetailsPage({
 	params,

@@ -18,7 +18,7 @@ import { ClientContactsForm } from "./ClientContactsForm";
 import { useForm, FormProvider } from "react-hook-form";
 import { toast } from "sonner";
 import { useCreateClientMutation } from "@/contexts/clients/queries";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
 	createClientFormSchema,

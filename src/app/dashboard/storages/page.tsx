@@ -4,7 +4,7 @@ import { Storages } from "@/components/dashboard/storages/Storages";
 import { GripIcon, Info } from "lucide-react";
 import { CreateStorageDialog } from "@/components/dashboard/storages/CreateStorageDialog";
 import { useQueryClient } from "@tanstack/react-query";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Suspense } from "react";
 import { Spinner } from "@/components/ui/spinner";
 

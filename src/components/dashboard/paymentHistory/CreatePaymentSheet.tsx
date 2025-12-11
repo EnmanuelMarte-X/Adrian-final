@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { CreatePaymentForm } from "./CreatePaymentForm";
 import { useState } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { useForm, FormProvider } from "react-hook-form";
 import { toast } from "sonner";
 import { useCreatePaymentHistoryMutation } from "@/contexts/paymentHistory/queries";

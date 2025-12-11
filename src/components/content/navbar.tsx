@@ -1,8 +1,9 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Menu, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
+import { signOut } from "next-auth/react";
 
 import {
 	Accordion,
@@ -97,15 +98,33 @@ const Navbar = ({ logo, menu, auth }: NavbarProps) => {
 							</div>
 						</div>
 						<div className="flex gap-2">
-							{isAuthenticated && (
+							{!isAuthenticated && (
 								<Button asChild variant="outline" size="sm">
 									<a href={auth.login.url}>{auth.login.title}</a>
 								</Button>
 							)}
 
-							<Button asChild size="sm">
-								<a href={auth.signup.url}>{auth.signup.title}</a>
-							</Button>
+							{!isAuthenticated && (
+								<Button asChild size="sm">
+									<a href={auth.signup.url}>{auth.signup.title}</a>
+								</Button>
+							)}
+
+							{isAuthenticated && (
+								<>
+									<Button asChild variant="outline" size="sm">
+										<a href="/dashboard">Panel</a>
+									</Button>
+									<Button
+										variant="destructive"
+										size="sm"
+										onClick={() => signOut({ callbackUrl: "/" })}
+									>
+										<LogOut className="size-4 mr-2" />
+										Cerrar sesión
+									</Button>
+								</>
+							)}
 						</div>
 					</nav>
 
@@ -157,9 +176,18 @@ const Navbar = ({ logo, menu, auth }: NavbarProps) => {
 												</Button>
 											)}
 											{isAuthenticated && (
-												<Button asChild variant="outline">
-													<a href="/dashboard">Panel</a>
-												</Button>
+												<>
+													<Button asChild variant="outline">
+														<a href="/dashboard">Panel</a>
+													</Button>
+													<Button
+														variant="destructive"
+														onClick={() => signOut({ callbackUrl: "/" })}
+													>
+														<LogOut className="size-4 mr-2" />
+														Cerrar sesión
+													</Button>
+												</>
 											)}
 										</div>
 									</div>

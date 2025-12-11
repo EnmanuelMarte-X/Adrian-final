@@ -24,8 +24,8 @@ const navbarConfig = {
 	],
 	auth: {
 		login: {
-			title: "Ir a dashboard",
-			url: "/dashboard",
+			title: "Iniciar sesión",
+			url: "/auth/login",
 		},
 		signup: {
 			title: "Suplirme",

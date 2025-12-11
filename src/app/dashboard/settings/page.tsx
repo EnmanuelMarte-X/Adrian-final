@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/card";
 import { useTheme } from "next-themes";
 import { ComingSoon } from "@/components/ui/coming-soon";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Palette } from "lucide-react";
 import { Suspense } from "react";
 import { Spinner } from "@/components/ui/spinner";

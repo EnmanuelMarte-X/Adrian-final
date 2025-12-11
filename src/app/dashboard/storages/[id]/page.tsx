@@ -31,7 +31,7 @@ import {
 	ArrowLeftIcon,
 	RefreshCwIcon,
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { StorageProductsTable } from "@/components/dashboard/products/StorageProductsTable";
 import Link from "next/link";
 import { BarcodeScanner } from "@/components/dashboard/shared/BarcodeScanner";

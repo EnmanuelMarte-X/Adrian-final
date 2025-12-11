@@ -301,9 +301,6 @@ const validateStockAvailability = async (products: OrderProduct[]): Promise<void
  * Actualiza el stock de los productos después de crear una orden
  */
 const updateProductStock = async (products: OrderProduct[]): Promise<void> => {
-	const session = await mongoose.startSession();
-	session.startTransaction();
-
 	try {
 		for (const product of products) {
 			if (product.locationId) {
@@ -315,13 +312,12 @@ const updateProductStock = async (products: OrderProduct[]): Promise<void> => {
 					},
 					{
 						$inc: { "locations.$.stock": -product.quantity }
-					},
-					{ session }
+					}
 				);
 			} else {
 				// Si no se especifica ubicación, decrementar del stock disponible
 				// Priorizar ubicaciones con mayor stock
-				const productDoc = await Product.findById(product.productId).session(session);
+				const productDoc = await Product.findById(product.productId);
 				if (!productDoc) continue;
 
 				let remainingQuantity = product.quantity;
@@ -341,21 +337,15 @@ const updateProductStock = async (products: OrderProduct[]): Promise<void> => {
 						},
 						{
 							$inc: { "locations.$.stock": -quantityToDeduct }
-						},
-						{ session }
+						}
 					);
 
 					remainingQuantity -= quantityToDeduct;
 				}
 			}
 		}
-
-		await session.commitTransaction();
 	} catch (error) {
-		await session.abortTransaction();
 		throw error;
-	} finally {
-		session.endSession();
 	}
 };
 

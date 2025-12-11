@@ -7,7 +7,7 @@ import { LastProductsTable } from "@/components/dashboard/products/LastProductsT
 import { ResumeCards } from "@/components/dashboard/resume/ResumeCards";
 import { QuickActions } from "@/components/dashboard/resume/QuickActions";
 import { LastClientsSection } from "@/components/dashboard/clients/LastClientsSection";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { LastClientsTable } from "@/components/dashboard/clients/LastClientTable";
 import { Suspense } from "react";
 import { Spinner } from "@/components/ui/spinner";

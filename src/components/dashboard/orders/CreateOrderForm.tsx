@@ -40,7 +40,7 @@ import type { ClientType } from "@/types/models/clients";
 import { useEffect, useState, useRef } from "react";
 import { OrderPaymentForm } from "./OrderPaymentForm";
 import type { PaymentMethod } from "@/types/models/paymentHistory";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type OrderFormData = Omit<Partial<OrderType>, "buyerId" | "sellerId"> & {
 	buyerId: string;

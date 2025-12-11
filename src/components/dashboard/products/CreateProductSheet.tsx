@@ -11,7 +11,7 @@ import {
 import { CreateProductForm } from "./CreateProductForm";
 import { useState } from "react";
 import { ProductStoragesFrom } from "./ProductStoragesFrom";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useForm, FormProvider } from "react-hook-form";
 import { toast } from "sonner";

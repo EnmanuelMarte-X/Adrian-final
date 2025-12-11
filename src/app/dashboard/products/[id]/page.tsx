@@ -2,7 +2,7 @@
 
 import { useProduct } from "@/contexts/products/queries";
 import { useStorages } from "@/contexts/storages/queries";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
 	ArrowLeftIcon,
 	BoxesIcon,

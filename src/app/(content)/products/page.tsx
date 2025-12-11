@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import {
 	PackageIcon,
 	SearchIcon,

@@ -7,7 +7,7 @@ import type { ProductFilters } from "@/contexts/products/types";
 import { ProductsFilters } from "@/components/dashboard/products/ProductsFilters";
 import { CreateProductSheet } from "@/components/dashboard/products/CreateProductSheet";
 import { usePaginationState } from "@/hooks/use-pagination-state";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Spinner } from "@/components/ui/spinner";
 
 function ProductsPageContent() {

@@ -17,9 +17,10 @@ import { useRouter } from "next/navigation";
 import { z } from "zod";
 import { toast } from "sonner";
 import { use } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Spinner } from "@/components/ui/spinner";
 import { Logo } from "@/components/logo";
+import Link from "next/link";
 
 const loginSchema = z.object({
 	email: z.string().email("Correo electrónico inválido"),
@@ -28,19 +29,15 @@ const loginSchema = z.object({
 
 const errorMessages: Record<string, string> = {
 	CredentialsSignin: "Correo o contraseña incorrectos.",
-
 	OAuthSignin: "No se pudo iniciar sesión con el proveedor.",
 	OAuthCallback: "Error al procesar la respuesta del proveedor.",
 	OAuthCreateAccount: "No se pudo crear la cuenta desde el proveedor.",
 	OAuthAccountNotLinked: "La cuenta del proveedor no está vinculada.",
-
 	EmailCreateAccount: "No se pudo crear la cuenta de correo electrónico.",
 	EmailSignInError: "Error al enviar el correo de inicio de sesión.",
 	Verification: "El vínculo de verificación es inválido o ha expirado.",
-
 	MissingCSRF: "Error de seguridad (CSRF), inténtalo de nuevo.",
 	AccessDenied: "Acceso denegado.",
-
 	Configuration: "Error de configuración del servidor.",
 	AdapterError: "Error en el adaptador de la base de datos.",
 	CallbackRouteError: "Ha ocurrido un error durante el inicio de sesión.",
@@ -55,7 +52,6 @@ const errorMessages: Record<string, string> = {
 	MissingWebAuthnAutocomplete:
 		"WebAuthn requiere campo de autocompletar adecuado.",
 	UntrustedHost: "Host no confiable, revisa la configuración de trustHost.",
-
 	default:
 		"Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.",
 };
@@ -68,6 +64,7 @@ export default function Login({
 
 	const form = useForm({
 		resolver: zodResolver(loginSchema),
+		mode: "onChange",
 		defaultValues: { email: "", password: "" },
 	});
 
@@ -103,6 +100,10 @@ export default function Login({
 				transition={{ duration: 0.6, delay: 0.1 }}
 				className="w-full max-w-md mx-auto"
 			>
+				<div className="flex justify-center mb-6">
+					<Logo />
+				</div>
+
 				<Form {...form}>
 					<motion.form
 						onSubmit={form.handleSubmit(onSubmit)}
@@ -111,20 +112,6 @@ export default function Login({
 						animate={{ scale: 1 }}
 						transition={{ duration: 0.4, delay: 0.2 }}
 					>
-						<motion.div
-							className="flex flex-col items-center justify-center text-center mb-6"
-							initial={{ y: -10, opacity: 0 }}
-							animate={{ y: 0, opacity: 1 }}
-							transition={{ duration: 0.5, delay: 0.3 }}
-						>
-							<Logo width={256} height={256} className="size-16 mb-4" />
-
-							<span className="text-muted-foreground font-bold">
-								Jhenson Supply
-							</span>
-							<h1 className="text-3xl font-bold">Iniciar sesión</h1>
-						</motion.div>
-
 						<motion.div
 							initial={{ x: -20, opacity: 0 }}
 							animate={{ x: 0, opacity: 1 }}
@@ -222,6 +209,21 @@ export default function Login({
 									Iniciar sesión
 								</Button>
 							</motion.div>
+						</motion.div>
+
+						<motion.div
+							initial={{ y: 20, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							transition={{ duration: 0.5, delay: 0.7 }}
+							className="text-center text-sm text-muted-foreground"
+						>
+							Regístrate para poder iniciar sesión.{" "}
+							<Link
+								href="/auth/register"
+								className="text-primary hover:underline font-medium"
+							>
+								Crear cuenta
+							</Link>
 						</motion.div>
 					</motion.form>
 				</Form>

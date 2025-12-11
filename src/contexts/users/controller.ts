@@ -55,8 +55,30 @@ export const getUsers = async (
 
 	const total = await User.find(query).countDocuments();
 
+	// Transformar los documentos para que _id sea string
+	const plainUsers = users.map((user) => {
+		const obj = user.toObject();
+		return {
+			...obj,
+			_id: obj._id.toString(),
+			createdAt: obj.createdAt?.toString(),
+			updatedAt: obj.updatedAt?.toString(),
+			lastName: typeof obj.lastName === "string" ? obj.lastName : "",
+			lastLogin:
+				obj.lastLogin === undefined || obj.lastLogin === null
+					? undefined
+					: obj.lastLogin instanceof Date
+						? obj.lastLogin.toISOString()
+						: typeof obj.lastLogin === "string"
+							? obj.lastLogin
+							: undefined,
+			phone: typeof obj.phone === "string" ? obj.phone : undefined,
+			avatar: typeof obj.avatar === "string" ? obj.avatar : undefined,
+		};
+	});
+
 	return {
-		data: users,
+		data: plainUsers,
 		total,
 	};
 };
@@ -73,7 +95,24 @@ export const getUserById = async (id: string): Promise<UserType> => {
 		throw new UserNotFoundException();
 	}
 
-	return user.toObject();
+	const obj = user.toObject();
+	return {
+		...obj,
+		_id: obj._id.toString(),
+		createdAt: obj.createdAt?.toString(),
+		updatedAt: obj.updatedAt?.toString(),
+		lastName: typeof obj.lastName === "string" ? obj.lastName : "",
+		lastLogin:
+			obj.lastLogin === undefined || obj.lastLogin === null
+				? undefined
+				: obj.lastLogin instanceof Date
+					? obj.lastLogin.toISOString()
+					: typeof obj.lastLogin === "string"
+						? obj.lastLogin
+						: undefined,
+		phone: typeof obj.phone === "string" ? obj.phone : undefined,
+		avatar: typeof obj.avatar === "string" ? obj.avatar : undefined,
+	};
 };
 
 export const getUserBasicInfo = async (id: string): Promise<UserBasicInfo> => {
@@ -90,7 +129,16 @@ export const getUserBasicInfo = async (id: string): Promise<UserBasicInfo> => {
 		throw new UserNotFoundException();
 	}
 
-	return user.toObject();
+	const obj = user.toObject();
+	return {
+		...obj,
+		_id: obj._id.toString(),
+		firstName: typeof obj.firstName === "string" ? obj.firstName : "",
+		lastName: typeof obj.lastName === "string" ? obj.lastName : "",
+		email: typeof obj.email === "string" ? obj.email : "",
+		username: typeof obj.username === "string" ? obj.username : "",
+		avatar: typeof obj.avatar === "string" ? obj.avatar : undefined,
+	};
 };
 
 export const createUser = async (
@@ -100,7 +148,24 @@ export const createUser = async (
 
 	try {
 		const user = await User.create(userData);
-		return user.toObject();
+		const obj = user.toObject();
+		return {
+			...obj,
+			_id: obj._id.toString(),
+			createdAt: obj.createdAt?.toString(),
+			updatedAt: obj.updatedAt?.toString(),
+			lastName: typeof obj.lastName === "string" ? obj.lastName : "",
+			lastLogin:
+				obj.lastLogin === undefined || obj.lastLogin === null
+					? undefined
+					: obj.lastLogin instanceof Date
+						? obj.lastLogin.toISOString()
+						: typeof obj.lastLogin === "string"
+							? obj.lastLogin
+							: undefined,
+			phone: typeof obj.phone === "string" ? obj.phone : undefined,
+			avatar: typeof obj.avatar === "string" ? obj.avatar : undefined,
+		};
 	} catch {
 		throw new UserValidationException();
 	}
@@ -125,7 +190,24 @@ export const updateUser = async (
 		throw new UserNotFoundException();
 	}
 
-	return updatedUser.toObject();
+	const obj = updatedUser.toObject();
+	return {
+		...obj,
+		_id: obj._id.toString(),
+		createdAt: obj.createdAt?.toString(),
+		updatedAt: obj.updatedAt?.toString(),
+		lastName: typeof obj.lastName === "string" ? obj.lastName : "",
+		lastLogin:
+			obj.lastLogin === undefined || obj.lastLogin === null
+				? undefined
+				: obj.lastLogin instanceof Date
+					? obj.lastLogin.toISOString()
+					: typeof obj.lastLogin === "string"
+						? obj.lastLogin
+						: undefined,
+		phone: typeof obj.phone === "string" ? obj.phone : undefined,
+		avatar: typeof obj.avatar === "string" ? obj.avatar : undefined,
+	};
 };
 
 export const deleteUser = async (id: string): Promise<UserType> => {
@@ -140,5 +222,22 @@ export const deleteUser = async (id: string): Promise<UserType> => {
 		throw new UserNotFoundException();
 	}
 
-	return deletedUser.toObject();
+	const obj = deletedUser.toObject();
+	return {
+		...obj,
+		_id: obj._id.toString(),
+		createdAt: obj.createdAt?.toString(),
+		updatedAt: obj.updatedAt?.toString(),
+		lastName: typeof obj.lastName === "string" ? obj.lastName : "",
+		lastLogin:
+			obj.lastLogin === undefined || obj.lastLogin === null
+				? undefined
+				: obj.lastLogin instanceof Date
+					? obj.lastLogin.toISOString()
+					: typeof obj.lastLogin === "string"
+						? obj.lastLogin
+						: undefined,
+		phone: typeof obj.phone === "string" ? obj.phone : undefined,
+		avatar: typeof obj.avatar === "string" ? obj.avatar : undefined,
+	};
 };

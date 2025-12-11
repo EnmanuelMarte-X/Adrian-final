@@ -2,7 +2,7 @@ import { OrdersResumeCard } from "@/components/dashboard/orders/OrdersResumeCard
 import { ProductsResumeCard } from "@/components/dashboard/products/ProductsResumeCard";
 import { StoragesResumeCard } from "@/components/dashboard/storages/StorageResumeCard";
 import { ClientResumeCard } from "../clients/ClientsResumeCard";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 

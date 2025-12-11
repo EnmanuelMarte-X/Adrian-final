@@ -1,6 +1,6 @@
 import { useClients } from "@/contexts/clients/queries";
 import { CircleAlertIcon } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export function LastClientsSection({
 	children,

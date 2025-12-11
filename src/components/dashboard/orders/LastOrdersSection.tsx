@@ -1,6 +1,6 @@
 import { useOrders } from "@/contexts/orders/queries";
 import { CircleAlertIcon } from "lucide-react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 export function LastOrdersSection({ children }: { children: React.ReactNode }) {
 	const { isError } = useOrders();

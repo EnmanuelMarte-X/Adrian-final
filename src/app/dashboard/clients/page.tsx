@@ -7,7 +7,7 @@ import type { ClientFilters } from "@/contexts/clients/types";
 import { ClientsFilters } from "@/components/dashboard/clients/ClientsFilters";
 import { CreateClientSheet } from "@/components/dashboard/clients/CreateClientSheet";
 import { useQueryPaginationState } from "@/hooks/use-pagination-state";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 
 function ClientsPageContent() {
 	const [pagination, setPagination] = useQueryPaginationState({

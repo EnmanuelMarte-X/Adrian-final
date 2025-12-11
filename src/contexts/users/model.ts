@@ -29,7 +29,8 @@ export const userSchema = new mongoose.Schema({
 	},
 	lastName: {
 		type: String,
-		required: true,
+		required: false,
+		default: "",
 	},
 	role: {
 		type: String,
@@ -68,5 +69,10 @@ userSchema.pre("save", function (next) {
 	next();
 });
 
+// Eliminar el modelo del cache si existe para evitar problemas con cambios en el schema
+if (mongoose.models.User) {
+	delete mongoose.models.User;
+}
+
 // Exportar el modelo de forma estándar
-export const User = mongoose.models?.User || mongoose.model("User", userSchema);
+export const User = mongoose.model("User", userSchema);

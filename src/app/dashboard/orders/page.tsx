@@ -7,7 +7,7 @@ import type { OrderFilters } from "@/contexts/orders/types";
 import { usePaginationState } from "@/hooks/use-pagination-state";
 import type { SortingState } from "@tanstack/react-table";
 import { useState, Suspense } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Spinner } from "@/components/ui/spinner";
 
 function OrdersPageContent() {

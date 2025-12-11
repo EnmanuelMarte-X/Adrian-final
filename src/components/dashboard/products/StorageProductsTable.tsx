@@ -16,7 +16,7 @@ import { ProductsFilters } from "./ProductsFilters";
 import { currencyFormat } from "@/config/formats";
 import { DataTable } from "@/components/ui/data-table";
 import { DataPagination } from "@/components/ui/data-pagination";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useSidebar } from "@/components/ui/sidebar";
 import { ProductCard } from "./ProductCard";
 import { useWindowWidth } from "@/hooks/use-window-width";

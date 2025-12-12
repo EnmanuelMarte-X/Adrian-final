@@ -30,4 +30,4 @@ Si desean asignar un nombre personalizado al proyecto, pueden utilizar el parám
 docker compose -p nombre_del_proyecto up
 ```
 
-
+En caso de que le ocurra algun error verifique tener almacenamiento suficiente en su maquina ya que es un poco pesado el projecto

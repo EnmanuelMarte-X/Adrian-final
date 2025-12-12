@@ -4,18 +4,6 @@ import bcrypt from "bcryptjs";
 import type { UserRole } from "@/types/models/users";
 import { connectToMongo } from "./mongo";
 
-// Usuario demo por defecto (funciona sin base de datos)
-const DEMO_USER = {
-	id: "demo-admin-id",
-	email: "admin@admin.com",
-	username: "admin",
-	password: "$2b$10$eEsdWIqhK0DuY1Y7wmYeZeFX00S4.OgYoO4Y0sDu86QdRDlMBxqIe", // admin1234
-	firstName: "Admin",
-	lastName: "Demo",
-	role: "admin" as UserRole,
-	isActive: true,
-};
-
 export const authOptions: NextAuthOptions = {
 	providers: [
 		CredentialsProvider({
@@ -29,58 +17,21 @@ export const authOptions: NextAuthOptions = {
 					return null;
 				}
 
-				const { email, password } = credentials;
-
-				// Primero verificar si es el usuario demo
-				if (email === DEMO_USER.email && bcrypt.compareSync(password, DEMO_USER.password)) {
-					// Intentar MongoDB con timeout corto, si falla usar demo
-					try {
-						const timeoutPromise = new Promise((_, reject) => 
-							setTimeout(() => reject(new Error("MongoDB timeout")), 3000)
-						);
-						
-						const mongoPromise = (async () => {
-							await connectToMongo();
-							const { User } = await import("@/contexts/users/model");
-							return await User.findOne({ email });
-						})();
-
-						const user = await Promise.race([mongoPromise, timeoutPromise]) as any;
-						
-						if (user && bcrypt.compareSync(password, user.password)) {
-							return {
-								id: user._id.toString(),
-								email: user.email,
-								username: user.username,
-								firstName: user.firstName,
-								lastName: typeof user.lastName === "string" ? user.lastName : "",
-								role: user.role,
-								avatar: typeof user.avatar === "string" ? user.avatar : undefined,
-								phone: typeof user.phone === "string" ? user.phone : undefined,
-							};
-						}
-					} catch {
-						// MongoDB no disponible, usar demo
-					}
-					
-					console.log("✅ Logged in with demo user");
-					return {
-						id: DEMO_USER.id,
-						email: DEMO_USER.email,
-						username: DEMO_USER.username,
-						firstName: DEMO_USER.firstName,
-						lastName: DEMO_USER.lastName,
-						role: DEMO_USER.role,
-						avatar: undefined,
-						phone: undefined,
-					};
-				}
-
-				// Para otros usuarios, solo MongoDB
 				try {
 					await connectToMongo();
+
+					// Importación dinámica del modelo para evitar problemas de timing
 					const { User } = await import("@/contexts/users/model");
-					const user = await User.findOne({ email });
+
+					const { email, password } = credentials;
+
+					// Verificar que el modelo User está disponible
+					if (!User) {
+						console.error("User model is not available");
+						return null;
+					}
+
+					const user = await User.findOne({ email: email });
 
 					if (user && bcrypt.compareSync(password, user.password)) {
 						return {
@@ -94,11 +45,16 @@ export const authOptions: NextAuthOptions = {
 							phone: typeof user.phone === "string" ? user.phone : undefined,
 						};
 					}
-				} catch (error) {
-					console.error("MongoDB auth error:", error instanceof Error ? error.message : "Unknown error");
-				}
 
-				return null;
+					return null;
+				} catch (error) {
+					console.error("Auth error:", error);
+					console.error("Error details:", {
+						message: error instanceof Error ? error.message : "Unknown error",
+						stack: error instanceof Error ? error.stack : undefined,
+					});
+					return null;
+				}
 			},
 		}),
 	],

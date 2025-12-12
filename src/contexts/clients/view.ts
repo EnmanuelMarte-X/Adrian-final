@@ -5,6 +5,7 @@ import { getErrorResponse } from "../shared/exceptions";
 import { ClientNotFoundException } from "./exceptions";
 import type { ClientFilters, ClientSort } from "./types";
 import { withAdminOnly } from "@/contexts/auth/middlewares";
+import { DEMO_DATA } from "@/lib/mongo-fallback";
 
 export async function getClientsCountView(
 	_: NextRequest,
@@ -12,7 +13,8 @@ export async function getClientsCountView(
 	const { data: count, error } = await tryCatch(controller.getClientsCount());
 
 	if (error) {
-		return getErrorResponse(error);
+		console.log("MongoDB not available for clients count, returning 0");
+		return NextResponse.json({ count: 0, _isDemo: true });
 	}
 
 	return NextResponse.json({ count });
@@ -41,7 +43,8 @@ export async function getClientsView(req: NextRequest): Promise<NextResponse> {
 	);
 
 	if (error) {
-		return getErrorResponse(error);
+		console.log("MongoDB not available for clients, returning empty data");
+		return NextResponse.json({ ...DEMO_DATA.clients, _isDemo: true });
 	}
 
 	if (!data) {

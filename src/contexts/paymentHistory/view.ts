@@ -14,7 +14,8 @@ export async function getPaymentHistoryCountView(
 	);
 
 	if (error) {
-		return getErrorResponse(error);
+		console.log("MongoDB not available for payment history count, returning 0");
+		return NextResponse.json({ count: 0, _isDemo: true });
 	}
 
 	return NextResponse.json({ count });
@@ -45,7 +46,15 @@ export async function getPaymentHistoryView(
 	);
 
 	if (error) {
-		return getErrorResponse(error);
+		console.log("MongoDB not available for payment history, returning empty data");
+		return NextResponse.json({
+			items: [],
+			total: 0,
+			page: 1,
+			limit: 10,
+			totalPages: 0,
+			_isDemo: true,
+		});
 	}
 
 	if (!data) {

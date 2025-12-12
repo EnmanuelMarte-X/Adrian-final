@@ -3,6 +3,7 @@ import * as controller from "./controller";
 import { tryCatch } from "@/lib/utils";
 import { getErrorResponse } from "../shared/exceptions";
 import { withAdminOnly } from "@/contexts/auth/middlewares";
+import { DEMO_DATA } from "@/lib/mongo-fallback";
 
 export const getStoragesView = async (
 	req: NextRequest,
@@ -17,7 +18,8 @@ export const getStoragesView = async (
 	);
 
 	if (error) {
-		return getErrorResponse(error);
+		console.log("MongoDB not available for storages, returning empty data");
+		return NextResponse.json({ ...DEMO_DATA.storages, _isDemo: true });
 	}
 
 	return NextResponse.json(data);
@@ -29,7 +31,8 @@ export const getStoragesCountView = async (
 	const { data, error } = await tryCatch(controller.getStoragesCount());
 
 	if (error) {
-		return getErrorResponse(error);
+		console.log("MongoDB not available for storages count, returning 0");
+		return NextResponse.json({ count: 0, _isDemo: true });
 	}
 
 	return NextResponse.json({ count: data });

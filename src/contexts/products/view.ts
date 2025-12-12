@@ -5,6 +5,7 @@ import { getErrorResponse } from "../shared/exceptions";
 import { ProductsNotFoundException } from "./exceptions";
 import type { ProductFilters, ProductSort } from "./types";
 import { withAdminOnly } from "@/contexts/auth/middlewares";
+import { DEMO_DATA } from "@/lib/mongo-fallback";
 
 export async function getProductsCountView(
 	_: NextRequest,
@@ -12,7 +13,9 @@ export async function getProductsCountView(
 	const { data: count, error } = await tryCatch(controller.getProductsCount());
 
 	if (error) {
-		return getErrorResponse(error);
+		// Si hay error de conexión, devolver 0 en lugar de error
+		console.log("MongoDB not available for products count, returning 0");
+		return NextResponse.json({ count: 0, _isDemo: true });
 	}
 
 	return NextResponse.json({ count });
@@ -41,7 +44,9 @@ export async function getProductsView(req: NextRequest): Promise<NextResponse> {
 	);
 
 	if (error) {
-		return getErrorResponse(error);
+		// Si hay error de conexión a MongoDB, devolver datos vacíos
+		console.log("MongoDB not available for products, returning empty data");
+		return NextResponse.json({ ...DEMO_DATA.products, _isDemo: true });
 	}
 
 	if (!data) {

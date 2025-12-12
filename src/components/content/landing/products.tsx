@@ -260,7 +260,7 @@ export function ProductsSection() {
 							/>
 						))}
 					</div>
-				) : data?.products.length ? (
+				) : data?.products?.length ? (
 					<>
 						<motion.div
 							initial={{ opacity: 0 }}

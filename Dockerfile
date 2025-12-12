@@ -46,20 +46,31 @@ COPY package.json ./
 COPY pnpm-lock.yaml* ./
 COPY pnpm-workspace.yaml* ./
 
-# Instalar solo dependencias de producción
-RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile --prod; else pnpm install --prod --no-frozen-lockfile; fi
+# Instalar dependencias completas (necesarias para tsx y seed)
+RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else pnpm install --no-frozen-lockfile; fi
 
 # Copiar la aplicación compilada desde el stage anterior
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/config ./config
 
-# Variables de entorno
+# Copiar scripts necesarios para el seed
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
+
+# Copiar script de entrada
+COPY app-entrypoint.sh ./app-entrypoint.sh
+RUN chmod +x ./app-entrypoint.sh
+
+# Variables de entorno por defecto
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV MONGODB_URI=mongodb://host.docker.internal:27017/adrian_db
+ENV NEXTAUTH_SECRET=secreto-por-defecto-cambiar-en-produccion
+ENV NEXTAUTH_URL=http://localhost:3000
 
 # Exponer puerto
 EXPOSE 3000
 
-# Comando para iniciar la aplicación
-CMD ["pnpm", "start"]
+# Usar script de entrada que crea usuario admin y luego inicia la app
+CMD ["./app-entrypoint.sh"]

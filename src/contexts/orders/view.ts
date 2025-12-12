@@ -5,6 +5,7 @@ import * as controller from "./controller";
 import type { OrderFilters } from "./types";
 import { OrdersNotFoundException } from "./exceptions";
 import { withAdminOnly } from "@/contexts/auth/middlewares";
+import { DEMO_DATA } from "@/lib/mongo-fallback";
 
 export async function getOrdersCountView(
 	_: NextRequest,
@@ -12,7 +13,8 @@ export async function getOrdersCountView(
 	const { data: count, error } = await tryCatch(controller.getOrdersCount());
 
 	if (error) {
-		return getErrorResponse(error);
+		console.log("MongoDB not available for orders count, returning 0");
+		return NextResponse.json({ count: 0, _isDemo: true });
 	}
 
 	return NextResponse.json({ count });
@@ -46,7 +48,8 @@ export async function getOrdersViews(req: NextRequest): Promise<NextResponse> {
 	);
 
 	if (error) {
-		return getErrorResponse(error);
+		console.log("MongoDB not available for orders, returning empty data");
+		return NextResponse.json({ ...DEMO_DATA.orders, _isDemo: true });
 	}
 
 	if (!data) {

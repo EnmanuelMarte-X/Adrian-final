@@ -1,4 +1,8 @@
-# A G3deon For Enterprises Project
+Aquí tienes el texto completo, organizado, claro y profesional, con todo lo que pediste integrado:
+
+---
+
+# **A G3deon For Enterprises Project**
 
 En caso de querer correr el proyecto, solo deben clonar el repositorio utilizando el siguiente comando:
 
@@ -30,4 +34,42 @@ Si desean asignar un nombre personalizado al proyecto, pueden utilizar el parám
 docker compose -p nombre_del_proyecto up
 ```
 
-En caso de que le ocurra algun error verifique tener almacenamiento suficiente en su maquina ya que es un poco pesado el projecto
+En caso de que ocurra algún error, verifique que su máquina tenga suficiente almacenamiento, ya que el proyecto es algo pesado.
+
+---
+
+## **Información importante sobre los servicios**
+
+El proyecto levanta **tres contenedores**:
+
+### **1. Aplicación principal**
+
+* Corre en: **[http://localhost:3000](http://localhost:3000)**
+
+### **2. Mongo Express**
+
+* Corre en: **[http://localhost:8000](http://localhost:8000)**
+* Para acceder necesitarán las credenciales por defecto:
+
+  * **Usuario:** `admin`
+  * **Contraseña:** `admin123`
+* Aquí podrán visualizar la base de datos MongoDB.
+
+### **3. MongoDB**
+
+* Corre también en su **puerto por defecto (27017)**.
+
+---
+
+## **Credenciales de acceso a la aplicación**
+
+La aplicación incluye un usuario creado por defecto:
+
+* **Email:** `admin@admin.com`
+* **Contraseña:** `admin1234`
+
+También puede registrarse y crear su propio usuario si así lo desea.
+
+---
+
+Si quieres, puedo convertir este texto en PDF, README.md o darle un formato más técnico tipo documentación profesional.

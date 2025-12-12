@@ -1,15 +1,9 @@
-
+import mongoose from "mongoose";
 
 interface MongooseCache {
 	conn: mongoose.Connection | null;
 	promise: Promise<mongoose.Connection> | null;
 }
-
-declare global {
-	// eslint-disable-next-line no-var
-	var mongoose: MongooseCache | undefined;
-}
-import mongoose from "mongoose";
 
 const { MONGODB_URI } = process.env;
 
@@ -19,10 +13,14 @@ if (!MONGODB_URI) {
 	);
 }
 
-let cached: MongooseCache | undefined = global.mongoose;
+const globalWithMongoose = globalThis as typeof globalThis & {
+	mongoose?: MongooseCache;
+};
+
+let cached: MongooseCache | undefined = globalWithMongoose.mongoose;
 
 if (!cached) {
-	cached = global.mongoose = { conn: null, promise: null };
+	cached = globalWithMongoose.mongoose = { conn: null, promise: null };
 }
 
 async function connectToMongo() {

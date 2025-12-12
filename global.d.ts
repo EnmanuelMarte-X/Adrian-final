@@ -1,10 +1,13 @@
-import type mongo from 'mongoose';
+import type mongoose from 'mongoose';
 
 interface MongooseCache {
-  conn: mongo.Connection | null;
-  promise: Promise<mongo.Connection> | null;
+  conn: mongoose.Connection | null;
+  promise: Promise<mongoose.Connection> | null;
 }
 
 declare global {
-  var mongoose: MongooseCache;
+  // eslint-disable-next-line no-var
+  var mongoose: MongooseCache | undefined;
 }
+
+export {};

@@ -1,7 +1,3 @@
-Aquí tienes el texto completo, organizado, claro y profesional, con todo lo que pediste integrado:
-
----
-
 # **A G3deon For Enterprises Project**
 
 En caso de querer correr el proyecto, solo deben clonar el repositorio utilizando el siguiente comando:
@@ -71,5 +67,3 @@ La aplicación incluye un usuario creado por defecto:
 También puede registrarse y crear su propio usuario si así lo desea.
 
 ---
-
-Si quieres, puedo convertir este texto en PDF, README.md o darle un formato más técnico tipo documentación profesional.
